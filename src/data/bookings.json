@@ -1,0 +1,103 @@
+[
+  {
+    "id": "BK-1006",
+    "apartmentId": "a1",
+    "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",
+    "checkInDate": "2026-09-23",
+    "checkOutDate": "2026-09-24",
+    "nightsCount": 1,
+    "guestsCount": 2,
+    "guestName": "Mohamed zied Jabeur",
+    "guestEmail": "ziedjaber18@gmail.com",
+    "guestPhone": "20358162",
+    "specialRequests": "zzzz",
+    "selectedPacks": [
+      {
+        "id": "pack-love",
+        "name": "Pack Love",
+        "priceEUR": 59
+      },
+      {
+        "id": "pack-prestige",
+        "name": "Pack Prestige",
+        "priceEUR": 79
+      }
+    ],
+    "totalAmountEUR": 428,
+    "createdAt": "2026-09-22T20:41:36.563Z",
+    "status": "confirmed"
+  },
+  {
+    "id": "BK-6059",
+    "apartmentId": "a3",
+    "apartmentTitle": "Le Rêve Luxe • Spa Privatif | Jacuzzi & Sauna",
+    "checkInDate": "2026-09-23",
+    "checkOutDate": "2026-09-24",
+    "nightsCount": 1,
+    "guestsCount": 2,
+    "guestName": "zied",
+    "guestEmail": "zied@gmail.com",
+    "guestPhone": "000012302103",
+    "specialRequests": "zied",
+    "selectedPacks": [],
+    "totalAmountEUR": 310,
+    "createdAt": "2026-09-22T20:16:07.774Z",
+    "status": "confirmed"
+  },
+  {
+    "id": "BK-2577",
+    "serviceId": "a1",
+    "serviceTitle": "Suite Diamant Noir | Spa Privatif",
+    "therapistName": "Conciergerie Privée Crystal Spa",
+    "date": "2026-09-22 → 2026-09-23 (1 nuit(s))",
+    "timeSlot": "Arrivée dès 17h (ou 15h avec Pack Confort)",
+    "guestName": "kl,kk,l",
+    "guestEmail": "aaaa@exemple",
+    "guestPhone": "04231232013213",
+    "notes": "Voyageurs: 2. Options: Pack Romance (+49€), Pack Prestige (+79€), Pack Love (+59€), Pack Confort (+29€). eazezaaez",
+    "totalAmount": 706,
+    "createdAt": "2026-09-21T20:56:03.550Z"
+  },
+  {
+    "id": "BK-6875",
+    "serviceId": "appartement-a1",
+    "serviceTitle": "Appartement A1 - Black Edition Suite",
+    "therapistName": "Private Concierge Manager",
+    "date": "2026-09-22 to 2026-09-25 (3 Nights)",
+    "timeSlot": "Check-in 15:00",
+    "guestName": "Jabeur Mohamed Zied",
+    "guestEmail": "ziedjaber18@gmail.com",
+    "guestPhone": "+21628150013",
+    "notes": "Guests: 2. 12:00",
+    "totalAmount": 1660,
+    "createdAt": "2026-09-21T20:08:05.780Z"
+  },
+  {
+    "id": "BK-6591",
+    "serviceId": "appartement-a1",
+    "serviceTitle": "Appartement A1 - Black Edition Suite",
+    "therapistName": "Private Concierge Manager",
+    "date": "2026-09-21 to 2026-09-24 (3 Nights)",
+    "timeSlot": "Check-in 15:00",
+    "guestName": "Jabeur Mohamed Zied",
+    "guestEmail": "ziedjaber18@gmail.com",
+    "guestPhone": "+21628150013",
+    "notes": "Guests: 3. ",
+    "totalAmount": 1590,
+    "createdAt": "2026-09-20T21:04:12.768Z"
+  },
+  {
+    "id": "BK-9821",
+    "serviceId": "crystal-quartz-massage",
+    "serviceTitle": "Crystal Quartz & Warm Stone Massage",
+    "therapistName": "Elena Vance",
+    "date": "2026-09-25",
+    "timeSlot": "14:00",
+    "guestName": "Victoria Howard",
+    "guestEmail": "victoria@example.com",
+    "guestPhone": "+1 (555) 234-5678",
+    "notes": "Prefers lavender oil and firm shoulder focus.",
+    "totalAmount": 240,
+    "createdAt": "2026-09-18T10:15:00.000Z"
+  }
+]
