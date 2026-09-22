@@ -96,7 +96,7 @@ export default function SuiteSignatureDetail({
     },
     a3: {
       mainTitle: language === 'fr' ? 'Jacuzzi & Sauna Privatifs 24h/24' : 'Private 24/7 Jacuzzi & Sauna',
-      mainDesc: language === 'fr' ? 'Bassin balnéo chauffé • TV panoramique face au bain & sauna finlandais' : 'Heated hydro spa • Panoramic TV facing the tub & Finnish sauna',
+      mainDesc: language === 'fr' ? 'Bassin spa chauffé • TV panoramique face au bain & sauna finlandais' : 'Heated spa • Panoramic TV facing the tub & Finnish sauna',
       detail1Title: language === 'fr' ? 'Chambre Cocon Romantique' : 'Romantic Cocoon Bedroom',
       detail1Desc: language === 'fr' ? 'Literie haut de gamme Queen Size, ambiance tamisée et calme absolu' : 'Premium Queen Size bedding, ambient mood lighting & calm',
       detail2Title: language === 'fr' ? 'Salon Séjour Confort & Écran Connecté' : 'Comfort Lounge & Connected TV',

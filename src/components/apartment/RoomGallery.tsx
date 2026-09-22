@@ -65,7 +65,7 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
 
   const categoriesA1 = [
     { id: 'all', label: language === 'fr' ? 'Toutes les Perspectives' : 'All Perspectives' },
-    { id: 'jacuzzi', label: language === 'fr' ? 'Jacuzzi Balnéo' : 'Balneo Jacuzzi' },
+    { id: 'jacuzzi', label: language === 'fr' ? 'Jacuzzi Spa' : 'Spa Jacuzzi' },
     { id: 'chambre', label: language === 'fr' ? 'Chambre Master' : 'Master Bedroom' },
     { id: 'salon', label: language === 'fr' ? 'Salon Cinéma' : 'Cinema Salon' },
     { id: 'cuisine', label: language === 'fr' ? 'Cuisine Équipée' : 'Full Kitchen' },

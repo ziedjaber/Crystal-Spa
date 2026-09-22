@@ -46,8 +46,8 @@ export const SUITES_DATA: SuiteItem[] = [
   },
   {
     id: 'diamant-noir',
-    title: 'Suite Diamant Noir & Balnéothérapie',
-    titleEn: 'Black Diamond Suite & Balneotherapy',
+    title: 'Suite Diamant Noir & Spa Privatif',
+    titleEn: 'Black Diamond Suite & Private Spa',
     location: 'Avenue Montaigne, Paris 8ème',
     price: 490,
     area: '85 m²',
@@ -60,8 +60,8 @@ export const SUITES_DATA: SuiteItem[] = [
     image: '/a1/Jacuzzi.png',
     badge: 'Suite Signature Paris',
     badgeEn: 'Paris Signature Suite',
-    tags: ['Balnéo XXL 300 jets', 'Sauna Finlandais Cèdre', 'Champagne Chanoine', 'Cheminée Ambiance'],
-    tagsEn: ['XXL Hydro 300 Jets', 'Cedar Finnish Sauna', 'Chanoine Champagne', 'Mood Fireplace'],
+    tags: ['Jacuzzi XXL Privatif', 'Sauna Finlandais Cèdre', 'Champagne Chanoine', 'Cheminée Ambiance'],
+    tagsEn: ['Private XXL Jacuzzi', 'Cedar Finnish Sauna', 'Chanoine Champagne', 'Mood Fireplace'],
     featured: true,
   },
   {

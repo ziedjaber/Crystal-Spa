@@ -566,7 +566,7 @@ export const ROOM_IMAGES_A3: RoomImage[] = [
     category: 'jacuzzi',
     categoryLabel: 'JACUZZI',
     src: '/a3/Jacuzzi.png',
-    description: 'Bassin balnéo chauffé sous plafond étoilé en fibre optique.',
+    description: 'Bassin spa chauffé sous plafond étoilé en fibre optique.',
   },
   {
     id: 'a3-jacuzzi-1',
