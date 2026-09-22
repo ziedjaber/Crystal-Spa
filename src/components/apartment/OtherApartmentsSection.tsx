@@ -26,8 +26,8 @@ export default function OtherApartmentsSection({
   if (otherApartments.length === 0) return null;
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-24 bg-[#0e0e0e] border-t border-white/5" id="autres-suites">
-      <div className="max-w-7xl mx-auto flex flex-col gap-12">
+    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 bg-[#0e0e0e] border-t border-white/5" id="autres-suites">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

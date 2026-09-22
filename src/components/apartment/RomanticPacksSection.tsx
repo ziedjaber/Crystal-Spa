@@ -131,8 +131,8 @@ export default function RomanticPacksSection({
   const { language } = useLanguage();
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-20 bg-[#0e0e0e]" id="packs-romantiques">
-      <div className="max-w-7xl mx-auto flex flex-col gap-14">
+    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-20 bg-[#0e0e0e]" id="packs-romantiques">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         
         {/* Header */}
         <div className="text-center flex flex-col items-center gap-3 max-w-3xl mx-auto">

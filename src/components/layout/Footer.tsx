@@ -21,7 +21,7 @@ export default function Footer() {
 
   return (
     <footer className="w-full bg-[#0e0e0e] text-[#d0c5af] border-t border-white/5">
-      <div className="w-full px-6 md:px-12 lg:px-24 pt-16 sm:pt-20 pb-12">
+      <div className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 pt-12 sm:pt-20 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
           
           {/* Brand Info */}

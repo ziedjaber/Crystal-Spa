@@ -65,8 +65,8 @@ export default function ConciergeContact() {
   };
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-24 bg-[#131313] border-t border-white/5" id="conciergerie-contact">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
+    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 bg-[#131313] border-t border-white/5" id="conciergerie-contact">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 sm:gap-16 items-center">
         
         {/* Contact Info Left */}
         <div className="lg:w-5/12 flex flex-col gap-6">

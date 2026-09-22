@@ -371,44 +371,44 @@ export default function SuiteTopGallery({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8"
+            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-3 sm:p-8"
           >
             {/* Lightbox Header */}
-            <div className="flex items-center justify-between gap-4 z-20">
-              <div className="flex items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-xs">
+            <div className="flex items-center justify-between gap-3 z-20 pb-2">
+              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] sm:text-xs shrink-0">
                   {currentImage.categoryLabel}
                 </span>
-                <span className="text-sm sm:text-base font-serif text-white font-medium">
+                <span className="text-xs sm:text-base font-serif text-white font-medium truncate max-w-[160px] sm:max-w-md">
                   {currentImage.title}
                 </span>
               </div>
 
-              <div className="flex items-center gap-3">
-                <span className="text-xs text-[#d0c5af] font-mono">
+              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                <span className="text-[11px] sm:text-xs text-[#d0c5af] font-mono">
                   {currentIndex + 1} / {totalImages}
                 </span>
                 <button
                   onClick={() => setLightboxOpen(false)}
-                  className="p-2.5 rounded-full bg-white/10 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] transition-colors cursor-pointer"
+                  className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] transition-colors cursor-pointer"
                   aria-label="Fermer"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
               </div>
             </div>
 
             {/* Main Stage with Navigation Arrows */}
-            <div className="relative flex-grow flex items-center justify-center py-4 my-auto">
+            <div className="relative flex-grow flex items-center justify-center py-2 sm:py-4 my-auto">
               <button
                 onClick={handlePrev}
-                className="absolute left-2 sm:left-6 z-30 p-3 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
+                className="absolute left-1 sm:left-6 z-30 p-2 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
                 aria-label="Précédent"
               >
-                <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+                <ChevronLeft className="w-5 h-5 sm:w-8 sm:h-8" />
               </button>
 
-              <div className="relative w-full h-[60vh] sm:h-[70vh] max-w-6xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+              <div className="relative w-full h-[52vh] sm:h-[70vh] max-w-6xl mx-auto rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
                 <AnimatePresence initial={false} custom={direction}>
                   <motion.div
                     key={currentIndex}
@@ -433,26 +433,25 @@ export default function SuiteTopGallery({
 
               <button
                 onClick={handleNext}
-                className="absolute right-2 sm:right-6 z-30 p-3 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
+                className="absolute right-1 sm:right-6 z-30 p-2 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
                 aria-label="Suivant"
               >
-                <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+                <ChevronRight className="w-5 h-5 sm:w-8 sm:h-8" />
               </button>
             </div>
 
             {/* Lightbox Footer Thumbnail Strip */}
-            <div className="w-full max-w-4xl mx-auto overflow-x-auto pb-2 scrollbar-none z-20">
-              <div className="flex items-center justify-center gap-2 sm:gap-3 min-w-max mx-auto">
+            <div className="w-full max-w-4xl mx-auto overflow-x-auto pb-1 scrollbar-none z-20">
+              <div className="flex items-center justify-center gap-1.5 sm:gap-3 min-w-max mx-auto px-2">
                 {images.map((img, idx) => (
                   <button
                     key={img.id || idx}
                     onClick={() => handleSelect(idx)}
-                    className={`relative rounded-lg overflow-hidden cursor-pointer transition-all ${
+                    className={`relative rounded-md sm:rounded-lg overflow-hidden cursor-pointer transition-all w-12 h-9 sm:w-[70px] sm:h-[48px] shrink-0 ${
                       idx === currentIndex
-                        ? 'ring-2 ring-[#f2ca50] scale-110 opacity-100'
+                        ? 'ring-2 ring-[#f2ca50] scale-105 opacity-100'
                         : 'opacity-50 hover:opacity-80'
                     }`}
-                    style={{ width: '70px', height: '48px' }}
                   >
                     <Image
                       src={img.src}

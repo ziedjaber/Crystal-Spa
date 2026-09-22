@@ -31,9 +31,9 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
   };
 
   return (
-    <section className="relative z-30 px-6 md:px-12 lg:px-24 -mt-14 w-full">
-      <div className="max-w-6xl mx-auto rounded-xl bg-[#201f1f]/95 backdrop-blur-2xl shadow-[0_24px_50px_rgba(0,0,0,0.7)] p-6 lg:p-8 border border-[#f2ca50]/20 transition-all duration-500 hover:border-[#f2ca50]/40">
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 items-end" id="reservation-bar">
+    <section className="relative z-30 px-3.5 sm:px-6 md:px-12 lg:px-24 -mt-6 sm:-mt-10 lg:-mt-14 w-full">
+      <div className="max-w-6xl mx-auto rounded-2xl sm:rounded-xl bg-[#201f1f]/95 backdrop-blur-2xl shadow-[0_24px_50px_rgba(0,0,0,0.7)] p-4 sm:p-6 lg:p-8 border border-[#f2ca50]/20 transition-all duration-500 hover:border-[#f2ca50]/40">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5 sm:gap-5 items-end" id="reservation-bar">
           
           {/* Suite Choice */}
           <div className="flex flex-col gap-1.5">

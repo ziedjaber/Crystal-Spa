@@ -55,7 +55,7 @@ export default function LocationAccessSection({
 
   return (
     <section
-      className="relative w-full py-24 px-6 md:px-12 lg:px-24 bg-[#131313] border-t border-white/5 overflow-hidden"
+      className="relative w-full py-16 sm:py-24 px-3.5 sm:px-6 md:px-12 lg:px-24 bg-[#131313] border-t border-white/5 overflow-hidden"
       id="localisation-section"
     >
       {/* Subtle Background Glow */}
@@ -159,7 +159,7 @@ export default function LocationAccessSection({
             <div className="absolute inset-0 z-10 cursor-default" aria-hidden="true" />
 
             {/* Map Bottom Information Ribbon */}
-            <div className="absolute bottom-4 left-4 right-4 bg-[#131313]/95 backdrop-blur-xl p-4 rounded-2xl border border-white/10 flex items-center justify-between gap-3 shadow-xl z-20">
+            <div className="absolute bottom-2.5 left-2.5 right-2.5 sm:bottom-4 sm:left-4 sm:right-4 bg-[#131313]/95 backdrop-blur-xl p-3 sm:p-4 rounded-xl sm:rounded-2xl border border-white/10 flex items-center justify-between gap-3 shadow-xl z-20">
               <div className="flex items-center gap-3">
                 <div className="p-2.5 rounded-xl bg-[#f2ca50]/20 text-[#f2ca50] border border-[#f2ca50]/30 shrink-0">
                   <MapPin className="w-5 h-5" />
@@ -293,25 +293,25 @@ export default function LocationAccessSection({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-5xl h-[85vh] bg-[#1c1b1b] rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col"
+              className="relative w-full max-w-5xl h-[88vh] sm:h-[85vh] bg-[#1c1b1b] rounded-2xl sm:rounded-3xl overflow-hidden border border-white/10 shadow-2xl flex flex-col"
             >
               {/* Modal Top Bar */}
-              <div className="p-4 sm:p-5 bg-[#131313] border-b border-white/10 flex items-center justify-between z-10">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#131313] border border-white flex items-center justify-center text-white">
-                    <Home className="w-4 h-4 fill-white text-white" />
+              <div className="p-3 sm:p-5 bg-[#131313] border-b border-white/10 flex items-center justify-between gap-2 z-10">
+                <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                  <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#131313] border border-white flex items-center justify-center text-white shrink-0">
+                    <Home className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
                   </div>
-                  <div>
-                    <h3 className="font-serif text-base sm:text-lg text-white font-semibold">
+                  <div className="min-w-0">
+                    <h3 className="font-serif text-sm sm:text-lg text-white font-semibold truncate max-w-[160px] sm:max-w-none">
                       {locationTitle}
                     </h3>
-                    <p className="text-xs text-[#f2ca50]">
+                    <p className="text-[11px] sm:text-xs text-[#f2ca50] truncate max-w-[160px] sm:max-w-none">
                       {aptTitle} • 76140 Le Petit-Quevilly
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
                   <a
                     href={directionsUrl}
                     target="_blank"

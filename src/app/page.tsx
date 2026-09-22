@@ -231,16 +231,16 @@ function MainContent() {
       {/* Booking Modal Overlay */}
       <AnimatePresence>
         {bookingModalOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-[#090909]/90 backdrop-blur-2xl overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2.5 sm:p-6 bg-[#090909]/90 backdrop-blur-2xl overflow-y-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl my-auto"
+              className="relative w-full max-w-4xl my-auto py-2 sm:py-0"
             >
               <button
                 onClick={() => setBookingModalOpen(false)}
-                className="absolute top-4 right-4 z-30 p-2.5 rounded-full bg-[#1c1b1b] border border-[#f2ca50]/30 text-[#e5e2e1] hover:text-[#f2ca50] transition-colors cursor-pointer shadow-lg"
+                className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 z-40 p-2 sm:p-2.5 rounded-full bg-[#1c1b1b]/90 backdrop-blur-md border border-[#f2ca50]/30 text-[#e5e2e1] hover:text-[#f2ca50] transition-colors cursor-pointer shadow-lg"
                 aria-label="Fermer"
               >
                 <X className="w-5 h-5" />

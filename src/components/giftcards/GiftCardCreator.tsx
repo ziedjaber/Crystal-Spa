@@ -61,7 +61,7 @@ export default function GiftCardCreator() {
                 <label className="block text-xs font-bold text-teal-300 uppercase tracking-wider mb-2">
                   1. Select Voucher Value
                 </label>
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                   {[150, 250, 500, 1000].map((val) => (
                     <button
                       type="button"
@@ -84,7 +84,7 @@ export default function GiftCardCreator() {
                 <label className="block text-xs font-bold text-teal-300 uppercase tracking-wider mb-2">
                   2. Voucher Aesthetic Theme
                 </label>
-                <div className="grid grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3">
                   <button
                     type="button"
                     onClick={() => setTheme('gold')}

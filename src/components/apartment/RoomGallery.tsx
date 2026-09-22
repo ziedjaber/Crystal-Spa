@@ -225,12 +225,23 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
                   {img.description}
                 </p>
               </div>
-
-              <div className="absolute top-2.5 right-2.5 w-7 h-7 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <Maximize2 className="w-3.5 h-3.5 text-[#f2ca50]" />
-              </div>
             </div>
           ))}
+        </div>
+
+        {/* Bottom Booking Trigger */}
+        <div className="text-center pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-[#d0c5af] font-light">
+            {language === 'fr'
+              ? 'Toutes les photos sont certifiées 100% fidèles à l’appartement réel.'
+              : 'All photos are 100% genuine and verified.'}
+          </p>
+          <a
+            href="#reservation-bar"
+            className="px-6 py-2.5 rounded-lg bg-[#2a2a2a] hover:bg-[#353534] text-[#f2ca50] text-xs font-bold uppercase tracking-wider transition-colors border border-[#f2ca50]/20"
+          >
+            {language === 'fr' ? 'Réserver cette ambiance' : 'Book this atmosphere'}
+          </a>
         </div>
 
       </div>
@@ -243,32 +254,32 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setActiveImageIndex(null)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-8"
           >
             {/* Close Button */}
             <button
               onClick={() => setActiveImageIndex(null)}
-              className="absolute top-6 right-6 z-50 p-3 rounded-full bg-[#1c1b1b] border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
+              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b] border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
               aria-label="Fermer"
             >
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
 
             {/* Navigation Buttons */}
             <button
               onClick={handlePrev}
-              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
+              className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
               aria-label="Précédent"
             >
-              <ChevronLeft className="w-7 h-7" />
+              <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
             </button>
 
             <button
               onClick={handleNext}
-              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
+              className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
               aria-label="Suivant"
             >
-              <ChevronRight className="w-7 h-7" />
+              <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
             </button>
 
             {/* Modal Image & Caption */}
@@ -276,7 +287,7 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
               onClick={(e) => e.stopPropagation()}
               className="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center"
             >
-              <div className="relative w-full h-[65vh] rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+              <div className="relative w-full h-[52vh] sm:h-[65vh] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
                 <Image
                   src={filteredImages[activeImageIndex].src}
                   alt={filteredImages[activeImageIndex].title}

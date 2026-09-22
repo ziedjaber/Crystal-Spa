@@ -113,8 +113,8 @@ export default function SuiteSignatureDetail({
   }[aptKey];
 
   return (
-    <section className="w-full bg-[#0e0e0e] py-20 px-6 md:px-12 lg:px-24" id="suite-signature">
-      <div className="max-w-7xl mx-auto flex flex-col gap-14">
+    <section className="w-full bg-[#0e0e0e] py-16 sm:py-20 px-3.5 sm:px-6 md:px-12 lg:px-24" id="suite-signature">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         
         {/* Header */}
         <div className="flex flex-col gap-2">
@@ -290,8 +290,8 @@ export default function SuiteSignatureDetail({
           </div>
 
           {/* Interactive Direct Booking Calculator */}
-          <div className="lg:col-span-5 rounded-xl bg-[#1c1b1b] p-6 sm:p-8 flex flex-col gap-6 shadow-2xl border border-[#f2ca50]/30">
-            <div className="flex items-baseline justify-between border-b border-white/5 pb-4">
+          <div className="lg:col-span-5 rounded-2xl sm:rounded-xl bg-[#1c1b1b] p-4 sm:p-8 flex flex-col gap-5 sm:gap-6 shadow-2xl border border-[#f2ca50]/30">
+            <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-white/5 pb-4">
               <div>
                 <span className="text-[10px] font-bold uppercase text-[#f2ca50] tracking-widest">
                   {language === 'fr' ? 'Réservation Directe Meilleur Prix' : 'Direct Booking Best Rate'}
@@ -301,7 +301,7 @@ export default function SuiteSignatureDetail({
                 </h4>
                 <p className="text-[11px] text-[#c9c6bf]">{currentSuite.location}</p>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <span className="font-serif text-2xl sm:text-3xl text-[#f2ca50] font-bold">
                   {currentSuite.price} €
                 </span>

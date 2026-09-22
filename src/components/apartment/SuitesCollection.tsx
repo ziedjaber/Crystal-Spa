@@ -133,8 +133,8 @@ export default function SuitesCollection({
   const { language, t } = useLanguage();
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-20" id="suites-collection">
-      <div className="max-w-7xl mx-auto flex flex-col gap-14">
+    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-20" id="suites-collection">
+      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

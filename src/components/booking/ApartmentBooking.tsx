@@ -217,7 +217,7 @@ export default function ApartmentBooking({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-6 sm:p-10 text-[#e5e2e1] relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-4 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
       
       {/* Step Indicator */}
       {step < 4 && (
@@ -349,7 +349,7 @@ export default function ApartmentBooking({
             </div>
 
             {/* Summary Box */}
-            <div className="rounded-xl bg-[#101010] p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+            <div className="rounded-xl bg-[#101010] p-4 sm:p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs">
               <div>
                 <span className="text-[#99907c] block">{language === 'fr' ? 'DURÉE DU SÉJOUR' : 'STAY DURATION'}</span>
                 <span className="font-bold text-sm text-white">{calculateNights()} {language === 'fr' ? 'Nuit(s)' : 'Night(s)'}</span>
@@ -358,7 +358,7 @@ export default function ApartmentBooking({
                 <span className="text-[#99907c] block">{language === 'fr' ? 'TARIF DIRECT EN LIGNE' : 'DIRECT NIGHTLY RATE'}</span>
                 <span className="font-bold text-sm text-white">{currentApartment.pricePerNightEUR} € / {language === 'fr' ? 'nuit' : 'night'}</span>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <span className="text-[#99907c] block">{language === 'fr' ? 'SOUS-TOTAL HÉBERGEMENT' : 'SUBTOTAL'}</span>
                 <span className="font-serif text-2xl font-bold text-[#f2ca50]">
                   {calculateNights() * currentApartment.pricePerNightEUR} €
@@ -383,7 +383,7 @@ export default function ApartmentBooking({
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="px-7 py-3.5 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg"
               >
                 <span>{language === 'fr' ? 'Étape Suivante : Options & Packs' : 'Next: Add-on Packs'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -468,12 +468,12 @@ export default function ApartmentBooking({
             </div>
 
             {/* Pricing Recap Box */}
-            <div className="rounded-xl bg-[#101010] p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs">
+            <div className="rounded-xl bg-[#101010] p-4 sm:p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs">
               <div>
                 <span className="text-[#99907c] block">{language === 'fr' ? 'OPTIONS SÉLECTIONNÉES' : 'SELECTED ADD-ONS'}</span>
                 <span className="font-bold text-sm text-white">+{calculatePacksTotal()} €</span>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <span className="text-[#99907c] block">{language === 'fr' ? 'TOTAL DU SÉJOUR' : 'TOTAL STAY PRICE'}</span>
                 <span className="font-serif text-3xl font-bold text-[#f2ca50]">
                   {calculateTotal()} €
@@ -482,11 +482,11 @@ export default function ApartmentBooking({
             </div>
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between items-center pt-4 border-t border-white/5">
+            <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-between items-stretch sm:items-center pt-4 border-t border-white/5">
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className="px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+                className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>{language === 'fr' ? 'Retour aux Dates' : 'Back to Dates'}</span>
@@ -495,7 +495,7 @@ export default function ApartmentBooking({
               <button
                 type="button"
                 onClick={() => setStep(3)}
-                className="px-7 py-3.5 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-lg"
+                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg"
               >
                 <span>{language === 'fr' ? 'Étape Suivante : Vos Coordonnées' : 'Next: Your Details'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -622,11 +622,11 @@ export default function ApartmentBooking({
               </div>
 
               {/* Action Buttons */}
-              <div className="flex justify-between items-center pt-4 border-t border-white/5">
+              <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-between items-stretch sm:items-center pt-4 border-t border-white/5">
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className="px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors"
+                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
                 >
                   <ArrowLeft className="w-4 h-4" />
                   <span>{language === 'fr' ? 'Retour aux Packs' : 'Back to Packs'}</span>
@@ -635,7 +635,7 @@ export default function ApartmentBooking({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="px-8 py-4 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-widest luxury-shimmer-btn flex items-center gap-2 transition-all cursor-pointer shadow-xl disabled:opacity-50"
+                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-widest luxury-shimmer-btn flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xl disabled:opacity-50"
                 >
                   {loading ? (
                     <span>{language === 'fr' ? 'Validation en cours...' : 'Processing...'}</span>

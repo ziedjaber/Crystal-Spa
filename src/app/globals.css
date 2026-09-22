@@ -46,11 +46,17 @@
   --font-display: var(--font-outfit), sans-serif;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
 body {
   background-color: #131313;
   color: #e5e2e1;
   font-family: var(--font-jakarta), sans-serif;
-  overflow-x: hidden;
   selection-background-color: #d4af37;
   selection-color: #3c2f00;
 }

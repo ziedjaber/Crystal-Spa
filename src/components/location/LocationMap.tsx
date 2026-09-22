@@ -74,27 +74,27 @@ export default function LocationMap() {
           </div>
 
           {/* Location Selector Tabs */}
-          <div className="flex items-center gap-2 bg-[#1c1b1b] p-1.5 rounded-xl border border-white/10">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 bg-[#1c1b1b] p-1.5 rounded-xl border border-white/10 w-full sm:w-auto">
             <button
               onClick={() => setActiveApt('a2')}
-              className={`px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2 ${
                 activeApt === 'a2'
                   ? 'bg-[#d4af37] text-[#3c2f00] shadow-md'
                   : 'text-[#B8B8B8] hover:text-white'
               }`}
             >
-              <MapPin className="w-4 h-4" />
+              <MapPin className="w-4 h-4 shrink-0" />
               <span>Appartement 2 : Rouen / Normandie</span>
             </button>
             <button
               onClick={() => setActiveApt('a1')}
-              className={`px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-2 ${
+              className={`px-4 py-2.5 rounded-lg text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center sm:justify-start gap-2 ${
                 activeApt === 'a1'
                   ? 'bg-[#d4af37] text-[#3c2f00] shadow-md'
                   : 'text-[#B8B8B8] hover:text-white'
               }`}
             >
-              <MapPin className="w-4 h-4" />
+              <MapPin className="w-4 h-4 shrink-0" />
               <span>Appartement 1 : Paris 8e</span>
             </button>
           </div>

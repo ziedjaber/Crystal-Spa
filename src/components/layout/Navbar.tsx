@@ -54,7 +54,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
             : 'bg-[#131313]/70 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] py-4'
         }`}
       >
-        <div className="h-14 w-full px-6 md:px-12 lg:px-24 flex items-center justify-between">
+        <div className="h-14 w-full px-3.5 sm:px-6 md:px-12 lg:px-24 flex items-center justify-between">
           
           {/* Logo & Brand */}
           <Link href="/" className="flex items-center gap-3 group cursor-pointer" aria-label="Crystal Spa Accueil">
@@ -94,10 +94,10 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
           </nav>
 
           {/* Actions on right */}
-          <div className="flex items-center gap-4 sm:gap-5">
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-5">
             
-            {/* Language Switcher with USA and France Flags */}
-            <div className="flex items-center gap-1.5 p-1 rounded-lg bg-[#1c1b1b] border border-white/10 shadow-inner">
+            {/* Language Switcher with USA and France Flags (Hidden on mobile < sm, available in mobile drawer) */}
+            <div className="hidden sm:flex items-center gap-1.5 p-1 rounded-lg bg-[#1c1b1b] border border-white/10 shadow-inner">
               {/* French Button */}
               <button
                 type="button"
@@ -171,7 +171,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="xl:hidden fixed top-16 left-0 right-0 z-40 bg-[#0e0e0e]/98 backdrop-blur-2xl border-b border-white/10 shadow-2xl px-6 py-8"
+            className="xl:hidden fixed top-16 left-0 right-0 z-40 bg-[#0e0e0e]/98 backdrop-blur-2xl border-b border-white/10 shadow-2xl px-5 sm:px-6 py-6 sm:py-8 max-h-[calc(100vh-4.5rem)] overflow-y-auto"
           >
             <div className="flex flex-col space-y-4">
               {/* Language Switcher in Mobile Drawer */}
