@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   keywords: ["crystal spa", "suite spa privative", "jacuzzi privatif", "sauna privatif", "séjour romantique luxe", "spa paris"],
   openGraph: {
     title: "Crystal Spa – Suite Spa Privative de Luxe",
-    description: "Écrin d'exception & bien-être intime. Jacuzzi privatif et sauna.",
+    description: "Suites spa privatives haut de gamme avec jacuzzi privatif et sauna.",
     images: ["/a1/Jacuzzi.png"],
   },
 };

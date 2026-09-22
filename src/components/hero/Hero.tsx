@@ -107,15 +107,6 @@ export default function Hero({ onReserveNow }: HeroProps) {
 
       {/* Central Content */}
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center mt-12">
-        
-        {/* Eyebrow Pill */}
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#1c1b1b]/80 backdrop-blur-md border border-[#f2ca50]/30 mb-8 shadow-lg shadow-[#000000]/40">
-          <span className="w-2 h-2 rounded-full bg-[#f2ca50] animate-pulse" />
-          <span className="text-[11px] sm:text-xs uppercase font-bold tracking-[0.25em] text-[#f2ca50]">
-            {t('hero.eyebrow')}
-          </span>
-        </div>
-
         {/* Title */}
         <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#e5e2e1] font-extrabold tracking-tight leading-[1.05] mb-6 drop-shadow-2xl">
           {t('hero.title.part1')} <br className="hidden sm:inline" />

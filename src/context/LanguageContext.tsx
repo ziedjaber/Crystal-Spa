@@ -63,8 +63,8 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.book': 'Réserver',
 
     // Hero
-    'hero.eyebrow': "Écrin d'Exception & Bien-Être Intime",
-    'hero.badge': "Écrin d'Exception & Bien-Être Intime",
+    'hero.eyebrow': '',
+    'hero.badge': '',
     'hero.title.part1': "L'art du luxe intime",
     'hero.title.part2': "lâcher-prise absolu",
     'hero.title.pre': "L'art du luxe intime et du",
@@ -178,8 +178,8 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'nav.book': 'Book',
 
     // Hero
-    'hero.eyebrow': 'Exclusive Sanctuary & Intimate Wellness',
-    'hero.badge': 'Exclusive Sanctuary & Intimate Wellness',
+    'hero.eyebrow': '',
+    'hero.badge': '',
     'hero.title.part1': 'The art of intimate luxury and',
     'hero.title.part2': 'pure relaxation',
     'hero.title.pre': 'The art of intimate luxury and pure',
