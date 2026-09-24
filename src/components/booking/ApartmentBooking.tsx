@@ -198,28 +198,58 @@ export default function ApartmentBooking({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-4 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#151414] border border-[#f2ca50]/30 shadow-[0_20px_70px_rgba(0,0,0,0.8)] p-5 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
       
+      {/* Brand & Guarantee Header */}
+      <div className="mb-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-5 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="w-11 h-11 rounded-full bg-[#1c1a17] border border-[#f2ca50]/40 flex items-center justify-center p-2 shadow-[0_0_15px_rgba(242,202,80,0.25)] shrink-0">
+            <img
+              src="/logo.png"
+              alt="Crystal Spa"
+              className="w-full h-full object-contain filter drop-shadow"
+            />
+          </div>
+          <div>
+            <div className="flex items-center gap-2">
+              <span className="font-serif text-sm sm:text-base font-bold text-[#f2ca50] tracking-[0.2em] uppercase">
+                CRYSTAL SPA
+              </span>
+              <span className="text-[10px] font-bold text-[#22c55e] bg-[#22c55e]/15 px-2 py-0.5 rounded-full border border-[#22c55e]/30">
+                Direct Best Rate
+              </span>
+            </div>
+            <span className="text-[11px] text-[#99907c] block">
+              {language === 'fr' ? 'Sanctuaire Spa Privatif • Réservation Directe Garantie' : 'Private Spa Sanctuary • Guaranteed Direct Booking'}
+            </span>
+          </div>
+        </div>
 
+        <div className="flex items-center gap-2 text-xs text-[#d0c5af] bg-[#1a1918] px-3.5 py-1.5 rounded-xl border border-white/5 w-fit">
+          <ShieldCheck className="w-4 h-4 text-[#22c55e]" />
+          <span>{language === 'fr' ? 'Garantie Meilleur Tarif • Sans Frais' : 'Best Price Guarantee • 0 Fees'}</span>
+        </div>
+      </div>
 
       {/* Step Indicator */}
       {step < 4 && (
-        <div className="mb-8 border-b border-white/5 pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs uppercase tracking-wider text-[#d0c5af]">
-          <div className="flex items-center gap-2">
+        <div className="mb-8 flex flex-col gap-2">
+          <div className="flex justify-between items-center text-xs uppercase tracking-wider text-[#d0c5af]">
             <span className="text-[#f2ca50] font-bold">
               {language === 'fr' ? `ÉTAPE ${step} SUR 3` : `STEP ${step} OF 3`}
             </span>
-            <span>•</span>
             <span className="text-white font-medium">
-              {step === 1 && (language === 'fr' ? 'Suite & Dates du Séjour' : 'Suite & Dates')}
-              {step === 2 && (language === 'fr' ? 'Packs Romantiques & Add-ons' : 'Romantic Add-on Packs')}
-              {step === 3 && (language === 'fr' ? 'Coordonnées & Confirmation' : 'Guest Details & Confirmation')}
+              {step === 1 && (language === 'fr' ? '1. Suite & Dates du Séjour' : '1. Suite & Dates')}
+              {step === 2 && (language === 'fr' ? '2. Packs Romantiques & Add-ons' : '2. Romantic Add-on Packs')}
+              {step === 3 && (language === 'fr' ? '3. Coordonnées & Confirmation' : '3. Guest Details & Confirmation')}
             </span>
           </div>
-
-          <div className="flex items-center gap-1 text-[11px] text-[#22c55e]">
-            <ShieldCheck className="w-3.5 h-3.5" />
-            <span>{language === 'fr' ? 'Réservation Directe Sécurisée' : 'Secure Direct Booking'}</span>
+          {/* Progress Bar */}
+          <div className="w-full h-1.5 rounded-full bg-white/10 overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#d4af37] to-[#f2ca50] transition-all duration-500 rounded-full"
+              style={{ width: `${(step / 3) * 100}%` }}
+            />
           </div>
         </div>
       )}
@@ -237,19 +267,19 @@ export default function ApartmentBooking({
           >
             <div>
               <span className="text-[11px] font-bold text-[#f2ca50] uppercase tracking-widest block mb-1">
-                {language === 'fr' ? 'Réservation Directe Sans Frais' : 'Direct Booking Zero Commission'}
+                {language === 'fr' ? 'Étape 1 sur 3' : 'Step 1 of 3'}
               </span>
               <h2 className="font-serif text-2xl sm:text-4xl text-[#e5e2e1]">
                 {language === 'fr' ? 'Choisissez Votre Suite & Vos Dates' : 'Select Your Suite & Stay Dates'}
               </h2>
             </div>
 
-            {/* Suite Selector Buttons */}
-            <div className="flex flex-col gap-2">
+            {/* Suite Selector Cards with Images */}
+            <div className="flex flex-col gap-2.5">
               <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
-                {language === 'fr' ? 'Hébergement Spa Privatif' : 'Private Spa Suite'}
+                {language === 'fr' ? 'Sélectionnez Votre Logement Spa Privatif' : 'Select Your Private Spa Sanctuary'}
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
                 {FEATURED_APARTMENTS.map((apt) => {
                   const isAptSelected = selectedAptId === apt.id;
                   return (
@@ -257,27 +287,49 @@ export default function ApartmentBooking({
                       key={apt.id}
                       type="button"
                       onClick={() => setSelectedAptId(apt.id)}
-                      className={`p-4 rounded-xl text-left flex flex-col justify-between gap-3 transition-all cursor-pointer border ${
+                      className={`group rounded-2xl overflow-hidden text-left flex flex-col justify-between transition-all cursor-pointer border relative ${
                         isAptSelected
-                          ? 'bg-[#252219] border-[#f2ca50] shadow-[0_0_20px_rgba(242,202,80,0.15)]'
-                          : 'bg-[#1e1d1d] border-white/5 hover:border-[#f2ca50]/30'
+                          ? 'bg-[#221f17] border-[#f2ca50] shadow-[0_0_25px_rgba(242,202,80,0.2)] ring-1 ring-[#f2ca50]'
+                          : 'bg-[#1a1919] border-white/5 hover:border-[#f2ca50]/40'
                       }`}
                     >
-                      <div className="flex items-start justify-between gap-1">
-                        <span className="font-serif text-sm sm:text-base font-semibold text-white leading-snug">
-                          {apt.title}
+                      {/* Apartment Thumbnail */}
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-black/40">
+                        <img
+                          src={apt.image}
+                          alt={apt.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+                        <span className="absolute top-2 left-2 text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-black/70 text-[#f2ca50] border border-[#f2ca50]/30 backdrop-blur-sm">
+                          {apt.badge}
                         </span>
                         {isAptSelected && (
-                          <span className="w-2 h-2 rounded-full bg-[#f2ca50] shrink-0 mt-1" />
+                          <span className="absolute top-2 right-2 w-5 h-5 rounded-full bg-[#f2ca50] text-[#3c2f00] flex items-center justify-center font-bold text-xs shadow-md">
+                            ✓
+                          </span>
                         )}
                       </div>
-                      <div className="flex items-baseline justify-between text-xs pt-2 border-t border-white/5">
-                        <span className="text-[#f2ca50] font-bold text-sm">
-                          {language === 'fr' ? 'Dès 110 €' : 'From 110 €'}
-                        </span>
-                        <span className="text-[#99907c] text-[11px] font-light">
-                          {apt.surfaceM2} m² • {apt.location.split(',')[0]}
-                        </span>
+
+                      {/* Apartment Details */}
+                      <div className="p-3.5 flex flex-col justify-between gap-2 flex-grow">
+                        <div>
+                          <span className="font-serif text-sm sm:text-base font-semibold text-white leading-snug block">
+                            {apt.title}
+                          </span>
+                          <span className="text-[11px] text-[#99907c] font-light">
+                            {apt.surfaceM2} m² • Jacuzzi Privatif 24h/24
+                          </span>
+                        </div>
+
+                        <div className="flex items-baseline justify-between pt-2 border-t border-white/5">
+                          <span className="text-[#f2ca50] font-bold text-sm">
+                            {language === 'fr' ? 'Dès 110 €' : 'From 110 €'}
+                          </span>
+                          <span className={`text-[11px] font-semibold ${isAptSelected ? 'text-[#f2ca50]' : 'text-[#d0c5af]'}`}>
+                            {isAptSelected ? (language === 'fr' ? '✓ Sélectionné' : '✓ Selected') : (language === 'fr' ? 'Choisir' : 'Select')}
+                          </span>
+                        </div>
                       </div>
                     </button>
                   );
@@ -285,112 +337,149 @@ export default function ApartmentBooking({
               </div>
             </div>
 
-            {/* Dates Grid with clickable modal triggers */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div
-                onClick={() => setIsCalendarModalOpen(true)}
-                role="button"
-                tabIndex={0}
-                className="flex flex-col gap-1.5 p-3.5 rounded-xl bg-[#101010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group"
-              >
-                <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
-                    <span>{language === 'fr' ? 'Date d’Arrivée' : 'Check-in Date'}</span>
-                  </span>
-                  <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
-                    {language === 'fr' ? 'Choisir sur l’agenda' : 'Select on calendar'}
-                  </span>
-                </label>
-                <div className="text-base font-semibold text-white flex items-center justify-between">
-                  <span>{checkInDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
-                  <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/10 px-2 py-0.5 rounded">
-                    {language === 'fr' ? 'Arrivée dès 17h' : 'From 5 PM'}
-                  </span>
+            {/* Dates & Nights Grid with Instant Stepper */}
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div
+                  onClick={() => setIsCalendarModalOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  className="flex flex-col gap-1.5 p-4 rounded-2xl bg-[#111010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group shadow-inner"
+                >
+                  <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
+                      <span>{language === 'fr' ? 'Date d’Arrivée' : 'Check-in Date'}</span>
+                    </span>
+                    <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
+                      {language === 'fr' ? 'Calendrier' : 'Calendar'}
+                    </span>
+                  </label>
+                  <div className="text-base font-semibold text-white flex items-center justify-between pt-1">
+                    <span>{checkInDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
+                    <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/15 border border-[#f2ca50]/30 px-2 py-0.5 rounded-md">
+                      {language === 'fr' ? 'Dès 17h00' : 'From 5 PM'}
+                    </span>
+                  </div>
+                </div>
+
+                <div
+                  onClick={() => setIsCalendarModalOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  className="flex flex-col gap-1.5 p-4 rounded-2xl bg-[#111010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group shadow-inner"
+                >
+                  <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
+                    <span className="flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
+                      <span>{language === 'fr' ? 'Date de Départ' : 'Check-out Date'}</span>
+                    </span>
+                    <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
+                      {language === 'fr' ? 'Calendrier' : 'Calendar'}
+                    </span>
+                  </label>
+                  <div className="text-base font-semibold text-white flex items-center justify-between pt-1">
+                    <span>{checkOutDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
+                    <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/15 border border-[#f2ca50]/30 px-2 py-0.5 rounded-md">
+                      {language === 'fr' ? 'Jusqu’à 11h00' : 'Until 11 AM'}
+                    </span>
+                  </div>
                 </div>
               </div>
 
-              <div
-                onClick={() => setIsCalendarModalOpen(true)}
-                role="button"
-                tabIndex={0}
-                className="flex flex-col gap-1.5 p-3.5 rounded-xl bg-[#101010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group"
-              >
-                <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
-                  <span className="flex items-center gap-1.5">
-                    <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
-                    <span>{language === 'fr' ? 'Date de Départ' : 'Check-out Date'}</span>
+              {/* Number of Nights Quick Stepper & Open Full Agenda Bar */}
+              <div className="p-4 rounded-2xl bg-[#1a1918] border border-[#f2ca50]/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <div className="w-9 h-9 rounded-xl bg-[#f2ca50]/15 border border-[#f2ca50]/30 flex items-center justify-center text-[#f2ca50] shrink-0">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div className="text-xs text-[#d0c5af]">
+                    <div className="text-white font-semibold flex items-center gap-2">
+                      <span>{stayPricing ? `${stayPricing.nightsCount} ${language === 'fr' ? 'nuitée(s)' : 'night(s)'}` : '1 nuit'}</span>
+                      <span className="text-[#f2ca50] font-bold font-serif text-sm">
+                        ({stayPricing.baseAmountEUR} €)
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-[#99907c]">
+                      {language === 'fr' ? 'Tarif journalier dynamique selon le jour de la semaine' : 'Dynamic daily rates by day of week'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const inD = new Date(checkInDate + 'T12:00:00');
+                      const newNights = Math.max(1, stayPricing.nightsCount - 1);
+                      inD.setDate(inD.getDate() + newNights);
+                      setCheckOutDate(inD.toISOString().split('T')[0]);
+                    }}
+                    disabled={stayPricing.nightsCount <= 1}
+                    className="w-8 h-8 rounded-lg bg-[#252424] hover:bg-[#323030] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold flex items-center justify-center transition-colors cursor-pointer"
+                    title={language === 'fr' ? 'Moins 1 nuit' : '1 less night'}
+                  >
+                    -
+                  </button>
+
+                  <span className="px-3 py-1 rounded-lg bg-[#121110] border border-white/10 text-xs font-bold text-[#f2ca50] min-w-[3rem] text-center">
+                    {stayPricing.nightsCount} {language === 'fr' ? 'nuit(s)' : 'nt(s)'}
                   </span>
-                  <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
-                    {language === 'fr' ? 'Choisir sur l’agenda' : 'Select on calendar'}
-                  </span>
-                </label>
-                <div className="text-base font-semibold text-white flex items-center justify-between">
-                  <span>{checkOutDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
-                  <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/10 px-2 py-0.5 rounded">
-                    {language === 'fr' ? 'Départ jusqu’à 11h' : 'Until 11 AM'}
-                  </span>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const inD = new Date(checkInDate + 'T12:00:00');
+                      const newNights = Math.min(30, stayPricing.nightsCount + 1);
+                      inD.setDate(inD.getDate() + newNights);
+                      setCheckOutDate(inD.toISOString().split('T')[0]);
+                    }}
+                    disabled={stayPricing.nightsCount >= 30}
+                    className="w-8 h-8 rounded-lg bg-[#252424] hover:bg-[#323030] disabled:opacity-30 disabled:cursor-not-allowed text-white font-bold flex items-center justify-center transition-colors cursor-pointer"
+                    title={language === 'fr' ? 'Plus 1 nuit' : '1 more night'}
+                  >
+                    +
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setIsCalendarModalOpen(true)}
+                    className="ml-2 px-4 py-2 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-1.5 cursor-pointer shadow-md"
+                  >
+                    <Calendar className="w-3.5 h-3.5" />
+                    <span>{language === 'fr' ? 'Agenda 2 mois' : 'Dual Calendar'}</span>
+                  </button>
                 </div>
               </div>
             </div>
 
-            {/* Prominent Modal Button */}
-            <div className="p-3.5 rounded-xl bg-[#1b1a1a] border border-[#f2ca50]/30 flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="flex items-center gap-2.5">
-                <Calendar className="w-4 h-4 text-[#f2ca50] shrink-0" />
-                <div className="text-xs text-[#d0c5af]">
-                  <span className="text-white font-semibold">
-                    {stayPricing ? `${stayPricing.nightsCount} ${language === 'fr' ? 'nuitée(s) sélectionnée(s)' : 'night(s) selected'} (${stayPricing.baseAmountEUR} €)` : ''}
-                  </span>
-                  <span className="text-[11px] text-[#99907c] block">
-                    {language === 'fr' ? 'Consultez les disponibilités sur 2 mois & ajustez le nombre de nuits' : 'View dual-month availability & adjust nights'}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setIsCalendarModalOpen(true)}
-                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{language === 'fr' ? 'Ouvrir l’agenda complet' : 'Open Full Agenda'}</span>
-              </button>
-            </div>
-
-            {/* Occupancy (Strictly 2 guests) */}
-            <div className="p-4 rounded-xl bg-[#1c1b1b] border border-white/5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <div className="flex items-center gap-3">
-                <User className="w-4 h-4 text-[#f2ca50]" />
-                <span className="text-[#d0c5af]">
-                  {language === 'fr'
-                    ? 'Capacité d’accueil : 2 personnes adultes exclusivement (sanctuaire romantique pour couple).'
-                    : 'Occupancy: strictly 2 adult guests (private romantic sanctuary for couples).'}
-                </span>
-              </div>
-              <span className="font-bold text-[#f2ca50] bg-[#f2ca50]/15 px-3 py-1 rounded-full whitespace-nowrap">
-                {language === 'fr' ? '2 Voyageurs' : '2 Guests'}
-              </span>
-            </div>
-
-            {/* Summary Box */}
-            <div className="rounded-xl bg-[#101010] p-4 sm:p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs">
+            {/* Pricing Breakdown Summary Card */}
+            <div className="rounded-2xl bg-[#100f0f] p-5 border border-white/10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 text-xs shadow-xl">
               <div>
-                <span className="text-[#99907c] block">{language === 'fr' ? 'DURÉE DU SÉJOUR' : 'STAY DURATION'}</span>
-                <span className="font-bold text-sm text-white">{stayPricing.nightsCount} {language === 'fr' ? 'Nuit(s)' : 'Night(s)'}</span>
-              </div>
-              <div>
-                <span className="text-[#99907c] block">{language === 'fr' ? 'TARIFS DU SÉJOUR' : 'STAY RATES'}</span>
-                <span className="font-bold text-sm text-white">
-                  {stayPricing.averageNightlyEUR} € / {language === 'fr' ? 'nuit (moyenne)' : 'avg night'}
+                <span className="text-[#99907c] text-[10px] uppercase font-bold tracking-widest block">
+                  {language === 'fr' ? 'GRILLE TARIFAIRE OFFICIELLE' : 'OFFICIAL NIGHTLY RATES'}
                 </span>
-                <span className="text-[10px] text-[#99907c] block">
-                  Lun-Jeu: 120€ • Ven: 169€ • Sam: 190€ • Dim: 110€
-                </span>
+                <div className="flex flex-wrap items-center gap-2 mt-1.5">
+                  <span className="px-2.5 py-1 rounded-md bg-[#1e1c19] text-[#e5e2e1] text-[11px] border border-white/5">
+                    Lun → Jeu : <strong className="text-[#f2ca50]">120 €</strong>
+                  </span>
+                  <span className="px-2.5 py-1 rounded-md bg-[#1e1c19] text-[#e5e2e1] text-[11px] border border-white/5">
+                    Vendredi : <strong className="text-[#f2ca50]">169 €</strong>
+                  </span>
+                  <span className="px-2.5 py-1 rounded-md bg-[#1e1c19] text-[#e5e2e1] text-[11px] border border-white/5">
+                    Samedi : <strong className="text-[#f2ca50]">190 €</strong>
+                  </span>
+                  <span className="px-2.5 py-1 rounded-md bg-[#1e1c19] text-[#e5e2e1] text-[11px] border border-white/5">
+                    Dimanche : <strong className="text-[#f2ca50]">110 €</strong>
+                  </span>
+                </div>
               </div>
-              <div className="text-left sm:text-right">
-                <span className="text-[#99907c] block">{language === 'fr' ? 'SOUS-TOTAL HÉBERGEMENT' : 'SUBTOTAL'}</span>
-                <span className="font-serif text-2xl font-bold text-[#f2ca50]">
+
+              <div className="text-left sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-white/5 w-full sm:w-auto">
+                <span className="text-[#99907c] text-[10px] uppercase font-bold tracking-widest block">
+                  {language === 'fr' ? 'SOUS-TOTAL HÉBERGEMENT' : 'SUBTOTAL'}
+                </span>
+                <span className="font-serif text-3xl font-bold text-[#f2ca50]">
                   {stayPricing.baseAmountEUR} €
                 </span>
               </div>
@@ -399,11 +488,11 @@ export default function ApartmentBooking({
             {/* Reassurance notes */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#99907c]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#22c55e]" />
-                <span>{language === 'fr' ? 'Caution par empreinte bancaire : 250 € (aucun débit)' : 'Deposit hold: €250 (not debited)'}</span>
+                <ShieldCheck className="w-4 h-4 text-[#22c55e]" />
+                <span>{language === 'fr' ? 'Caution par simple empreinte bancaire : 250 € (aucun débit)' : 'Deposit hold: €250 (not debited)'}</span>
               </div>
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-3.5 h-3.5 text-[#f2ca50]" />
+                <CheckCircle2 className="w-4 h-4 text-[#f2ca50]" />
                 <span>{language === 'fr' ? 'Prix tout compris : taxe de séjour & ménage inclus' : 'All-inclusive: tourist tax & cleaning included'}</span>
               </div>
             </div>
@@ -413,7 +502,7 @@ export default function ApartmentBooking({
               <button
                 type="button"
                 onClick={() => setStep(2)}
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg"
+                className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-widest luxury-shimmer-btn flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xl hover:scale-[1.02] active:scale-[0.98]"
               >
                 <span>{language === 'fr' ? 'Étape Suivante : Options & Packs' : 'Next: Add-on Packs'}</span>
                 <ArrowRight className="w-4 h-4" />

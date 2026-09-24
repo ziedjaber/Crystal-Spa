@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
-import { ArrowRight, Play, ShieldCheck, Droplets, Star } from 'lucide-react';
+import { ArrowRight, Play, ShieldCheck, Droplets, Star, Sparkles } from 'lucide-react';
 import AirbnbLogo from '@/components/ui/AirbnbLogo';
+import { motion } from 'framer-motion';
 
 interface HeroProps {
   onReserveNow?: () => void;
@@ -12,79 +13,83 @@ interface HeroProps {
 export default function Hero({ onReserveNow }: HeroProps) {
   const { language, t } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Bulletproof video loop and playback manager to ensure continuous non-stop playing
+  // Bulletproof video loop and playback manager for both desktop & mobile video elements
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
+    const videos = [desktopVideoRef.current, mobileVideoRef.current].filter(Boolean) as HTMLVideoElement[];
+    if (videos.length === 0) return;
 
-    // Enforce core autoplay & silent playback flags directly on DOM node
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.loop = true;
+    const cleanupFns: Array<() => void> = [];
 
-    const playVideo = () => {
-      if (video.paused) {
-        const promise = video.play();
-        if (promise !== undefined) {
-          promise.catch(() => {
-            // Handled gracefully if browser policy intervenes
-          });
+    videos.forEach((video) => {
+      video.muted = true;
+      video.defaultMuted = true;
+      video.playsInline = true;
+      video.loop = true;
+
+      const playVideo = () => {
+        if (video.paused) {
+          const promise = video.play();
+          if (promise !== undefined) {
+            promise.catch(() => {});
+          }
         }
-      }
-    };
+      };
 
-    // When video finishes, immediately rewind and play
-    const handleEnded = () => {
-      video.currentTime = 0;
-      playVideo();
-    };
-
-    // Edge guard: If browser pauses right at EOF before firing native loop
-    const handleTimeUpdate = () => {
-      if (video.duration && video.currentTime >= video.duration - 0.08) {
+      const handleEnded = () => {
         video.currentTime = 0;
         playVideo();
-      }
-    };
+      };
 
-    // If browser pauses the video upon reaching the end, resume immediately
-    const handlePause = () => {
-      if (document.visibilityState === 'visible') {
-        playVideo();
-      }
-    };
+      const handleTimeUpdate = () => {
+        if (video.duration && video.currentTime >= video.duration - 0.08) {
+          video.currentTime = 0;
+          playVideo();
+        }
+      };
 
-    // Resume when returning to the tab
-    const handleVisibility = () => {
-      if (document.visibilityState === 'visible') {
-        playVideo();
-      }
-    };
+      const handlePause = () => {
+        if (document.visibilityState === 'visible') {
+          playVideo();
+        }
+      };
 
-    video.addEventListener('ended', handleEnded);
-    video.addEventListener('timeupdate', handleTimeUpdate);
-    video.addEventListener('pause', handlePause);
-    document.addEventListener('visibilitychange', handleVisibility);
+      const handleVisibility = () => {
+        if (document.visibilityState === 'visible') {
+          playVideo();
+        }
+      };
 
-    // Initial playback trigger
-    playVideo();
+      video.addEventListener('ended', handleEnded);
+      video.addEventListener('timeupdate', handleTimeUpdate);
+      video.addEventListener('pause', handlePause);
+      document.addEventListener('visibilitychange', handleVisibility);
 
-    // Active watchdog to guarantee it never stays stopped or frozen
+      playVideo();
+
+      cleanupFns.push(() => {
+        video.removeEventListener('ended', handleEnded);
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+        video.removeEventListener('pause', handlePause);
+        document.removeEventListener('visibilitychange', handleVisibility);
+      });
+    });
+
     const watchdog = setInterval(() => {
-      if (document.visibilityState === 'visible' && video.paused) {
-        video.currentTime = video.currentTime >= (video.duration || 9) - 0.1 ? 0 : video.currentTime;
-        playVideo();
+      if (document.visibilityState === 'visible') {
+        videos.forEach((video) => {
+          if (video.paused && video.offsetParent !== null) {
+            video.currentTime = video.currentTime >= (video.duration || 9) - 0.1 ? 0 : video.currentTime;
+            video.play().catch(() => {});
+          }
+        });
       }
     }, 600);
 
     return () => {
-      video.removeEventListener('ended', handleEnded);
-      video.removeEventListener('timeupdate', handleTimeUpdate);
-      video.removeEventListener('pause', handlePause);
-      document.removeEventListener('visibilitychange', handleVisibility);
+      cleanupFns.forEach((fn) => fn());
       clearInterval(watchdog);
     };
   }, []);
@@ -166,28 +171,42 @@ export default function Hero({ onReserveNow }: HeroProps) {
   return (
     <section className="relative w-full min-h-[940px] flex items-center justify-center overflow-hidden -mt-20">
       
-      {/* Hero Background Video & Atmospheric Scrim (Muted, Silent, Continuous Seamless Loop) */}
+      {/* Hero Background Video & Atmospheric Scrim */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
+        {/* Desktop Video (Screen >= 768px) */}
         <video
-          ref={videoRef}
+          ref={desktopVideoRef}
           autoPlay
           loop
           muted
           playsInline
           preload="auto"
           poster="/hero/preview_video.jpg"
-          className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
+          className="hidden md:block w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
           aria-hidden="true"
-          onEnded={(e) => {
-            const v = e.currentTarget;
-            v.currentTime = 0;
-            v.play().catch(() => {});
-          }}
         >
           <source src="/hero/hero-bg.mp4" type="video/mp4" />
           <source src="/hero/hero-bg.webm" type="video/webm" />
         </video>
-        {/* Fallback image if video fails to load or on power save */}
+
+        {/* Mobile Video (Screen < 768px vertical portrait optimized) */}
+        <video
+          ref={mobileVideoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/hero/preview_mobile.jpg"
+          className="block md:hidden w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
+          aria-hidden="true"
+        >
+          <source src="/hero/hero-mobile.mp4" type="video/mp4" />
+          <source src="/hero/hero-mobile.webm" type="video/webm" />
+          <source src="/hero/video mobile.mp4" type="video/mp4" />
+        </video>
+
+        {/* Fallback image if video fails to load */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center -z-10 pointer-events-none"
           style={{ backgroundImage: "url('/hero/preview_video.jpg')" }}
@@ -204,10 +223,15 @@ export default function Hero({ onReserveNow }: HeroProps) {
         className="absolute inset-0 pointer-events-none z-10 opacity-70"
       />
 
-      {/* Central Content */}
+      {/* Central Content with Framer Motion Entrance */}
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center mt-12">
         {/* Title & Subtitle with French Luxury Haute-Couture Typography */}
-        <div className="mb-6 flex flex-col items-center">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 flex flex-col items-center"
+        >
           <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#faf8f5] font-medium tracking-tight leading-[1.08] drop-shadow-2xl">
             {t('hero.title.part1')}
           </h1>
@@ -215,18 +239,28 @@ export default function Hero({ onReserveNow }: HeroProps) {
           <p className="font-cormorant italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#f2ca50] font-normal tracking-wide mt-2 sm:mt-3 leading-snug drop-shadow-lg max-w-4xl">
             {t('hero.title.part2')}
           </p>
-        </div>
+        </motion.div>
 
         {/* Description */}
-        <p className="text-base sm:text-lg text-[#c9c6bf] max-w-2xl font-light mb-8 leading-relaxed">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          className="text-base sm:text-lg text-[#c9c6bf] max-w-2xl font-light mb-8 leading-relaxed"
+        >
           {t('hero.desc')}
-        </p>
+        </motion.p>
 
         {/* CTAs */}
-        <div className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col sm:flex-row items-center gap-4 w-full justify-center"
+        >
           <a
             href="#suites-collection"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#d4af37] text-[#3c2f00] font-bold text-xs tracking-widest uppercase luxury-shimmer-btn cursor-pointer"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#d4af37] text-[#3c2f00] font-bold text-xs tracking-widest uppercase luxury-shimmer-btn cursor-pointer shadow-xl shadow-[#d4af37]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
           >
             <span>{t('hero.cta.book')}</span>
             <ArrowRight className="w-4 h-4" />
@@ -234,15 +268,20 @@ export default function Hero({ onReserveNow }: HeroProps) {
 
           <a
             href="#packs-romantiques"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#2a2a2a]/60 backdrop-blur-md text-[#e5e2e1] font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:bg-[#353534] hover:text-[#f2ca50] hover:border hover:border-[#f2ca50]/40"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#2a2a2a]/70 backdrop-blur-md text-[#e5e2e1] font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:bg-[#353534] hover:text-[#f2ca50] hover:border hover:border-[#f2ca50]/50 hover:scale-[1.02] active:scale-[0.98]"
           >
             <Play className="w-4 h-4 text-[#f2ca50]" />
             <span>{language === 'fr' ? 'Découvrir nos Packs' : 'Explore Romantic Packs'}</span>
           </a>
-        </div>
+        </motion.div>
 
         {/* Micro Trust Badges */}
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-[#d0c5af] text-xs font-medium">
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10 flex flex-wrap items-center justify-center gap-6 text-[#d0c5af] text-xs font-medium"
+        >
           <div className="flex items-center gap-1.5 transition-transform duration-300 hover:scale-105">
             <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
             <span>{t('hero.trust.privacy')}</span>
@@ -253,14 +292,14 @@ export default function Hero({ onReserveNow }: HeroProps) {
             <span>{t('hero.trust.water')}</span>
           </div>
           <div className="hidden sm:inline opacity-30">•</div>
-          <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 bg-[#1c1b1b]/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/5">
+          <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 bg-[#1c1b1b]/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
             <AirbnbLogo className="w-4 h-4 text-[#FF385C]" />
             <div className="flex items-center gap-1.5">
               <Star className="w-3.5 h-3.5 text-[#f2ca50] fill-current" />
               <span>{t('hero.trust.rating')}</span>
             </div>
           </div>
-        </div>
+        </motion.div>
 
       </div>
     </section>
