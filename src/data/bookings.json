@@ -1,5 +1,45 @@
 [
   {
+    "id": "BK-8095",
+    "apartmentId": "a1",
+    "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",
+    "checkInDate": "2026-10-02",
+    "checkOutDate": "2026-10-04",
+    "nightsCount": 2,
+    "guestsCount": 2,
+    "guestName": "Camille &amp; Antoine",
+    "guestEmail": "camille@example.com",
+    "guestPhone": "0629866909",
+    "specialRequests": "",
+    "selectedPacks": [
+      {
+        "id": "pack-romance",
+        "name": "Pack Romance",
+        "priceEUR": 29
+      }
+    ],
+    "totalAmountEUR": 388,
+    "createdAt": "2026-09-24T16:11:53.400Z",
+    "status": "confirmed"
+  },
+  {
+    "id": "BK-9438",
+    "apartmentId": "a1",
+    "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",
+    "checkInDate": "2026-10-02",
+    "checkOutDate": "2026-10-04",
+    "nightsCount": 2,
+    "guestsCount": 2,
+    "guestName": "Test Client",
+    "guestEmail": "client@example.com",
+    "guestPhone": "0629866909",
+    "specialRequests": "",
+    "selectedPacks": [],
+    "totalAmountEUR": 359,
+    "createdAt": "2026-09-24T16:09:08.410Z",
+    "status": "confirmed"
+  },
+  {
     "id": "BK-1006",
     "apartmentId": "a1",
     "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",

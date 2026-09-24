@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import ProgressiveImage from '@/components/ui/ProgressiveImage';
 import { motion } from 'framer-motion';
 import { Star, MapPin, Users, BedDouble, Calendar, Sparkles, Check } from 'lucide-react';
 import { FEATURED_APARTMENTS, ApartmentItem } from '@/data/apartment';
@@ -33,7 +34,7 @@ export default function ApartmentGrid({ onReserveSuite }: ApartmentGridProps) {
               
               {/* Image Header (28px rounded top) */}
               <div className="relative h-64 w-full overflow-hidden rounded-t-[24px]">
-                <Image
+                <ProgressiveImage
                   src={item.image}
                   alt={item.title}
                   fill
@@ -49,7 +50,7 @@ export default function ApartmentGrid({ onReserveSuite }: ApartmentGridProps) {
 
                 {/* Price Pill */}
                 <div className="absolute bottom-4 right-4 z-10 bg-[#090909]/90 backdrop-blur-md px-3.5 py-1.5 border border-[#D4AF37]/40 text-xs font-bold text-[#F5D97A]">
-                  {item.pricePerNightEUR}€ <span className="text-[10px] text-[#B8B8B8] font-normal">/ nuit</span>
+                  Dès {item.pricePerNightEUR}€ <span className="text-[10px] text-[#B8B8B8] font-normal">/ nuit</span>
                 </div>
               </div>
 

@@ -127,6 +127,9 @@ export default function OtherApartmentsSection({
 
                   {/* Price Row */}
                   <div className="flex items-baseline gap-2 pt-2">
+                    <span className="text-xs text-[#d0c5af] font-light">
+                      {language === 'fr' ? 'Dès' : 'From'}
+                    </span>
                     <span className="font-serif text-2xl sm:text-3xl font-bold text-[#f2ca50]">
                       {apt.pricePerNightEUR} €
                     </span>

@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, ArrowRight, Heart, Gem, Sparkles, Maximize2 } from 'lucide-react';
+import { ArrowRight, Heart, Gem, Sparkles } from 'lucide-react';
 import { ROOM_IMAGES_A1, ROOM_IMAGES_A2, ROOM_IMAGES_A3, RoomImage } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
+import AirbnbGalleryModal from '@/components/gallery/AirbnbGalleryModal';
+import ProgressiveImage from '@/components/ui/ProgressiveImage';
 
 interface RoomGalleryProps {
   apartmentId?: string;
@@ -70,6 +70,7 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
     { id: 'salon', label: language === 'fr' ? 'Salon Cinéma' : 'Cinema Salon' },
     { id: 'cuisine', label: language === 'fr' ? 'Cuisine Équipée' : 'Full Kitchen' },
     { id: 'salle-de-bain', label: language === 'fr' ? 'Salle de Bain' : 'Bathroom' },
+    { id: 'cour', label: language === 'fr' ? 'Cour & Accès Privé' : 'Private Courtyard' },
   ];
 
   const activeCategories =
@@ -82,22 +83,6 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
   const filteredImages = imagesList.filter((img) => {
     return activeCategory === 'all' || img.category === activeCategory;
   });
-
-  const handleNext = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (activeImageIndex !== null) {
-      setActiveImageIndex((activeImageIndex + 1) % filteredImages.length);
-    }
-  };
-
-  const handlePrev = (e?: React.MouseEvent) => {
-    e?.stopPropagation();
-    if (activeImageIndex !== null) {
-      setActiveImageIndex(
-        (activeImageIndex - 1 + filteredImages.length) % filteredImages.length
-      );
-    }
-  };
 
   return (
     <section className="w-full bg-[#0e0e0e] py-20 px-6 md:px-12 lg:px-24" id="galerie-section">
@@ -206,15 +191,15 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
               onClick={() => setActiveImageIndex(index)}
               className="group relative aspect-[4/3] rounded-xl overflow-hidden bg-[#1c1b1b] cursor-pointer border border-white/5 hover:border-[#f2ca50]/40 transition-all duration-500 hover:-translate-y-1 shadow-lg"
             >
-              <Image
+              <ProgressiveImage
                 src={img.src}
                 alt={img.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform duration-700 group-hover:scale-105"
-                loading="lazy"
+                rounded="rounded-xl"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4 z-10 pointer-events-none">
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#f2ca50] mb-0.5">
                   {img.categoryLabel}
                 </span>
@@ -246,73 +231,20 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
 
       </div>
 
-      {/* Fullscreen Lightbox Modal */}
-      <AnimatePresence>
-        {activeImageIndex !== null && filteredImages[activeImageIndex] && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveImageIndex(null)}
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-8"
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setActiveImageIndex(null)}
-              className="absolute top-3 right-3 sm:top-6 sm:right-6 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b] border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
-              aria-label="Fermer"
-            >
-              <X className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-
-            {/* Navigation Buttons */}
-            <button
-              onClick={handlePrev}
-              className="absolute left-2 sm:left-8 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
-              aria-label="Précédent"
-            >
-              <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
-            </button>
-
-            <button
-              onClick={handleNext}
-              className="absolute right-2 sm:right-8 top-1/2 -translate-y-1/2 z-50 p-2 sm:p-3 rounded-full bg-[#1c1b1b]/80 border border-white/10 text-white hover:text-[#f2ca50] transition-colors cursor-pointer"
-              aria-label="Suivant"
-            >
-              <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
-            </button>
-
-            {/* Modal Image & Caption */}
-            <div
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-5xl w-full max-h-[85vh] flex flex-col items-center"
-            >
-              <div className="relative w-full h-[52vh] sm:h-[65vh] rounded-xl sm:rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
-                <Image
-                  src={filteredImages[activeImageIndex].src}
-                  alt={filteredImages[activeImageIndex].title}
-                  fill
-                  sizes="100vw"
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
-
-              <div className="mt-4 text-center max-w-xl">
-                <span className="text-xs font-bold text-[#f2ca50] uppercase tracking-widest">
-                  {filteredImages[activeImageIndex].categoryLabel} • {activeImageIndex + 1} / {filteredImages.length}
-                </span>
-                <h3 className="font-serif text-xl text-[#e5e2e1] mt-1">
-                  {filteredImages[activeImageIndex].title}
-                </h3>
-                <p className="text-xs text-[#d0c5af] font-light mt-1">
-                  {filteredImages[activeImageIndex].description}
-                </p>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* Airbnb-Grade Fullscreen Interactive Gallery Modal */}
+      <AirbnbGalleryModal
+        images={filteredImages}
+        initialIndex={activeImageIndex ?? 0}
+        isOpen={activeImageIndex !== null}
+        onClose={() => setActiveImageIndex(null)}
+        apartmentTitle={
+          selectedApartment === 'a2'
+            ? 'Apt 2: La Vie est Belle'
+            : selectedApartment === 'a3'
+            ? 'Apt 3: Le Rêve Luxe'
+            : 'Apt 1: YOU AND ME'
+        }
+      />
     </section>
   );
 }

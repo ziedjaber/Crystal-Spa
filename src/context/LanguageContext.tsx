@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-export type Language = 'fr' | 'en';
+export type Language = 'fr' | 'en' | 'es';
 
 export interface LanguageContextType {
   language: Language;
@@ -51,9 +51,21 @@ export const UsaFlag = ({ className = 'w-5 h-3.5' }: { className?: string }) => 
   </svg>
 );
 
+export const SpainFlag = ({ className = 'w-5 h-3.5' }: { className?: string }) => (
+  <svg
+    className={`${className} rounded-[2px] overflow-hidden shadow-sm inline-block shrink-0 align-middle`}
+    viewBox="0 0 3 2"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <rect width="3" height="2" fill="#AA151B" />
+    <rect width="3" height="1" y="0.5" fill="#F1BF00" />
+    <circle cx="0.9" cy="1" r="0.25" fill="#AA151B" opacity="0.85" />
+  </svg>
+);
+
 const TRANSLATIONS: Record<Language, Record<string, string>> = {
   fr: {
-    // Navigation (Single Word per Section)
+    // Navigation
     'nav.suites': 'Suites',
     'nav.experience': 'Expérience',
     'nav.galerie': 'Galerie',
@@ -66,11 +78,11 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.eyebrow': '',
     'hero.badge': '',
     'hero.title.part1': "L'art du luxe intime",
-    'hero.title.part2': "lâcher-prise absolu",
-    'hero.title.pre': "L'art du luxe intime et du",
-    'hero.title.accent': "lâcher-prise",
-    'hero.title.post': "absolu",
-    'hero.desc': "Découvrez nos suites spa privatives haut de gamme avec jacuzzi privatif XXL, sauna finlandais en cèdre et services d’hôtellerie 5 étoiles en totale discrétion.",
+    'hero.title.part2': "Quand le bien-être devient une histoire à deux.",
+    'hero.title.pre': "L'art du luxe intime",
+    'hero.title.accent': "Quand le bien-être",
+    'hero.title.post': "devient une histoire à deux.",
+    'hero.desc': "Découvrez nos suites spa privatives haut de gamme avec jacuzzi privatif, sauna finlandais en cèdre et services d’hôtellerie 5 étoiles en totale discrétion.",
     'hero.cta.book': 'Réserver votre Suite',
     'hero.cta.virtual': 'Visite Immersive 360°',
     'hero.trust.privacy': '100% Privatif & Secret',
@@ -85,7 +97,7 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'booking.pack_label': 'Formule & Packs',
     'booking.pack_romantic': 'Nuitée Romantique Prestige',
     'booking.pack_dayspa': 'Escapade Day Spa (4h)',
-    'booking.pack_champagne': 'Pack Champagne & Caviar',
+    'booking.pack_romance': 'Pack Romance (Pétales & Bougies)',
     'booking.pack_duo': 'Rituel Massage Duo (60 min)',
     'booking.search': 'Vérifier la Disponibilité',
 
@@ -168,7 +180,7 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'footer.rights': 'Tous droits réservés.',
   },
   en: {
-    // Navigation (Single Word per Section)
+    // Navigation
     'nav.suites': 'Suites',
     'nav.experience': 'Experience',
     'nav.galerie': 'Gallery',
@@ -180,12 +192,12 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     // Hero
     'hero.eyebrow': '',
     'hero.badge': '',
-    'hero.title.part1': 'The art of intimate luxury and',
-    'hero.title.part2': 'pure relaxation',
-    'hero.title.pre': 'The art of intimate luxury and pure',
-    'hero.title.accent': 'relaxation',
-    'hero.title.post': 'at its finest',
-    'hero.desc': 'Discover our premium private spa suites with XXL private hot tub, Canadian cedar sauna, and 5-star discreet hospitality.',
+    'hero.title.part1': 'The art of intimate luxury',
+    'hero.title.part2': 'When wellness becomes a story for two.',
+    'hero.title.pre': 'The art of intimate luxury',
+    'hero.title.accent': 'When wellness becomes',
+    'hero.title.post': 'a story for two.',
+    'hero.desc': 'Discover our premium private spa suites with private hot tub, Canadian cedar sauna, and 5-star discreet hospitality.',
     'hero.cta.book': 'Book Your Suite',
     'hero.cta.virtual': '360° Virtual Tour',
     'hero.trust.privacy': '100% Private & Discreet',
@@ -200,7 +212,7 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'booking.pack_label': 'Packages & Extras',
     'booking.pack_romantic': 'Prestige Romantic Night',
     'booking.pack_dayspa': 'Day Spa Escape (4h)',
-    'booking.pack_champagne': 'Champagne & Caviar Pack',
+    'booking.pack_romance': 'Romance Pack (Petals & Candles)',
     'booking.pack_duo': 'Duo Massage Ritual (60 min)',
     'booking.search': 'Check Availability',
 
@@ -282,6 +294,121 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'footer.join': 'Join the Circle',
     'footer.rights': 'All rights reserved.',
   },
+  es: {
+    // Navigation
+    'nav.suites': 'Suites',
+    'nav.experience': 'Experiencia',
+    'nav.galerie': 'Galería',
+    'nav.equipements': 'Servicios',
+    'nav.reviews': 'Opiniones',
+    'nav.contact': 'Contacto',
+    'nav.book': 'Reservar',
+
+    // Hero
+    'hero.eyebrow': '',
+    'hero.badge': '',
+    'hero.title.part1': 'El arte del lujo íntimo',
+    'hero.title.part2': 'Cuando el bienestar se convierte en una historia de dos.',
+    'hero.title.pre': 'El arte del lujo íntimo',
+    'hero.title.accent': 'Cuando el bienestar',
+    'hero.title.post': 'se convierte en una historia de dos.',
+    'hero.desc': 'Descubra nuestras suites spa privadas de alta gama con jacuzzi privado, sauna finlandesa de cedro y servicios hoteleros de 5 estrellas con total discreción.',
+    'hero.cta.book': 'Reservar su Suite',
+    'hero.cta.virtual': 'Tour Virtual 360°',
+    'hero.trust.privacy': '100% Privado y Confidencial',
+    'hero.trust.water': 'Agua filtrada y esterilizada',
+    'hero.trust.rating': 'Puntuación de Excelencia 4.97/5 (Airbnb Top 10%)',
+
+    // Booking Bar
+    'booking.suite_label': 'Suite Preferida',
+    'booking.all_suites': 'Todas nuestras Suites Spa',
+    'booking.checkin': 'Llegada (A partir de las 17:00)',
+    'booking.checkout': 'Salida (Hasta las 11:00)',
+    'booking.pack_label': 'Fórmulas y Packs',
+    'booking.pack_romantic': 'Noche Romántica Prestige',
+    'booking.pack_dayspa': 'Escapada Day Spa (4h)',
+    'booking.pack_romance': 'Pack Romance (Pétalos y Velas)',
+    'booking.pack_duo': 'Ritual Masaje en Pareja (60 min)',
+    'booking.search': 'Ver Disponibilidad',
+
+    // Switcher Apartment
+    'apt.switch.title': 'Nuestros Destinos Exclusivos',
+    'apt.switch.sub': 'Elija el refugio privado para su próxima escapada romántica',
+    'apt.switch.a1': 'Apartamento 1: Suite Diamant Noir (París 8)',
+    'apt.switch.a2': 'Apartamento 2: La Vie est Belle (Ruan / Le Petit-Quevilly)',
+    'apt.guest_fav': 'Favorito de los viajeros • Top 10% Airbnb',
+    'apt.host_info': 'Anfitrión: Laïd (Crystal Spa) • Responde en menos de 1 hora',
+
+    // Suites Collection
+    'suites.badge': 'Colección Alta Hospitalidad',
+    'suites.title': 'Nuestros Refugios Exclusivos',
+    'suites.desc': 'Cada suite está diseñada como un santuario sensorial independiente: acceso autónomo con cerradura de código, insonorización de estudio e instalaciones de spa privadas.',
+    'suites.available': 'Suites disponibles',
+    'suites.per_night': '/ noche',
+    'suites.reserve': 'Reservar esta suite',
+    'suites.select': 'Seleccionar',
+
+    // Equipments
+    'equip.title': 'Equipamiento Incluido y Servicios (42)',
+    'equip.desc': 'Todo ha sido meticulosamente preparado para ofrecerle una estancia sin compromisos.',
+    'equip.bath': 'Baño y Cuidado Personal',
+    'equip.bedroom': 'Dormitorio y Ropa de Cama',
+    'equip.entertainment': 'Entretenimiento y Tecnología',
+    'equip.climate': 'Climatización y Calefacción',
+    'equip.security': 'Seguridad y Discreción',
+    'equip.kitchen': 'Cocina y Café Gourmet',
+    'equip.parking': 'Aparcamiento y Jacuzzi 24h',
+    'equip.services': 'Servicios y Entrada Autónoma',
+
+    // Gallery
+    'gallery.badge': 'Galería de Atmósfera',
+    'gallery.title': 'El Instante Capturado en Imágenes',
+    'gallery.all': 'Todas las Perspectivas',
+    'gallery.jacuzzi': 'Jacuzzi Spa',
+    'gallery.chambre': 'Dormitorio Principal',
+    'gallery.salon': 'Salón Acogedor',
+    'gallery.cuisine': 'Cocina y Bar',
+    'gallery.salle_de_bain': 'Baño y Ducha',
+    'gallery.cour': 'Patio y Acceso Privado',
+    'gallery.theme': 'Habitación Temática',
+
+    // Reviews
+    'reviews.badge': 'Testimonios y Distinciones Airbnb',
+    'reviews.title': 'El Elogio de Nuestros Huéspedes',
+    'reviews.sub': 'Puntuación Media 4.97 / 5 en Airbnb (37+ reseñas verificadas)',
+    'reviews.cleanliness': 'Limpieza',
+    'reviews.accuracy': 'Precisión',
+    'reviews.checkin': 'Llegada',
+    'reviews.communication': 'Comunicación',
+    'reviews.location': 'Ubicación',
+    'reviews.value': 'Calidad-Precio',
+
+    // Location
+    'loc.badge': 'Ubicación Privilegiada',
+    'loc.title': 'Un Santuario Secreto a las Puertas de Ruan',
+    'loc.desc': 'Situado en Le Petit-Quevilly, muy cerca del centro histórico de Ruan y del transporte. La dirección exacta y su código privado se envían 2 horas antes de su llegada con total discreción.',
+    'loc.parking_free': 'Aparcamiento gratuito en el recinto y en la calle',
+    'loc.transport': 'A pocos minutos del centro de Ruan y de la estación',
+    'loc.quiet': 'Zona residencial tranquila con entrada autónoma 24h',
+
+    // FAQ
+    'faq.badge': 'Transparencia y Serenidad',
+    'faq.title': 'Preguntas Frecuentes',
+    'faq.desc': 'Todas las respuestas para preparar su estancia de relax con total confianza.',
+
+    // Contact
+    'contact.badge': 'Conserjería Privada 24/7',
+    'contact.title': '¿Una Petición a Medida?',
+    'contact.desc': 'Nuestro equipo está a su entera disposición para organizar una llegada discreta, preparar una sorpresa romántica o reservar una estancia personalizada.',
+    'contact.whatsapp': 'Contactar por WhatsApp VIP',
+    'contact.submit': 'Enviar Solicitud Confidencial',
+
+    // Footer
+    'footer.slogan': 'El arte del relax en un refugio excepcional.',
+    'footer.circle': 'Círculo VIP y Ofertas',
+    'footer.join': 'Unirse al Círculo',
+    'footer.rights': 'Todos los derechos reservados.',
+  },
 };
 
 const LanguageContext = createContext<LanguageContextType>({
@@ -295,7 +422,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   useEffect(() => {
     const saved = localStorage.getItem('crystal_spa_lang') as Language;
-    if (saved === 'fr' || saved === 'en') {
+    if (saved === 'fr' || saved === 'en' || saved === 'es') {
       setLanguageState(saved);
     }
   }, []);

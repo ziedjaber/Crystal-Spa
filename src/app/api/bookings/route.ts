@@ -74,7 +74,11 @@ export async function POST(request: NextRequest) {
       guestName: rawBody.guestName || '',
       guestEmail: rawBody.guestEmail || '',
       guestPhone: rawBody.guestPhone || '',
-      selectedPacks: Array.isArray(rawBody.selectedPacks) ? rawBody.selectedPacks : [],
+      selectedPacks: Array.isArray(rawBody.selectedPacks)
+        ? rawBody.selectedPacks
+        : Array.isArray(rawBody.packs)
+        ? rawBody.packs
+        : [],
       specialRequests: rawBody.specialRequests || rawBody.notes || '',
     };
 

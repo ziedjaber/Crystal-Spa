@@ -16,7 +16,7 @@ import {
   User,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useLanguage, FranceFlag, UsaFlag } from '@/context/LanguageContext';
+import { useLanguage, FranceFlag, UsaFlag, SpainFlag } from '@/context/LanguageContext';
 
 interface NavbarProps {
   onOpenBookingModal?: () => void;
@@ -129,6 +129,22 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
                 <UsaFlag className="w-4 h-3" />
                 <span className="text-[10px] font-bold">EN</span>
               </button>
+
+              {/* Spanish Button */}
+              <button
+                type="button"
+                onClick={() => setLanguage('es')}
+                className={`flex items-center gap-1.5 px-2 py-1 rounded transition-all cursor-pointer ${
+                  language === 'es'
+                    ? 'bg-[#f2ca50] text-[#3c2f00] font-bold shadow-sm'
+                    : 'text-[#d0c5af] hover:text-white opacity-70 hover:opacity-100'
+                }`}
+                title="Español"
+                aria-label="Cambiar a Español"
+              >
+                <SpainFlag className="w-4 h-3" />
+                <span className="text-[10px] font-bold">ES</span>
+              </button>
             </div>
 
             {/* Reserve CTA button */}
@@ -201,6 +217,17 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
                   >
                     <UsaFlag className="w-4 h-3" />
                     <span>EN</span>
+                  </button>
+                  <button
+                    onClick={() => setLanguage('es')}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded text-xs ${
+                      language === 'es'
+                        ? 'bg-[#f2ca50] text-[#3c2f00] font-bold'
+                        : 'text-[#d0c5af]'
+                    }`}
+                  >
+                    <SpainFlag className="w-4 h-3" />
+                    <span>ES</span>
                   </button>
                 </div>
               </div>

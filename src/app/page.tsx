@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ProgressiveImage from '@/components/ui/ProgressiveImage';
 import TopAnnouncementBar from '@/components/layout/TopAnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
@@ -23,6 +24,7 @@ import { LanguageProvider, useLanguage } from '@/context/LanguageContext';
 import { FEATURED_APARTMENTS, ApartmentItem } from '@/data/apartment';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, Star, MapPin, Users, Shield, Sparkles, ChevronRight, CheckCircle2 } from 'lucide-react';
+import AirbnbLogo from '@/components/ui/AirbnbLogo';
 
 function MainContent() {
   const { language, t } = useLanguage();
@@ -60,10 +62,7 @@ function MainContent() {
           }}
         />
 
-        {/* 3. Direct Booking Advantages (Meilleur Prix Garanti, Conciergerie, Caution Empreinte, Tout Compris) */}
-        <DirectBookingPerks />
-
-        {/* 4. The 3 Distinct Apartments Showcase Cards */}
+        {/* 3. The 3 Distinct Apartments Showcase Cards */}
         <section className="w-full px-6 md:px-12 lg:px-24 py-24 bg-[#131313]" id="suites-collection">
           <div className="max-w-7xl mx-auto flex flex-col gap-16">
             
@@ -103,13 +102,13 @@ function MainContent() {
                 >
                   {/* Photo Banner with Zoom */}
                   <div className="relative aspect-[16/11] overflow-hidden zoom-container">
-                    <Image
+                    <ProgressiveImage
                       src={apt.image}
                       alt={apt.title}
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      loading="lazy"
+                      rounded="rounded-none"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#1c1b1b] via-transparent to-black/40 pointer-events-none" />
 
@@ -120,8 +119,9 @@ function MainContent() {
                       </span>
                     </div>
 
-                    <div className="absolute top-4 right-4 bg-[#2a2a2a]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#f2ca50] border border-white/10">
-                      <Star className="w-3.5 h-3.5 fill-current" />
+                    <div className="absolute top-4 right-4 bg-[#2a2a2a]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#f2ca50] border border-white/10 shadow-lg">
+                      <AirbnbLogo className="w-3.5 h-3.5 text-[#FF385C]" />
+                      <Star className="w-3 h-3 fill-current text-[#f2ca50]" />
                       <span className="text-white font-bold">{apt.rating}</span>
                       <span className="text-[#d0c5af] font-light">({apt.reviewsCount})</span>
                     </div>
@@ -142,6 +142,9 @@ function MainContent() {
                       </div>
 
                       <div className="flex items-baseline gap-2">
+                        <span className="text-xs text-[#d0c5af] font-light">
+                          {language === 'fr' ? 'Dès' : 'From'}
+                        </span>
                         <span className="font-serif text-2xl font-bold text-[#f2ca50]">
                           {apt.pricePerNightEUR} €
                         </span>
@@ -194,11 +197,14 @@ function MainContent() {
           </div>
         </section>
 
-        {/* 5. 4 Romantic Add-on Packs (Pack Confort, Pack Romance, Pack Love, Pack Prestige) */}
+        {/* 4. Romantic Add-on Packs */}
         <RomanticPacksSection
           onSelectPack={(packId) => openBookingWithPack(packId)}
           selectedPackId={selectedPackId}
         />
+
+        {/* 5. Direct Booking Guarantees (Pourquoi Réserver en Direct sur ce Site ?) */}
+        <DirectBookingPerks />
 
         {/* 6. Complete 42 Amenities List */}
         <ApartmentEquipments />

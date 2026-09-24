@@ -69,7 +69,7 @@ export default function ApartmentHero({ onBookNow }: ApartmentHeroProps) {
             className="btn-gold-primary text-xs font-bold uppercase tracking-wider"
           >
             <Calendar className="w-4 h-4" />
-            RÉSERVER APPARTEMENT A1 • {suiteA1.pricePerNightEUR}€ / NUIT
+            RÉSERVER APPARTEMENT A1 • DÈS {suiteA1.pricePerNightEUR}€ / NUIT
           </button>
 
           <a

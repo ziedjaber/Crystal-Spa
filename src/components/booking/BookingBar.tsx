@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { Bed, Calendar, CalendarCheck, Sparkles, ChevronDown, Search } from 'lucide-react';
+import BookingCalendar from '@/components/booking/BookingCalendar';
 
 interface BookingBarProps {
   onSearch?: (criteria: any) => void;
@@ -18,6 +19,7 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
     new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
   );
   const [formula, setFormula] = useState(t('booking.pack_romantic'));
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,42 +66,54 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
           {/* Date Check-in */}
           <div className="flex flex-col gap-1.5">
             <label
-              htmlFor="booking-bar-checkin"
-              className="text-[11px] font-bold text-[#f2ca50] uppercase tracking-wider flex items-center gap-1.5"
+              className="text-[11px] font-bold text-[#f2ca50] uppercase tracking-wider flex items-center justify-between"
             >
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{t('booking.checkin')}</span>
+              <span className="flex items-center gap-1.5">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{t('booking.checkin')}</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsCalendarOpen(true)}
+                className="text-[10px] text-[#f2ca50] hover:underline cursor-pointer"
+              >
+                agenda
+              </button>
             </label>
-            <div className="bg-[#0e0e0e] rounded-lg border border-transparent focus-within:border-[#f2ca50]/40 transition-colors">
-              <input
-                id="booking-bar-checkin"
-                aria-label={t('booking.checkin')}
-                type="date"
-                value={checkIn}
-                onChange={(e) => setCheckIn(e.target.value)}
-                className="w-full bg-transparent text-[#e5e2e1] text-xs px-3.5 py-2.5 rounded-lg outline-none cursor-pointer"
-              />
+            <div
+              onClick={() => setIsCalendarOpen(true)}
+              role="button"
+              tabIndex={0}
+              className="bg-[#0e0e0e] rounded-lg border border-transparent hover:border-[#f2ca50]/40 transition-colors cursor-pointer flex items-center px-3.5 py-2.5 text-xs text-[#e5e2e1]"
+            >
+              <span className="truncate">{checkIn}</span>
             </div>
           </div>
 
           {/* Date Check-out */}
           <div className="flex flex-col gap-1.5">
             <label
-              htmlFor="booking-bar-checkout"
-              className="text-[11px] font-bold text-[#f2ca50] uppercase tracking-wider flex items-center gap-1.5"
+              className="text-[11px] font-bold text-[#f2ca50] uppercase tracking-wider flex items-center justify-between"
             >
-              <CalendarCheck className="w-3.5 h-3.5" />
-              <span>{t('booking.checkout')}</span>
+              <span className="flex items-center gap-1.5">
+                <CalendarCheck className="w-3.5 h-3.5" />
+                <span>{t('booking.checkout')}</span>
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsCalendarOpen(true)}
+                className="text-[10px] text-[#f2ca50] hover:underline cursor-pointer"
+              >
+                agenda
+              </button>
             </label>
-            <div className="bg-[#0e0e0e] rounded-lg border border-transparent focus-within:border-[#f2ca50]/40 transition-colors">
-              <input
-                id="booking-bar-checkout"
-                aria-label={t('booking.checkout')}
-                type="date"
-                value={checkOut}
-                onChange={(e) => setCheckOut(e.target.value)}
-                className="w-full bg-transparent text-[#e5e2e1] text-xs px-3.5 py-2.5 rounded-lg outline-none cursor-pointer"
-              />
+            <div
+              onClick={() => setIsCalendarOpen(true)}
+              role="button"
+              tabIndex={0}
+              className="bg-[#0e0e0e] rounded-lg border border-transparent hover:border-[#f2ca50]/40 transition-colors cursor-pointer flex items-center px-3.5 py-2.5 text-xs text-[#e5e2e1]"
+            >
+              <span className="truncate">{checkOut}</span>
             </div>
           </div>
 
@@ -121,9 +135,7 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
                 className="w-full bg-transparent text-[#e5e2e1] text-xs px-3.5 py-3 rounded-lg outline-none cursor-pointer appearance-none pr-8"
               >
                 <option className="bg-[#201f1f] text-[#e5e2e1]">Pack Confort (+29 €)</option>
-                <option className="bg-[#201f1f] text-[#e5e2e1]">Pack Romance (+49 €)</option>
-                <option className="bg-[#201f1f] text-[#e5e2e1]">Pack Love (+59 €)</option>
-                <option className="bg-[#201f1f] text-[#e5e2e1]">Pack Prestige (+79 €)</option>
+                <option className="bg-[#201f1f] text-[#e5e2e1]">Pack Romance (+29 €)</option>
               </select>
               <ChevronDown className="w-4 h-4 absolute right-3 top-3.5 pointer-events-none text-[#99907c]" />
             </div>
@@ -141,6 +153,19 @@ export default function BookingBar({ onSearch }: BookingBarProps) {
           </div>
 
         </form>
+
+        {/* Dual Month Calendar Modal */}
+        <BookingCalendar
+          asModal={true}
+          isOpen={isCalendarOpen}
+          onClose={() => setIsCalendarOpen(false)}
+          checkInDate={checkIn}
+          checkOutDate={checkOut}
+          onSelectDates={(newIn, newOut) => {
+            setCheckIn(newIn);
+            setCheckOut(newOut);
+          }}
+        />
       </div>
     </section>
   );

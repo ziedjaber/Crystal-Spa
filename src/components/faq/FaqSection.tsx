@@ -151,8 +151,8 @@ export default function FaqSection() {
         {/* Extra contact helper */}
         <div className="text-center text-xs text-[#99907c] font-light flex items-center justify-center gap-2">
           <span>{language === 'fr' ? 'Une autre question ? Notre conciergerie vous répond 24/7 au' : 'Another question? Contact our concierge 24/7 at'}</span>
-          <a href="tel:+33756949490" className="text-[#f2ca50] font-semibold hover:underline">
-            07 56 94 94 90
+          <a href="tel:+33629866909" className="text-[#f2ca50] font-semibold hover:underline">
+            06 29 86 69 09
           </a>
         </div>
       </div>

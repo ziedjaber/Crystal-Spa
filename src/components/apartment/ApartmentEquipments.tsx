@@ -19,6 +19,7 @@ import {
   Sparkles,
   Key,
 } from 'lucide-react';
+import AirbnbLogo from '@/components/ui/AirbnbLogo';
 
 function getAmenityIcon(iconName: string, className = "w-4 h-4") {
   switch (iconName) {
@@ -177,10 +178,14 @@ export default function ApartmentEquipments() {
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-0.5 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] uppercase tracking-wider">
-                  Airbnb Top 10%
+                <span className="px-2.5 py-0.5 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] uppercase tracking-wider inline-flex items-center gap-1.5 shadow-sm">
+                  <AirbnbLogo className="w-3.5 h-3.5 text-[#3c2f00]" />
+                  <span>Airbnb Top 10%</span>
                 </span>
-                <span className="text-xs text-[#d0c5af]">• Coup de cœur voyageurs 4.97★</span>
+                <span className="text-xs text-[#d0c5af] flex items-center gap-1">
+                  <AirbnbLogo className="w-3 h-3 text-[#FF385C]" />
+                  <span>• Coup de cœur voyageurs 4.97★</span>
+                </span>
               </div>
               <h4 className="font-serif text-lg sm:text-xl text-[#e5e2e1]">
                 {language === 'fr'

@@ -83,26 +83,26 @@ export default function ConciergeContact() {
 
             <div className="flex flex-col gap-3.5 pt-4 text-[#e5e2e1]">
               <a
-                href="tel:+33756949490"
+                href="tel:+33629866909"
                 className="flex items-center gap-3 group cursor-pointer"
               >
                 <div className="w-9 h-9 rounded-full bg-[#2a2a2a]/80 flex items-center justify-center text-[#f2ca50] transition-transform duration-300 group-hover:scale-110 shadow-md border border-[#f2ca50]/20">
                   <Phone className="w-4 h-4" />
                 </div>
                 <span className="text-sm group-hover:text-[#f2ca50] transition-colors font-light">
-                  +33 (0)7 56 94 94 90 ({language === 'fr' ? 'Ligne Directe' : 'Direct Line'})
+                  +33 (0)6 29 86 69 09 ({language === 'fr' ? 'Ligne Directe' : 'Direct Line'})
                 </span>
               </a>
 
               <a
-                href="mailto:contact@crystal-spa-privatif.com"
+                href="mailto:Crystalspa76@gmail.com"
                 className="flex items-center gap-3 group cursor-pointer"
               >
                 <div className="w-9 h-9 rounded-full bg-[#2a2a2a]/80 flex items-center justify-center text-[#f2ca50] transition-transform duration-300 group-hover:scale-110 shadow-md border border-[#f2ca50]/20">
                   <Mail className="w-4 h-4" />
                 </div>
                 <span className="text-sm group-hover:text-[#f2ca50] transition-colors font-light">
-                  contact@crystal-spa-privatif.com
+                  Crystalspa76@gmail.com
                 </span>
               </a>
             </div>
@@ -110,13 +110,13 @@ export default function ConciergeContact() {
 
           {/* WhatsApp VIP direct button */}
           <a
-            className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-lg bg-[#2a2a2a]/90 hover:bg-[#353534] text-[#f2ca50] text-xs font-bold uppercase tracking-wider transition-all luxury-shimmer-btn border border-[#f2ca50]/30 shadow-lg"
-            href="https://wa.me/33756949490"
+            className="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-lg bg-[#25D366]/20 hover:bg-[#25D366]/30 text-[#25D366] text-xs font-bold uppercase tracking-wider transition-all border border-[#25D366]/40 shadow-lg"
+            href="https://wa.me/33629866909"
             rel="noopener noreferrer"
             target="_blank"
           >
-            <MessageSquare className="w-4 h-4" />
-            <span>{t('contact.whatsapp')}</span>
+            <MessageSquare className="w-4 h-4 text-[#25D366]" />
+            <span>{t('contact.whatsapp')} (06 29 86 69 09)</span>
           </a>
         </div>
 

@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowRight, Play, ShieldCheck, Droplets, Star } from 'lucide-react';
+import AirbnbLogo from '@/components/ui/AirbnbLogo';
 
 interface HeroProps {
   onReserveNow?: () => void;
@@ -11,6 +12,82 @@ interface HeroProps {
 export default function Hero({ onReserveNow }: HeroProps) {
   const { language, t } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  // Bulletproof video loop and playback manager to ensure continuous non-stop playing
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    // Enforce core autoplay & silent playback flags directly on DOM node
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
+
+    const playVideo = () => {
+      if (video.paused) {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {
+            // Handled gracefully if browser policy intervenes
+          });
+        }
+      }
+    };
+
+    // When video finishes, immediately rewind and play
+    const handleEnded = () => {
+      video.currentTime = 0;
+      playVideo();
+    };
+
+    // Edge guard: If browser pauses right at EOF before firing native loop
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.08) {
+        video.currentTime = 0;
+        playVideo();
+      }
+    };
+
+    // If browser pauses the video upon reaching the end, resume immediately
+    const handlePause = () => {
+      if (document.visibilityState === 'visible') {
+        playVideo();
+      }
+    };
+
+    // Resume when returning to the tab
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        playVideo();
+      }
+    };
+
+    video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('pause', handlePause);
+    document.addEventListener('visibilitychange', handleVisibility);
+
+    // Initial playback trigger
+    playVideo();
+
+    // Active watchdog to guarantee it never stays stopped or frozen
+    const watchdog = setInterval(() => {
+      if (document.visibilityState === 'visible' && video.paused) {
+        video.currentTime = video.currentTime >= (video.duration || 9) - 0.1 ? 0 : video.currentTime;
+        playVideo();
+      }
+    }, 600);
+
+    return () => {
+      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('pause', handlePause);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      clearInterval(watchdog);
+    };
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -89,11 +166,33 @@ export default function Hero({ onReserveNow }: HeroProps) {
   return (
     <section className="relative w-full min-h-[940px] flex items-center justify-center overflow-hidden -mt-20">
       
-      {/* Hero Background Image & Atmospheric Scrim */}
-      <div
-        className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-1000 scale-105"
-        style={{ backgroundImage: "url('/a2/Jacuzzi.png')" }}
-      />
+      {/* Hero Background Video & Atmospheric Scrim (Muted, Silent, Continuous Seamless Loop) */}
+      <div className="absolute inset-0 w-full h-full overflow-hidden">
+        <video
+          ref={videoRef}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/hero/preview_video.jpg"
+          className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
+          aria-hidden="true"
+          onEnded={(e) => {
+            const v = e.currentTarget;
+            v.currentTime = 0;
+            v.play().catch(() => {});
+          }}
+        >
+          <source src="/hero/hero-bg.mp4" type="video/mp4" />
+          <source src="/hero/hero-bg.webm" type="video/webm" />
+        </video>
+        {/* Fallback image if video fails to load or on power save */}
+        <div
+          className="absolute inset-0 w-full h-full bg-cover bg-center -z-10 pointer-events-none"
+          style={{ backgroundImage: "url('/hero/preview_video.jpg')" }}
+        />
+      </div>
       
       {/* Layered luxury scrims */}
       <div className="absolute inset-0 scrim-4k-overlay pointer-events-none" />
@@ -107,16 +206,19 @@ export default function Hero({ onReserveNow }: HeroProps) {
 
       {/* Central Content */}
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center mt-12">
-        {/* Title */}
-        <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#e5e2e1] font-extrabold tracking-tight leading-[1.05] mb-6 drop-shadow-2xl">
-          {t('hero.title.part1')} <br className="hidden sm:inline" />
-          <span className="font-extrabold tracking-tight bg-gradient-to-r from-[#f2ca50] via-[#ffe894] to-[#d4af37] bg-clip-text text-transparent">
+        {/* Title & Subtitle with French Luxury Haute-Couture Typography */}
+        <div className="mb-6 flex flex-col items-center">
+          <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#faf8f5] font-medium tracking-tight leading-[1.08] drop-shadow-2xl">
+            {t('hero.title.part1')}
+          </h1>
+
+          <p className="font-cormorant italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#f2ca50] font-normal tracking-wide mt-2 sm:mt-3 leading-snug drop-shadow-lg max-w-4xl">
             {t('hero.title.part2')}
-          </span>
-        </h1>
+          </p>
+        </div>
 
         {/* Description */}
-        <p className="text-base sm:text-xl text-[#c9c6bf] max-w-2xl font-light mb-8 leading-relaxed">
+        <p className="text-base sm:text-lg text-[#c9c6bf] max-w-2xl font-light mb-8 leading-relaxed">
           {t('hero.desc')}
         </p>
 
@@ -151,9 +253,12 @@ export default function Hero({ onReserveNow }: HeroProps) {
             <span>{t('hero.trust.water')}</span>
           </div>
           <div className="hidden sm:inline opacity-30">•</div>
-          <div className="flex items-center gap-1.5 transition-transform duration-300 hover:scale-105">
-            <Star className="w-4 h-4 text-[#f2ca50] fill-current" />
-            <span>{t('hero.trust.rating')}</span>
+          <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 bg-[#1c1b1b]/60 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/5">
+            <AirbnbLogo className="w-4 h-4 text-[#FF385C]" />
+            <div className="flex items-center gap-1.5">
+              <Star className="w-3.5 h-3.5 text-[#f2ca50] fill-current" />
+              <span>{t('hero.trust.rating')}</span>
+            </div>
           </div>
         </div>
 

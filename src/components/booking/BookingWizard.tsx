@@ -15,10 +15,11 @@ import {
   Download,
   Copy,
   Check,
-  Plus
+  Plus,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Service, SERVICES_DATA, THERAPISTS_DATA, Therapist } from '@/data/services';
+import LuxuryLoader from '@/components/ui/LuxuryLoader';
 
 interface BookingWizardProps {
   initialService?: Service | null;
@@ -138,7 +139,24 @@ export default function BookingWizard({ initialService, onComplete }: BookingWiz
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6">
+    <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6 relative">
+      {/* Luxury Loader Overlay during confirmation */}
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-[#070707]/90 backdrop-blur-xl p-4"
+          >
+            <LuxuryLoader
+              variant="modal"
+              title="CRYSTAL SANCTUARY"
+              subtitle="Sécurisation de votre réservation d’exception..."
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
       
       {/* Step Indicator Header */}
       {step < 5 && (

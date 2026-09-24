@@ -22,24 +22,18 @@ export default function SuiteSignatureDetail({
   const { language } = useLanguage();
   const [packConfort, setPackConfort] = useState(false);
   const [packRomance, setPackRomance] = useState(false);
-  const [packLove, setPackLove] = useState(false);
-  const [packPrestige, setPackPrestige] = useState(false);
 
   const calculateTotal = () => {
     let total = currentSuite.price;
     if (packConfort) total += 29;
-    if (packRomance) total += 49;
-    if (packLove) total += 59;
-    if (packPrestige) total += 79;
+    if (packRomance) total += 29;
     return total;
   };
 
   const handleBookingClick = () => {
     const extras: string[] = [];
     if (packConfort) extras.push(language === 'fr' ? 'Pack Confort (+29€)' : 'Comfort Pack (+29€)');
-    if (packRomance) extras.push(language === 'fr' ? 'Pack Romance (+49€)' : 'Romance Pack (+49€)');
-    if (packLove) extras.push(language === 'fr' ? 'Pack Love (+59€)' : 'Love Pack (+59€)');
-    if (packPrestige) extras.push(language === 'fr' ? 'Pack Prestige (+79€)' : 'Prestige Pack (+79€)');
+    if (packRomance) extras.push(language === 'fr' ? 'Pack Romance (+29€)' : 'Romance Pack (+29€)');
 
     onConfirmBooking({
       suiteTitle: language === 'fr' ? currentSuite.title : currentSuite.titleEn,
@@ -372,49 +366,7 @@ export default function SuiteSignatureDetail({
                     </span>
                   </div>
                 </div>
-                <span className="text-xs text-[#f2ca50] font-bold">+ 49 €</span>
-              </label>
-
-              {/* Pack Love */}
-              <label className="flex items-center justify-between p-3 rounded-lg bg-[#201f1f] cursor-pointer hover:bg-[#2a2a2a] transition-all border border-transparent hover:border-[#f2ca50]/20">
-                <div className="flex items-center gap-2.5">
-                  <input
-                    type="checkbox"
-                    checked={packLove}
-                    onChange={(e) => setPackLove(e.target.checked)}
-                    className="w-4 h-4 accent-[#f2ca50] rounded cursor-pointer"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-xs text-[#e5e2e1] font-medium">
-                      {language === 'fr' ? 'Pack Love (Coup de Cœur)' : 'Love Pack (Favorite)'}
-                    </span>
-                    <span className="text-[11px] text-[#99907c]">
-                      {language === 'fr' ? 'Pack Romance + Demi Champagne & macarons' : 'Romance Pack + Half Champagne & macarons'}
-                    </span>
-                  </div>
-                </div>
-                <span className="text-xs text-[#f2ca50] font-bold">+ 59 €</span>
-              </label>
-
-              {/* Pack Prestige */}
-              <label className="flex items-center justify-between p-3 rounded-lg bg-[#201f1f] cursor-pointer hover:bg-[#2a2a2a] transition-all border border-transparent hover:border-[#f2ca50]/20">
-                <div className="flex items-center gap-2.5">
-                  <input
-                    type="checkbox"
-                    checked={packPrestige}
-                    onChange={(e) => setPackPrestige(e.target.checked)}
-                    className="w-4 h-4 accent-[#f2ca50] rounded cursor-pointer"
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-xs text-[#e5e2e1] font-medium">
-                      {language === 'fr' ? 'Pack Prestige' : 'Prestige Pack'}
-                    </span>
-                    <span className="text-[11px] text-[#99907c]">
-                      {language === 'fr' ? 'Moët & Chandon, pétales frais & départ tardif' : 'Moët & Chandon bottle, natural petals & late out'}
-                    </span>
-                  </div>
-                </div>
-                <span className="text-xs text-[#f2ca50] font-bold">+ 79 €</span>
+                <span className="text-xs text-[#f2ca50] font-bold">+ 29 €</span>
               </label>
             </div>
 

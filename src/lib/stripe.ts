@@ -1,7 +1,6 @@
 import Stripe from 'stripe';
-import { env, assertServerSecret } from './env';
-import { getApartmentBySlug, FEATURED_APARTMENTS, ROMANTIC_ADDONS_DATA } from '@/data/apartment';
-import { differenceInCalendarDays, parseISO } from 'date-fns';
+import { assertServerSecret } from './env';
+import { getApartmentBySlug, FEATURED_APARTMENTS, ROMANTIC_ADDONS_DATA, calculateStayPricing } from '@/data/apartment';
 
 /**
  * Server-Side Stripe SDK Instance
@@ -40,7 +39,8 @@ export interface BookingPriceCalculation {
  * AUTHORITATIVE SERVER-SIDE PRICING ENGINE
  * 
  * NEVER trusts prices sent from the client/browser.
- * Computes exact duration, apartment base rate, and validated addon pack prices.
+ * Computes exact duration, apartment base rate per day of week (Lun-Jeu: 120€, Ven: 169€, Sam: 190€, Dim: 110€),
+ * and validated addon pack prices.
  */
 export function calculateServerBookingPrice(params: {
   apartmentId: string;
@@ -53,12 +53,10 @@ export function calculateServerBookingPrice(params: {
     throw new Error(`Unknown apartment identifier: ${params.apartmentId}`);
   }
 
-  const checkIn = parseISO(params.checkInDate);
-  const checkOut = parseISO(params.checkOutDate);
-  const nightsCount = Math.max(1, differenceInCalendarDays(checkOut, checkIn));
-
-  const pricePerNightEUR = apartment.pricePerNightEUR;
-  const baseAmountEUR = pricePerNightEUR * nightsCount;
+  const stayPricing = calculateStayPricing(params.checkInDate, params.checkOutDate);
+  const nightsCount = stayPricing.nightsCount;
+  const baseAmountEUR = stayPricing.baseAmountEUR;
+  const pricePerNightEUR = stayPricing.averageNightlyEUR;
 
   // Validate and sum selected romantic addons against server catalog
   const validatedAddons: Array<{ id: string; name: string; priceEUR: number }> = [];

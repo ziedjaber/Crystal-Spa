@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { ApartmentItem, RoomImage, getTopApartmentImages } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
+import AirbnbGalleryModal from '@/components/gallery/AirbnbGalleryModal';
 
 interface SuiteTopGalleryProps {
   apartment: ApartmentItem;
@@ -287,6 +288,9 @@ export default function SuiteTopGallery({
             {/* Price & Booking Call-to-action */}
             <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
               <div className="flex items-baseline gap-1.5">
+                <span className="text-xs text-[#d0c5af] font-light">
+                  {language === 'fr' ? 'Dès' : 'From'}
+                </span>
                 <span className="font-serif text-2xl sm:text-3xl font-bold text-[#f2ca50]">
                   {apartment.pricePerNightEUR} €
                 </span>
@@ -363,110 +367,15 @@ export default function SuiteTopGallery({
       </section>
 
       {/* ============================================================ */}
-      {/* 2. FULLSCREEN LIGHTBOX MODAL */}
+      {/* 2. AIRBNB-GRADE FULLSCREEN INTERACTIVE GALLERY MODAL */}
       {/* ============================================================ */}
-      <AnimatePresence>
-        {lightboxOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-3 sm:p-8"
-          >
-            {/* Lightbox Header */}
-            <div className="flex items-center justify-between gap-3 z-20 pb-2">
-              <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-                <span className="px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] sm:text-xs shrink-0">
-                  {currentImage.categoryLabel}
-                </span>
-                <span className="text-xs sm:text-base font-serif text-white font-medium truncate max-w-[160px] sm:max-w-md">
-                  {currentImage.title}
-                </span>
-              </div>
-
-              <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-                <span className="text-[11px] sm:text-xs text-[#d0c5af] font-mono">
-                  {currentIndex + 1} / {totalImages}
-                </span>
-                <button
-                  onClick={() => setLightboxOpen(false)}
-                  className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] transition-colors cursor-pointer"
-                  aria-label="Fermer"
-                >
-                  <X className="w-4 h-4 sm:w-5 sm:h-5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Main Stage with Navigation Arrows */}
-            <div className="relative flex-grow flex items-center justify-center py-2 sm:py-4 my-auto">
-              <button
-                onClick={handlePrev}
-                className="absolute left-1 sm:left-6 z-30 p-2 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
-                aria-label="Précédent"
-              >
-                <ChevronLeft className="w-5 h-5 sm:w-8 sm:h-8" />
-              </button>
-
-              <div className="relative w-full h-[52vh] sm:h-[70vh] max-w-6xl mx-auto rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl">
-                <AnimatePresence initial={false} custom={direction}>
-                  <motion.div
-                    key={currentIndex}
-                    custom={direction}
-                    initial={{ opacity: 0, scale: 0.96 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.96 }}
-                    transition={{ duration: 0.3 }}
-                    className="relative w-full h-full"
-                  >
-                    <Image
-                      src={currentImage.src}
-                      alt={currentImage.title}
-                      fill
-                      priority
-                      className="object-contain"
-                      sizes="(max-width: 1200px) 100vw, 1200px"
-                    />
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              <button
-                onClick={handleNext}
-                className="absolute right-1 sm:right-6 z-30 p-2 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-lg border border-white/20 transition-all cursor-pointer"
-                aria-label="Suivant"
-              >
-                <ChevronRight className="w-5 h-5 sm:w-8 sm:h-8" />
-              </button>
-            </div>
-
-            {/* Lightbox Footer Thumbnail Strip */}
-            <div className="w-full max-w-4xl mx-auto overflow-x-auto pb-1 scrollbar-none z-20">
-              <div className="flex items-center justify-center gap-1.5 sm:gap-3 min-w-max mx-auto px-2">
-                {images.map((img, idx) => (
-                  <button
-                    key={img.id || idx}
-                    onClick={() => handleSelect(idx)}
-                    className={`relative rounded-md sm:rounded-lg overflow-hidden cursor-pointer transition-all w-12 h-9 sm:w-[70px] sm:h-[48px] shrink-0 ${
-                      idx === currentIndex
-                        ? 'ring-2 ring-[#f2ca50] scale-105 opacity-100'
-                        : 'opacity-50 hover:opacity-80'
-                    }`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={img.title}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <AirbnbGalleryModal
+        images={images}
+        initialIndex={currentIndex}
+        isOpen={lightboxOpen}
+        onClose={() => setLightboxOpen(false)}
+        apartmentTitle={apartment.title}
+      />
     </>
   );
 }

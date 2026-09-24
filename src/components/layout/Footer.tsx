@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
-import { ShieldCheck, CheckCircle2, Star } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, Star, Mail, Phone } from 'lucide-react';
 
 export default function Footer() {
   const { language, t } = useLanguage();
@@ -48,6 +48,25 @@ export default function Footer() {
                 ? 'Sanctuaire secret dédié au bien-être d’intimité absolue. Nos suites privatisées offrent spa bouillonnant d’hydrothérapie, sauna traditionnel et rituels signature sur mesure.'
                 : 'Secret haven dedicated to absolute intimate wellness. Our private suites offer hydrotherapy spas, traditional saunas, and tailor-made romantic rituals.'}
             </p>
+
+            <div className="flex flex-col gap-2 pt-2 text-xs">
+              <a
+                href="mailto:Crystalspa76@gmail.com"
+                className="flex items-center gap-2 text-[#d0c5af] hover:text-[#f2ca50] transition-colors"
+              >
+                <Mail className="w-3.5 h-3.5 text-[#f2ca50]" />
+                <span>Crystalspa76@gmail.com</span>
+              </a>
+              <a
+                href="https://wa.me/33629866909"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-[#d0c5af] hover:text-[#25D366] transition-colors"
+              >
+                <Phone className="w-3.5 h-3.5 text-[#25D366]" />
+                <span>06 29 86 69 09 (WhatsApp & Appel)</span>
+              </a>
+            </div>
 
             <div className="flex items-center gap-2 text-xs text-[#f2ca50]">
               <ShieldCheck className="w-4 h-4" />

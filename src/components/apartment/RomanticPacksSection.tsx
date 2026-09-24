@@ -42,84 +42,28 @@ export const ROMANTIC_PACKS = [
     id: 'pack-romance',
     name: 'Pack Romance',
     nameEn: 'Romance Pack',
-    price: 49,
-    tag: 'Ambiance Tamisée',
+    price: 29,
+    tag: 'Ambiance Féerique',
     tagEn: 'Romantic Mood',
-    popular: false,
+    popular: true,
     icon: Heart,
-    summary: 'Pétales de roses, bougies & chocolats fins',
-    summaryEn: 'Rose petals, candles & fine chocolates',
+    summary: 'Pétales de roses soyeux, bougies LED & mot personnalisé',
+    summaryEn: 'Silky rose petals, LED mood candles & handwritten love note',
     description:
-      'Une atmosphère romantique féerique prête dès votre ouverture de porte pour émerveiller votre moitié.',
+      'Une atmosphère romantique féerique prête dès votre arrivée pour émerveiller votre moitié.',
     descriptionEn:
-      'A fairytale romantic atmosphere ready upon door opening to enchant your significant other.',
+      'A fairytale romantic atmosphere ready upon your arrival to enchant your significant other.',
     features: [
       'Pétales de roses soyeux dispersés sur lit & jacuzzi',
       'Bougies d’ambiance LED chaleureuses allumées',
-      'Mot d’amour calligraphié sous pli scellé',
-      'Coffret de chocolats artisanaux d’exception',
+      'Mot d’amour personnalisé sous pli scellé',
+      'Ambiance lumineuse tamisée et musique douce',
     ],
     featuresEn: [
       'Silky rose petals sprinkled on bed & spa',
       'Warm LED mood candles illuminated upon arrival',
       'Personalized handwritten love letter in sealed envelope',
-      'Artisanal fine chocolate gift box',
-    ],
-  },
-  {
-    id: 'pack-love',
-    name: 'Pack Love',
-    nameEn: 'Love Pack',
-    price: 59,
-    tag: 'Coup de Cœur',
-    tagEn: 'Most Popular',
-    popular: true,
-    icon: Wine,
-    summary: 'Pack Romance + Demi-bouteille de Champagne & macarons',
-    summaryEn: 'Romance Pack + Half-bottle Champagne & macarons',
-    description:
-      'L’équilibre parfait : l’ambiance romantique complète accompagnée de bulles fraîches et de douceurs raffinées.',
-    descriptionEn:
-      'The perfect romantic balance: complete romantic décor accompanied by chilled champagne bubbles and delicacies.',
-    features: [
-      'Tous les privilèges du Pack Romance (pétales & bougies)',
-      'Demi-bouteille de champagne frais de Maison',
-      'Seau à glace rafraîchi et flûtes en cristal',
-      'Duo de macarons parisiens artisanaux',
-    ],
-    featuresEn: [
-      'All Romance Pack privileges (petals & candles)',
-      'Chilled half-bottle of Maison Champagne',
-      'Cooled ice bucket and crystal flutes ready',
-      'Duo of Parisian artisanal macarons',
-    ],
-  },
-  {
-    id: 'pack-prestige',
-    name: 'Pack Prestige',
-    nameEn: 'Prestige Pack',
-    price: 79,
-    tag: 'Expérience Ultime',
-    tagEn: 'Ultimate Luxury',
-    popular: false,
-    icon: Crown,
-    summary: 'Bouteille Moët & Chandon, pétales naturels & départ tardif',
-    summaryEn: 'Moët & Chandon bottle, natural petals & late check-out',
-    description:
-      'Le summum du luxe : grande bouteille de champagne de prestige, décoration grandiose et départ tardif offert.',
-    descriptionEn:
-      'The pinnacle of luxury: full bottle of prestige champagne, spectacular natural floral setup, and late departure.',
-    features: [
-      'Bouteille entière de Moët & Chandon Brut Impérial au frais',
-      'Chemin féerique de pétales de roses fraîches naturelles',
-      'Coffret dégustation prestige mignardises & chocolats',
-      'Départ tardif inclus jusqu’à 12h30',
-    ],
-    featuresEn: [
-      'Full bottle of chilled Moët & Chandon Brut Impérial',
-      'Fairy trail of fresh natural rose petals',
-      'Prestige gourmet tasting box (macarons & treats)',
-      'Complimentary late check-out until 12:30 PM',
+      'Soft romantic lighting ambiance and background music',
     ],
   },
 ];
@@ -143,7 +87,7 @@ export default function RomanticPacksSection({
             </span>
           </div>
           <h2 className="font-serif text-3xl sm:text-5xl text-[#e5e2e1]">
-            {language === 'fr' ? 'Nos 4 Packs Romantiques d’Exception' : 'Our 4 Signature Romantic Add-on Packs'}
+            {language === 'fr' ? 'Nos Packs Romantiques d’Exception' : 'Our Signature Romantic Add-on Packs'}
           </h2>
           <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed">
             {language === 'fr'
@@ -152,8 +96,8 @@ export default function RomanticPacksSection({
           </p>
         </div>
 
-        {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        {/* 2 Cards Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full items-stretch">
           {ROMANTIC_PACKS.map((pack) => {
             const Icon = pack.icon;
             const isSelected = selectedPackId === pack.id;

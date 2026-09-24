@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import { getApartmentScoresAndReviews, AirbnbReview } from '@/data/apartment';
 import { Star, ShieldCheck } from 'lucide-react';
+import AirbnbLogo from '@/components/ui/AirbnbLogo';
 
 interface ReviewsSectionProps {
   apartmentId?: string;
@@ -44,12 +45,14 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
         {/* Main Airbnb Header Card */}
         <div className="rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl p-6 sm:p-10 border border-white/10 shadow-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           <div className="flex flex-col gap-3">
-            <div className="flex items-center gap-2">
-              <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] uppercase tracking-wider">
-                {language === 'fr' ? 'Coup de Cœur Voyageurs' : 'Guest Favorite'}
+            <div className="flex flex-wrap items-center gap-2.5">
+              <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] uppercase tracking-wider inline-flex items-center gap-1.5 shadow-sm">
+                <AirbnbLogo className="w-3.5 h-3.5 text-[#3c2f00]" />
+                <span>{language === 'fr' ? 'Coup de Cœur Voyageurs' : 'Guest Favorite'}</span>
               </span>
-              <span className="text-xs text-[#d0c5af]">
-                {language === 'fr' ? 'Top 10% des logements sur Airbnb' : 'Top 10% of homes on Airbnb'}
+              <span className="text-xs text-[#d0c5af] inline-flex items-center gap-1.5 bg-black/40 px-3 py-1 rounded-full border border-white/5">
+                <AirbnbLogo className="w-3.5 h-3.5 text-[#FF385C]" />
+                <span>{language === 'fr' ? 'Top 10% des logements sur Airbnb' : 'Top 10% of homes on Airbnb'}</span>
               </span>
             </div>
             
@@ -64,30 +67,39 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
           </div>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 bg-[#201f1f]/90 backdrop-blur-md p-5 rounded-xl border border-white/10 shadow-lg">
-            <div className="flex items-center gap-3">
-              <span className="font-serif text-4xl sm:text-5xl font-bold text-[#f2ca50]">
-                {scores.overall.toFixed(2)}
-              </span>
+            <div className="flex items-center gap-3.5">
+              <div className="w-12 h-12 rounded-xl bg-[#FF385C]/15 border border-[#FF385C]/30 flex items-center justify-center shrink-0 shadow-inner">
+                <AirbnbLogo className="w-6 h-6 text-[#FF385C]" />
+              </div>
               <div className="flex flex-col">
-                <div className="flex text-[#f2ca50]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-current" />
-                  ))}
+                <div className="flex items-baseline gap-1.5">
+                  <span className="font-serif text-4xl sm:text-5xl font-bold text-[#f2ca50]">
+                    {scores.overall.toFixed(2)}
+                  </span>
+                  <span className="text-xs text-[#d0c5af] font-light">/ 5</span>
                 </div>
-                <span className="text-xs text-[#d0c5af] font-light">
-                  {scores.reviewsTotal} {language === 'fr' ? 'commentaires vérifiés' : 'verified reviews'}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <div className="flex text-[#f2ca50]">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                    ))}
+                  </div>
+                  <span className="text-[11px] text-[#d0c5af] font-light">
+                    ({scores.reviewsTotal} {language === 'fr' ? 'avis vérifiés' : 'verified reviews'})
+                  </span>
+                </div>
               </div>
             </div>
 
             <div className="h-10 w-[1px] bg-white/10 hidden sm:block"></div>
 
             <div className="flex flex-col text-xs text-[#d0c5af]">
-              <span className="text-white font-semibold flex items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-[#22c55e]"></span>
+              <span className="text-white font-semibold flex items-center gap-1.5">
+                <AirbnbLogo className="w-3.5 h-3.5 text-[#FF385C]" />
                 {language === 'fr' ? '100% Avis Airbnb Vérifiés' : '100% Verified Airbnb Reviews'}
               </span>
-              <span className="font-light mt-0.5">
+              <span className="font-light mt-0.5 flex items-center gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]"></span>
                 {language === 'fr' ? 'Statut Superhôte confirmé' : 'Confirmed Superhost status'}
               </span>
             </div>
@@ -162,10 +174,16 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
             >
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <div className="flex text-[#f2ca50]">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                    ))}
+                  <div className="flex items-center gap-2">
+                    <div className="flex text-[#f2ca50]">
+                      {[...Array(rev.rating)].map((_, i) => (
+                        <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                      ))}
+                    </div>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FF385C]/15 text-[#FF385C] text-[10px] font-bold border border-[#FF385C]/25">
+                      <AirbnbLogo className="w-3 h-3 text-[#FF385C]" />
+                      Airbnb
+                    </span>
                   </div>
                   <span className="text-[11px] text-[#99907c] font-light">
                     {rev.date}
@@ -185,8 +203,9 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
                   <span className="text-sm font-semibold text-white">
                     {rev.author}
                   </span>
-                  <span className="text-[11px] text-[#d0c5af] font-light">
-                    {rev.yearsOnAirbnb}
+                  <span className="text-[11px] text-[#d0c5af] font-light flex items-center gap-1">
+                    <AirbnbLogo className="w-3 h-3 text-[#FF385C]" />
+                    <span>{rev.yearsOnAirbnb}</span>
                   </span>
                 </div>
               </div>

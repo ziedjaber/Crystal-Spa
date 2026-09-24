@@ -60,8 +60,8 @@ export const SUITES_DATA: SuiteItem[] = [
     image: '/a1/Jacuzzi.png',
     badge: 'Suite Signature Paris',
     badgeEn: 'Paris Signature Suite',
-    tags: ['Jacuzzi XXL Privatif', 'Sauna Finlandais Cèdre', 'Champagne Chanoine', 'Cheminée Ambiance'],
-    tagsEn: ['Private XXL Jacuzzi', 'Cedar Finnish Sauna', 'Chanoine Champagne', 'Mood Fireplace'],
+    tags: ['Jacuzzi Privatif', 'Sauna Finlandais Cèdre', 'Champagne Chanoine', 'Cheminée Ambiance'],
+    tagsEn: ['Private Jacuzzi', 'Cedar Finnish Sauna', 'Chanoine Champagne', 'Mood Fireplace'],
     featured: true,
   },
   {

@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { ApartmentItem } from '@/data/apartment';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 
 interface LocationAccessSectionProps {
   currentApartment?: ApartmentItem;
@@ -34,9 +35,9 @@ export default function LocationAccessSection({
   const [bboxDelta, setBboxDelta] = useState<number>(0.005);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // Use per-apartment coordinates when available, fallback to La Vie est Belle
-  const lat = currentApartment?.lat ?? 49.426421;
-  const lng = currentApartment?.lng ?? 1.0662014;
+  // Exact coordinates for all apartments in Google Maps: 49.42427, 1.061738
+  const lat = currentApartment?.lat ?? 49.42427;
+  const lng = currentApartment?.lng ?? 1.061738;
   const locationTitle = 'Le Petit-Quevilly, Normandie, France';
   const aptTitle = currentApartment ? currentApartment.title : 'La Vie est Belle | Spa Privatif';
 
@@ -217,19 +218,65 @@ export default function LocationAccessSection({
                 </div>
 
                 {/* 2. Self Check-in */}
-                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-[#131313]/80 border border-white/5">
-                  <div className="w-10 h-10 rounded-xl bg-[#f2ca50]/15 flex items-center justify-center text-[#f2ca50] shrink-0 border border-[#f2ca50]/25">
-                    <Key className="w-5 h-5" />
+                <div className="flex flex-col gap-3 p-3.5 rounded-2xl bg-[#131313]/80 border border-[#f2ca50]/20 shadow-md">
+                  <div className="flex items-start gap-3.5">
+                    <div className="w-10 h-10 rounded-xl bg-[#f2ca50]/15 flex items-center justify-center text-[#f2ca50] shrink-0 border border-[#f2ca50]/25">
+                      <Key className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col gap-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold uppercase tracking-wider text-white">
+                          {language === 'fr' ? 'Arrivée Autonome Sécurisée 24h/24' : 'Keyless Self Check-in 24/7'}
+                        </span>
+                        <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-pulse" />
+                      </div>
+                      <span className="text-xs text-[#d0c5af] font-light leading-relaxed">
+                        {language === 'fr'
+                          ? 'Accès en totale discrétion par serrure connectée dès 17h00. Code personnel envoyé par message avant votre venue.'
+                          : 'Complete privacy via digital keypad lock from 5:00 PM. Access code texted prior to arrival.'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-xs font-bold uppercase tracking-wider text-white">
-                      {language === 'fr' ? 'Arrivée Autonome Sécurisée 24h/24' : 'Keyless Self Check-in 24/7'}
-                    </span>
-                    <span className="text-xs text-[#d0c5af] font-light leading-relaxed">
-                      {language === 'fr'
-                        ? 'Accès en totale discrétion par serrure connectée dès 17h00. Code personnel envoyé par message avant votre venue.'
-                        : 'Complete privacy via digital keypad lock from 5:00 PM. Access code texted prior to arrival.'}
-                    </span>
+
+                  {/* Actual Entry Door Photos Showcase */}
+                  <div className="grid grid-cols-2 gap-2 pt-1 border-t border-white/5">
+                    <div className="group/door relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
+                      <Image
+                        src="/entry/door-1.jpeg"
+                        alt="Porte d'entrée sécurisée et hall d'accueil"
+                        fill
+                        sizes="(max-width: 768px) 45vw, 220px"
+                        className="object-cover transition-transform duration-500 group-hover/door:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-2 left-2 right-2 flex flex-col">
+                        <span className="text-[10px] font-bold text-white leading-tight drop-shadow-md">
+                          {language === 'fr' ? 'Porte & Hall Privatif' : 'Entry & Private Hall'}
+                        </span>
+                        <span className="text-[9px] text-[#f2ca50] font-light">
+                          {language === 'fr' ? 'Double porte sécurisée' : 'Secure double door'}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className="group/door relative aspect-[3/4] rounded-xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
+                      <Image
+                        src="/entry/door.jpeg"
+                        alt="Digicode et serrure connectée 24h/24"
+                        fill
+                        sizes="(max-width: 768px) 45vw, 220px"
+                        className="object-cover transition-transform duration-500 group-hover/door:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-transparent pointer-events-none" />
+                      <div className="absolute bottom-2 left-2 right-2 flex flex-col">
+                        <span className="text-[10px] font-bold text-[#f2ca50] leading-tight drop-shadow-md">
+                          {language === 'fr' ? 'Digicode Serrure 24h/24' : 'Smart Lock Keypad'}
+                        </span>
+                        <span className="text-[9px] text-[#d0c5af] font-light">
+                          {language === 'fr' ? 'Code d’accès personnel' : 'Personal secret code'}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
 

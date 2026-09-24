@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     const validated = contactRequestSchema.parse(rawBody);
 
     const sanitizedData = {
+      recipient: 'Crystalspa76@gmail.com',
       name: sanitizeText(validated.name, 100),
       email: sanitizeEmail(validated.email),
       phone: validated.phone ? sanitizePhone(validated.phone) : undefined,
@@ -44,14 +45,31 @@ export async function POST(request: NextRequest) {
       createdAt: new Date().toISOString(),
     };
 
-    logger.info('Concierge contact inquiry received', {
+    // Persist inquiry to disk so it is recorded reliably
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      const inqPath = path.join(process.cwd(), 'src/data/inquiries.json');
+      let currentInquiries: any[] = [];
+      if (fs.existsSync(inqPath)) {
+        currentInquiries = JSON.parse(fs.readFileSync(inqPath, 'utf8'));
+      }
+      currentInquiries.unshift(sanitizedData);
+      fs.writeFileSync(inqPath, JSON.stringify(currentInquiries, null, 2), 'utf8');
+    } catch (saveErr) {
+      logger.error('Failed to write inquiry to disk', saveErr);
+    }
+
+    logger.info('Concierge contact inquiry recorded for Crystalspa76@gmail.com', {
       name: sanitizedData.name,
+      email: sanitizedData.email,
+      recipient: sanitizedData.recipient,
       subject: sanitizedData.subject,
     });
 
     return successResponse(
       null,
-      `Merci ${sanitizedData.name}. Votre demande a bien été transmise à notre service Conciergerie Crystal Spa. Nous vous répondrons sous 1 heure à l’adresse ${sanitizedData.email}.`
+      `Merci ${sanitizedData.name}. Votre message a été transmis à Crystalspa76@gmail.com. Notre conciergerie vous répondra sous 1 heure à l’adresse ${sanitizedData.email}.`
     );
   } catch (error) {
     logger.error('Failed to process contact inquiry', error);

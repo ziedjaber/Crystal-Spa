@@ -75,7 +75,7 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
     subtitle: 'Love Room Romantique avec Jacuzzi & Sauna Privatifs 24h/24',
     location: 'Le Petit-Quevilly, Normandie, France',
     locationDetails: 'À 5 minutes du centre historique de Rouen & 100% 5★ Emplacement',
-    pricePerNightEUR: 290,
+    pricePerNightEUR: 110,
     rating: 5.0,
     reviewsCount: 8,
     capacityGuests: 2,
@@ -109,8 +109,8 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
       responseTime: 'Répond dans l’heure',
       bio: 'Bonjour je m’appelle Crystal Spa. Entrepreneur dans l’immobilier et l’hôtellerie intime d’exception.',
     },
-    lat: 49.426421,
-    lng: 1.0662014,
+    lat: 49.42427,
+    lng: 1.061738,
   },
   {
     id: 'a2',
@@ -119,7 +119,7 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
     subtitle: 'Love Room Romantique avec Spa Privatif 24h/24 & 2 Écrans TV',
     location: 'Le Petit-Quevilly, Normandie, France',
     locationDetails: 'À 5 minutes du centre de Rouen & transports en commun',
-    pricePerNightEUR: 280,
+    pricePerNightEUR: 110,
     rating: 4.97,
     reviewsCount: 37,
     capacityGuests: 2,
@@ -153,8 +153,8 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
       responseTime: 'Répond dans l’heure',
       bio: 'Bonjour je m’appelle Crystal Spa. Passionné par l’hospitalité romantique et le bien-être absolu.',
     },
-    lat: 49.426421,
-    lng: 1.0662014,
+    lat: 49.42427,
+    lng: 1.061738,
   },
   {
     id: 'a3',
@@ -163,7 +163,7 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
     subtitle: 'Suite Privative Jacuzzi & Sauna avec Écran Cinéma Face au Bain',
     location: 'Le Petit-Quevilly, Normandie, France',
     locationDetails: 'Quartier calme et résidentiel, accessible à pied',
-    pricePerNightEUR: 310,
+    pricePerNightEUR: 110,
     rating: 4.93,
     reviewsCount: 27,
     capacityGuests: 2,
@@ -197,8 +197,8 @@ export const FEATURED_APARTMENTS: ApartmentItem[] = [
       responseTime: 'Répond dans l’heure',
       bio: 'Bonjour je m’appelle Crystal Spa. Fondateur des suites privatives Crystal Spa.',
     },
-    lat: 49.426421,
-    lng: 1.0662014,
+    lat: 49.42427,
+    lng: 1.061738,
   },
 ];
 
@@ -801,7 +801,23 @@ export const ROOM_IMAGES_A3: RoomImage[] = [
     description: 'Propreté absolue et confort d’exception.',
   },
 
-  // COUR D'ENTRÉE
+  // COUR D'ENTRÉE & ACCÈS SÉCURISÉ
+  {
+    id: 'a3-door-entrance',
+    title: 'Porte d’Entrée Sécurisée & Hall',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door-1.jpeg',
+    description: 'Double porte contemporaine sécurisée et hall d’accès privatif avec éclairage chaleureux.',
+  },
+  {
+    id: 'a3-door-keypad',
+    title: 'Digicode & Serrure Connectée 24h/24',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door.jpeg',
+    description: 'Serrure numérique sécurisée à code confidentiel pour une arrivée autonome en toute discrétion.',
+  },
   {
     id: 'a3-cour-main',
     title: 'Cour Extérieure & Accès Discret',
@@ -1046,6 +1062,22 @@ export const ROOM_IMAGES_A2: RoomImage[] = [
 
   // COUR D'ENTRÉE & EXTÉRIEUR
   {
+    id: 'a2-door-entrance',
+    title: 'Porte d’Entrée Sécurisée & Hall',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door-1.jpeg',
+    description: 'Double porte contemporaine sécurisée et hall d’accès privatif avec éclairage soigné.',
+  },
+  {
+    id: 'a2-door-keypad',
+    title: 'Digicode & Serrure Connectée 24h/24',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door.jpeg',
+    description: 'Serrure numérique sécurisée à code confidentiel pour une autonomie totale dès 17h00.',
+  },
+  {
     id: 'a2-cour-main',
     title: 'Cour d’Entrée & Accès Privé',
     category: 'cour',
@@ -1276,6 +1308,24 @@ export const ROOM_IMAGES_A1: RoomImage[] = [
     src: '/a1/Salle de bain 5.png',
     description: 'Espace d’hygiène et de bien-être haut de gamme.',
   },
+
+  // COUR D'ENTRÉE & ACCÈS SÉCURISÉ
+  {
+    id: 'a1-door-entrance',
+    title: 'Porte d’Entrée Sécurisée & Hall',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door-1.jpeg',
+    description: 'Double porte contemporaine sécurisée et hall d’accès privatif avec éclairage soigné.',
+  },
+  {
+    id: 'a1-door-keypad',
+    title: 'Digicode & Serrure Connectée 24h/24',
+    category: 'cour',
+    categoryLabel: 'PORTE & ACCÈS',
+    src: '/entry/door.jpeg',
+    description: 'Serrure numérique sécurisée à code confidentiel pour une autonomie totale.',
+  },
 ];
 
 // -------------------------------------------------------------
@@ -1414,31 +1464,104 @@ export const ROMANTIC_ADDONS_DATA: RomanticAddonItem[] = [
     id: 'pack-romance',
     name: 'Pack Romance',
     nameEn: 'Romance Pack',
-    price: 49,
+    price: 29,
     badge: 'Ambiance Féerique',
     badgeEn: 'Fairy Tale Mood',
-    summary: 'Pétales de roses sur lit & spa, bougies LED, mot d’amour calligraphié, chocolats fins',
-    summaryEn: 'Rose petals on bed & spa, LED candles, custom love letter, fine chocolates',
-  },
-  {
-    id: 'pack-love',
-    name: 'Pack Love',
-    nameEn: 'Love Pack',
-    price: 59,
-    badge: 'Coup de Cœur',
-    badgeEn: 'Most Popular',
-    summary: 'Pack Romance + Demi-bouteille de champagne frais de Maison & macarons artisanaux',
-    summaryEn: 'Romance Pack + Chilled half-bottle of Maison Champagne & Parisian macarons',
-  },
-  {
-    id: 'pack-prestige',
-    name: 'Pack Prestige',
-    nameEn: 'Prestige Pack',
-    price: 79,
-    badge: 'Luxe Absolu',
-    badgeEn: 'Ultimate Luxury',
-    summary: 'Bouteille entière Moët & Chandon, pétales naturels, coffret gourmand & départ tardif inclus',
-    summaryEn: 'Full Moët & Chandon bottle, natural rose petals, gourmet treats box & late check-out',
+    summary: 'Pétales de roses sur lit & spa, bougies LED chaleureuses, mot d’amour calligraphié personnalisé (sans alcool, sans chocolat)',
+    summaryEn: 'Silky rose petals on bed & spa, warm LED candles, handwritten personalized love letter (alcohol-free, chocolate-free)',
   },
 ];
+
+// -------------------------------------------------------------
+// DYNAMIC DAILY PRICING SCHEDULE (For all apartments)
+// Lundi -> Jeudi : 120 €
+// Vendredi : 169 €
+// Samedi : 190 €
+// Dimanche : 110 €
+// -------------------------------------------------------------
+export const APARTMENT_DAILY_PRICING: Record<number, number> = {
+  0: 110, // Dimanche
+  1: 120, // Lundi
+  2: 120, // Mardi
+  3: 120, // Mercredi
+  4: 120, // Jeudi
+  5: 169, // Vendredi
+  6: 190, // Samedi
+};
+
+export const PRICING_SCHEDULE_ITEMS = [
+  { day: 'Dimanche', dayEn: 'Sunday', price: 110, tag: 'Meilleur Tarif', tagEn: 'Best Value' },
+  { day: 'Lundi au Jeudi', dayEn: 'Monday to Thursday', price: 120, tag: 'Semaine Romantique', tagEn: 'Weekday Romance' },
+  { day: 'Vendredi', dayEn: 'Friday', price: 169, tag: 'Week-end Spa', tagEn: 'Weekend Spa' },
+  { day: 'Samedi', dayEn: 'Saturday', price: 190, tag: 'Nuit d’Exception', tagEn: 'Signature Night' },
+];
+
+export function getNightPriceEUR(dateOrDay: Date | string | number): number {
+  let dayOfWeek = 0;
+  if (typeof dateOrDay === 'number') {
+    dayOfWeek = dateOrDay;
+  } else if (typeof dateOrDay === 'string') {
+    const cleanDate = dateOrDay.split('T')[0];
+    const d = new Date(cleanDate + 'T12:00:00');
+    dayOfWeek = d.getDay();
+  } else {
+    dayOfWeek = dateOrDay.getDay();
+  }
+  return APARTMENT_DAILY_PRICING[dayOfWeek] ?? 120;
+}
+
+export interface NightPricingDetail {
+  date: string;
+  dayOfWeek: number;
+  dayNameFr: string;
+  dayNameEn: string;
+  priceEUR: number;
+}
+
+export interface StayPricingBreakdown {
+  nightsCount: number;
+  breakdown: NightPricingDetail[];
+  baseAmountEUR: number;
+  averageNightlyEUR: number;
+}
+
+export function calculateStayPricing(checkInDate: string, checkOutDate: string): StayPricingBreakdown {
+  const cleanIn = (checkInDate || new Date().toISOString().split('T')[0]).split('T')[0];
+  const cleanOut = (checkOutDate || cleanIn).split('T')[0];
+
+  const d1 = new Date(cleanIn + 'T12:00:00');
+  const d2 = new Date(cleanOut + 'T12:00:00');
+  const diffDays = Math.round((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+  const nightsCount = Math.max(1, diffDays);
+
+  const breakdown: NightPricingDetail[] = [];
+  let total = 0;
+  const current = new Date(d1);
+
+  const frDays = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+  const enDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  for (let i = 0; i < nightsCount; i++) {
+    const day = current.getDay();
+    const price = APARTMENT_DAILY_PRICING[day] ?? 120;
+    const dateStr = current.toISOString().split('T')[0];
+    breakdown.push({
+      date: dateStr,
+      dayOfWeek: day,
+      dayNameFr: frDays[day],
+      dayNameEn: enDays[day],
+      priceEUR: price,
+    });
+    total += price;
+    current.setDate(current.getDate() + 1);
+  }
+
+  return {
+    nightsCount,
+    breakdown,
+    baseAmountEUR: total,
+    averageNightlyEUR: Math.round(total / nightsCount),
+  };
+}
+
 

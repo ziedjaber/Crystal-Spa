@@ -19,8 +19,9 @@ import {
   Check,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import { FEATURED_APARTMENTS, ApartmentItem } from '@/data/apartment';
+import { FEATURED_APARTMENTS, calculateStayPricing } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
+import BookingCalendar from './BookingCalendar';
 
 interface ApartmentBookingProps {
   initialApartmentId?: string;
@@ -44,34 +45,12 @@ const ROMANTIC_ADDONS = [
     id: 'pack-romance',
     name: 'Pack Romance',
     nameEn: 'Romance Pack',
-    price: 49,
+    price: 29,
     icon: Heart,
     badge: 'Ambiance Féerique',
     badgeEn: 'Fairy Tale Mood',
-    summary: 'Pétales de roses sur lit & spa, bougies LED, mot d’amour calligraphié, chocolats fins',
-    summaryEn: 'Rose petals on bed & spa, LED candles, custom love letter, fine chocolates',
-  },
-  {
-    id: 'pack-love',
-    name: 'Pack Love',
-    nameEn: 'Love Pack',
-    price: 59,
-    icon: Wine,
-    badge: 'Coup de Cœur',
-    badgeEn: 'Most Popular',
-    summary: 'Pack Romance + Demi-bouteille de champagne frais de Maison & macarons artisanaux',
-    summaryEn: 'Romance Pack + Chilled half-bottle of Maison Champagne & Parisian macarons',
-  },
-  {
-    id: 'pack-prestige',
-    name: 'Pack Prestige',
-    nameEn: 'Prestige Pack',
-    price: 79,
-    icon: Crown,
-    badge: 'Luxe Absolu',
-    badgeEn: 'Ultimate Luxury',
-    summary: 'Bouteille entière Moët & Chandon, pétales naturels, coffret gourmand & départ tardif inclus',
-    summaryEn: 'Full Moët & Chandon bottle, natural rose petals, gourmet treats box & late check-out',
+    summary: 'Pétales de roses sur lit & spa, bougies LED chaleureuses, mot d’amour personnalisé calligraphié (sans alcool, sans chocolat)',
+    summaryEn: 'Silky rose petals on bed & spa, warm LED candles, handwritten personalized love letter (alcohol-free, chocolate-free)',
   },
 ];
 
@@ -107,16 +86,21 @@ export default function ApartmentBooking({
   const [errorMsg, setErrorMsg] = useState<string>('');
   const [confirmedBooking, setConfirmedBooking] = useState<any>(null);
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
+  const [showCalendarView, setShowCalendarView] = useState<boolean>(false);
+  const [isCalendarModalOpen, setIsCalendarModalOpen] = useState<boolean>(false);
+
+  const toggleCalendarView = () => {
+    setIsCalendarModalOpen(true);
+  };
 
   const currentApartment =
     FEATURED_APARTMENTS.find((apt) => apt.id === selectedAptId) ||
     FEATURED_APARTMENTS[0];
 
+  const stayPricing = calculateStayPricing(checkInDate, checkOutDate);
+
   const calculateNights = () => {
-    const d1 = new Date(checkInDate).getTime();
-    const d2 = new Date(checkOutDate).getTime();
-    const diff = Math.ceil((d2 - d1) / (1000 * 3600 * 24));
-    return diff > 0 ? diff : 1;
+    return stayPricing.nightsCount;
   };
 
   const calculatePacksTotal = () => {
@@ -127,11 +111,8 @@ export default function ApartmentBooking({
   };
 
   const calculateTotal = () => {
-    const nights = calculateNights();
-    const base = currentApartment.pricePerNightEUR * nights;
-    return base + calculatePacksTotal();
+    return stayPricing.baseAmountEUR + calculatePacksTotal();
   };
-
 
   const togglePack = (id: string) => {
     setSelectedPacks((prev) =>
@@ -219,6 +200,8 @@ export default function ApartmentBooking({
   return (
     <div className="w-full max-w-4xl mx-auto rounded-2xl sm:rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-4 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
       
+
+
       {/* Step Indicator */}
       {step < 4 && (
         <div className="mb-8 border-b border-white/5 pb-4 flex flex-col sm:flex-row justify-between sm:items-center gap-2 text-xs uppercase tracking-wider text-[#d0c5af]">
@@ -290,7 +273,7 @@ export default function ApartmentBooking({
                       </div>
                       <div className="flex items-baseline justify-between text-xs pt-2 border-t border-white/5">
                         <span className="text-[#f2ca50] font-bold text-sm">
-                          {apt.pricePerNightEUR} €
+                          {language === 'fr' ? 'Dès 110 €' : 'From 110 €'}
                         </span>
                         <span className="text-[#99907c] text-[11px] font-light">
                           {apt.surfaceM2} m² • {apt.location.split(',')[0]}
@@ -302,35 +285,77 @@ export default function ApartmentBooking({
               </div>
             </div>
 
-            {/* Dates Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
-                  <span>{language === 'fr' ? 'Date d’Arrivée' : 'Check-in Date'}</span>
+            {/* Dates Grid with clickable modal triggers */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div
+                onClick={() => setIsCalendarModalOpen(true)}
+                role="button"
+                tabIndex={0}
+                className="flex flex-col gap-1.5 p-3.5 rounded-xl bg-[#101010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group"
+              >
+                <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
+                    <span>{language === 'fr' ? 'Date d’Arrivée' : 'Check-in Date'}</span>
+                  </span>
+                  <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
+                    {language === 'fr' ? 'Choisir sur l’agenda' : 'Select on calendar'}
+                  </span>
                 </label>
-                <input
-                  type="date"
-                  min={new Date().toISOString().split('T')[0]}
-                  value={checkInDate}
-                  onChange={(e) => setCheckInDate(e.target.value)}
-                  className="w-full bg-[#101010] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-[#f2ca50] transition-colors"
-                />
+                <div className="text-base font-semibold text-white flex items-center justify-between">
+                  <span>{checkInDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
+                  <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/10 px-2 py-0.5 rounded">
+                    {language === 'fr' ? 'Arrivée dès 17h' : 'From 5 PM'}
+                  </span>
+                </div>
               </div>
 
-              <div className="flex flex-col gap-2">
-                <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
-                  <span>{language === 'fr' ? 'Date de Départ' : 'Check-out Date'}</span>
+              <div
+                onClick={() => setIsCalendarModalOpen(true)}
+                role="button"
+                tabIndex={0}
+                className="flex flex-col gap-1.5 p-3.5 rounded-xl bg-[#101010] border border-white/10 hover:border-[#f2ca50] cursor-pointer transition-all group"
+              >
+                <label className="text-[11px] font-bold text-[#d0c5af] group-hover:text-[#f2ca50] uppercase tracking-wider flex items-center justify-between cursor-pointer">
+                  <span className="flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-[#f2ca50]" />
+                    <span>{language === 'fr' ? 'Date de Départ' : 'Check-out Date'}</span>
+                  </span>
+                  <span className="text-[10px] text-[#f2ca50] font-normal underline underline-offset-2">
+                    {language === 'fr' ? 'Choisir sur l’agenda' : 'Select on calendar'}
+                  </span>
                 </label>
-                <input
-                  type="date"
-                  min={checkInDate}
-                  value={checkOutDate}
-                  onChange={(e) => setCheckOutDate(e.target.value)}
-                  className="w-full bg-[#101010] border border-white/10 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-[#f2ca50] transition-colors"
-                />
+                <div className="text-base font-semibold text-white flex items-center justify-between">
+                  <span>{checkOutDate || (language === 'fr' ? 'Choisir la date' : 'Select date')}</span>
+                  <span className="text-xs text-[#f2ca50] font-normal bg-[#f2ca50]/10 px-2 py-0.5 rounded">
+                    {language === 'fr' ? 'Départ jusqu’à 11h' : 'Until 11 AM'}
+                  </span>
+                </div>
               </div>
+            </div>
+
+            {/* Prominent Modal Button */}
+            <div className="p-3.5 rounded-xl bg-[#1b1a1a] border border-[#f2ca50]/30 flex flex-col sm:flex-row items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5">
+                <Calendar className="w-4 h-4 text-[#f2ca50] shrink-0" />
+                <div className="text-xs text-[#d0c5af]">
+                  <span className="text-white font-semibold">
+                    {stayPricing ? `${stayPricing.nightsCount} ${language === 'fr' ? 'nuitée(s) sélectionnée(s)' : 'night(s) selected'} (${stayPricing.baseAmountEUR} €)` : ''}
+                  </span>
+                  <span className="text-[11px] text-[#99907c] block">
+                    {language === 'fr' ? 'Consultez les disponibilités sur 2 mois & ajustez le nombre de nuits' : 'View dual-month availability & adjust nights'}
+                  </span>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsCalendarModalOpen(true)}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span>{language === 'fr' ? 'Ouvrir l’agenda complet' : 'Open Full Agenda'}</span>
+              </button>
             </div>
 
             {/* Occupancy (Strictly 2 guests) */}
@@ -352,16 +377,21 @@ export default function ApartmentBooking({
             <div className="rounded-xl bg-[#101010] p-4 sm:p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs">
               <div>
                 <span className="text-[#99907c] block">{language === 'fr' ? 'DURÉE DU SÉJOUR' : 'STAY DURATION'}</span>
-                <span className="font-bold text-sm text-white">{calculateNights()} {language === 'fr' ? 'Nuit(s)' : 'Night(s)'}</span>
+                <span className="font-bold text-sm text-white">{stayPricing.nightsCount} {language === 'fr' ? 'Nuit(s)' : 'Night(s)'}</span>
               </div>
               <div>
-                <span className="text-[#99907c] block">{language === 'fr' ? 'TARIF DIRECT EN LIGNE' : 'DIRECT NIGHTLY RATE'}</span>
-                <span className="font-bold text-sm text-white">{currentApartment.pricePerNightEUR} € / {language === 'fr' ? 'nuit' : 'night'}</span>
+                <span className="text-[#99907c] block">{language === 'fr' ? 'TARIFS DU SÉJOUR' : 'STAY RATES'}</span>
+                <span className="font-bold text-sm text-white">
+                  {stayPricing.averageNightlyEUR} € / {language === 'fr' ? 'nuit (moyenne)' : 'avg night'}
+                </span>
+                <span className="text-[10px] text-[#99907c] block">
+                  Lun-Jeu: 120€ • Ven: 169€ • Sam: 190€ • Dim: 110€
+                </span>
               </div>
               <div className="text-left sm:text-right">
                 <span className="text-[#99907c] block">{language === 'fr' ? 'SOUS-TOTAL HÉBERGEMENT' : 'SUBTOTAL'}</span>
                 <span className="font-serif text-2xl font-bold text-[#f2ca50]">
-                  {calculateNights() * currentApartment.pricePerNightEUR} €
+                  {stayPricing.baseAmountEUR} €
                 </span>
               </div>
             </div>
@@ -614,7 +644,12 @@ export default function ApartmentBooking({
                   <span className="font-serif text-lg text-[#f2ca50]">{calculateTotal()} €</span>
                 </div>
                 <div className="text-[#99907c] text-[11px] leading-relaxed flex flex-col gap-1">
-                  <span>• Du {checkInDate} au {checkOutDate} ({calculateNights()} nuitée(s))</span>
+                  <span>• Du {checkInDate} au {checkOutDate} ({stayPricing.nightsCount} nuitée(s) : {stayPricing.baseAmountEUR} €)</span>
+                  {selectedPacks.length > 0 && (
+                    <span>
+                      • Options : {selectedPacks.map(id => ROMANTIC_ADDONS.find(p => p.id === id)?.name).filter(Boolean).join(', ')} (+{calculatePacksTotal()} €)
+                    </span>
+                  )}
                   <span>• Caution par simple empreinte bancaire : 250 € (aucun débit effectué)</span>
                   <span>• Arrivée autonome 24h/24 par serrure connectée</span>
                   <span>• Taxe de séjour & ménage complet inclus</span>
@@ -723,6 +758,19 @@ export default function ApartmentBooking({
         )}
 
       </AnimatePresence>
+
+      {/* Dual Month Calendar Modal matching user screenshot */}
+      <BookingCalendar
+        asModal={true}
+        isOpen={isCalendarModalOpen}
+        onClose={() => setIsCalendarModalOpen(false)}
+        checkInDate={checkInDate}
+        checkOutDate={checkOutDate}
+        onSelectDates={(newIn, newOut) => {
+          setCheckInDate(newIn);
+          setCheckOutDate(newOut);
+        }}
+      />
     </div>
   );
 }

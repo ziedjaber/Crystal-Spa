@@ -66,6 +66,10 @@ h1, h2, h3, .font-serif, .font-display {
   letter-spacing: -0.02em;
 }
 
+.font-luxury-french, .font-cormorant {
+  font-family: var(--font-cormorant), 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+}
+
 /* 4K Image Rendering Sharpness & Quality */
 .bg-4k-hero {
   background-size: cover;
@@ -209,4 +213,58 @@ h1, h2, h3, .font-serif, .font-display {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #d4af37;
+}
+
+/* Luxury Skeleton Shimmer */
+@keyframes luxurySkeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-luxury {
+  background: linear-gradient(
+    90deg,
+    rgba(28, 27, 27, 0.8) 0%,
+    rgba(45, 42, 35, 0.9) 35%,
+    rgba(242, 202, 80, 0.12) 50%,
+    rgba(45, 42, 35, 0.9) 65%,
+    rgba(28, 27, 27, 0.8) 100%
+  );
+  background-size: 250% 100%;
+  animation: luxurySkeletonShimmer 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Progressive Unsplash-style Blur-to-HD Transition */
+.progressive-blur-loading {
+  filter: blur(20px) scale(1.05);
+  opacity: 0.7;
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+.progressive-blur-loaded {
+  filter: blur(0px) scale(1);
+  opacity: 1;
+  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+}
+
+/* Luxury Halo Glow Animation */
+@keyframes luxuryHaloGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.45;
+    filter: drop-shadow(0 0 25px rgba(242, 202, 80, 0.4));
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.8;
+    filter: drop-shadow(0 0 45px rgba(242, 202, 80, 0.75));
+  }
+}
+
+.animate-luxury-halo {
+  animation: luxuryHaloGlow 3.5s ease-in-out infinite;
 }

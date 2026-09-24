@@ -41,11 +41,11 @@ export default function TopAnnouncementBar() {
           </div>
 
           <a
-            href="tel:+33756949490"
+            href="tel:+33629866909"
             className="flex items-center gap-1.5 text-[#f2ca50] hover:underline font-semibold"
           >
             <Phone className="w-3 h-3" />
-            <span>07 56 94 94 90</span>
+            <span>06 29 86 69 09</span>
           </a>
         </div>
 
