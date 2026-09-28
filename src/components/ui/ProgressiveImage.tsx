@@ -16,23 +16,23 @@ export default function ProgressiveImage({
   className = '',
   containerClassName = '',
   rounded = 'rounded-none',
-  showSkeletonWhileLoading = true,
+  showSkeletonWhileLoading = false,
   fill,
   width,
   height,
   priority = false,
   ...props
 }: ProgressiveImageProps) {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(true);
   const [hasError, setHasError] = useState(false);
 
   return (
     <div
       className={`relative overflow-hidden ${rounded} ${
         fill ? 'w-full h-full' : 'inline-block'
-      } bg-[#181716] ${containerClassName}`}
+      } ${containerClassName || 'bg-[#181716]'}`}
     >
-      {/* Background Shimmer Skeleton while downloading */}
+      {/* Background Skeleton while loading if explicitly requested */}
       {showSkeletonWhileLoading && !isLoaded && !hasError && (
         <Skeleton
           className="absolute inset-0 w-full h-full z-0"
@@ -40,7 +40,7 @@ export default function ProgressiveImage({
         />
       )}
 
-      {/* Main Image with Unsplash-style Blur-to-HD Transition */}
+      {/* Main Image with Fast Smooth Render */}
       {!hasError ? (
         <Image
           src={src}
@@ -53,11 +53,8 @@ export default function ProgressiveImage({
           onError={() => setHasError(true)}
           className={`
             ${fill ? 'w-full h-full' : ''}
-            ${
-              isLoaded
-                ? 'progressive-blur-loaded'
-                : 'progressive-blur-loading'
-            }
+            transition-opacity duration-300 ease-out
+            ${isLoaded ? 'opacity-100' : 'opacity-90'}
             ${className}
           `}
           {...props}

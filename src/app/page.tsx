@@ -110,25 +110,25 @@ function MainContent() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                       rounded="rounded-none"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#1c1b1b] via-transparent to-black/40 pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none" />
 
                     {/* Badge */}
                     <div className="absolute top-4 left-4 flex flex-wrap gap-2">
-                      <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[11px] uppercase tracking-wider shadow-md">
+                      <span className="px-3 py-1 rounded-full bg-[#C8A24D] text-white font-bold text-[11px] uppercase tracking-wider shadow-md">
                         {apt.badge}
                       </span>
                     </div>
 
-                    <div className="absolute top-4 right-4 bg-[#2a2a2a]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#f2ca50] border border-white/10 shadow-lg">
+                    <div className="absolute top-4 right-4 bg-white/95 dark:bg-[#2a2a2a]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#171717] dark:text-[#f2ca50] border border-black/5 dark:border-white/10 shadow-lg">
                       <AirbnbLogo className="w-3.5 h-3.5 text-[#FF385C]" />
-                      <Star className="w-3 h-3 fill-current text-[#f2ca50]" />
-                      <span className="text-white font-bold">{apt.rating}</span>
-                      <span className="text-[#d0c5af] font-light">({apt.reviewsCount})</span>
+                      <Star className="w-3 h-3 fill-current text-[#C8A24D] dark:text-[#f2ca50]" />
+                      <span className="text-[#171717] dark:text-white font-bold">{apt.rating}</span>
+                      <span className="text-[#666666] dark:text-[#d0c5af] font-light">({apt.reviewsCount})</span>
                     </div>
 
-                    <div className="absolute bottom-3 left-4 text-xs text-[#e5e2e1] font-light flex items-center gap-1.5 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md border border-white/10">
-                      <MapPin className="w-3.5 h-3.5 text-[#f2ca50]" />
-                      <span>{apt.location}</span>
+                    <div className="absolute bottom-3 left-4 text-xs font-medium flex items-center gap-1.5 bg-white/95 text-[#171717] dark:bg-black/70 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg border border-black/5 dark:border-white/15 shadow-md">
+                      <MapPin className="w-3.5 h-3.5 text-[#C8A24D] dark:text-[#f2ca50]" />
+                      <span className="font-semibold text-[#171717] dark:text-white">{apt.location}</span>
                     </div>
                   </div>
 

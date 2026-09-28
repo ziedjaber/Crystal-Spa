@@ -17,11 +17,13 @@ import {
   Lock,
   Copy,
   Check,
+  CreditCard,
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { FEATURED_APARTMENTS, calculateStayPricing } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
 import BookingCalendar from './BookingCalendar';
+import StripePaymentForm from '@/components/payment/StripePaymentForm';
 
 interface ApartmentBookingProps {
   initialApartmentId?: string;
@@ -88,6 +90,8 @@ export default function ApartmentBooking({
   const [copiedCode, setCopiedCode] = useState<boolean>(false);
   const [showCalendarView, setShowCalendarView] = useState<boolean>(false);
   const [isCalendarModalOpen, setIsCalendarModalOpen] = useState<boolean>(false);
+  const [paymentMethod, setPaymentMethod] = useState<'stripe' | 'direct'>('stripe');
+  const [showStripeCheckout, setShowStripeCheckout] = useState<boolean>(false);
 
   const toggleCalendarView = () => {
     setIsCalendarModalOpen(true);
@@ -120,19 +124,9 @@ export default function ApartmentBooking({
     );
   };
 
-  const handleConfirm = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!guestName || !guestEmail || !guestPhone) {
-      setErrorMsg(
-        language === 'fr'
-          ? 'Veuillez renseigner votre nom, email et numéro de téléphone.'
-          : 'Please enter your name, email, and phone number.'
-      );
-      return;
-    }
-    setErrorMsg('');
+  const finalizeBookingWithPayment = async (stripeData?: any) => {
     setLoading(true);
-
+    setErrorMsg('');
     try {
       const res = await fetch('/api/bookings', {
         method: 'POST',
@@ -146,7 +140,7 @@ export default function ApartmentBooking({
           guestEmail: guestEmail.trim(),
           guestPhone: guestPhone.trim(),
           selectedPacks,
-          specialRequests: specialRequests.trim(),
+          specialRequests: specialRequests.trim() + (stripeData ? ` [Paiement Stripe validé: ${stripeData.transactionRef}]` : ''),
           hp_company_field: hpCompanyField,
         }),
       });
@@ -154,17 +148,12 @@ export default function ApartmentBooking({
       const data = await res.json();
       setLoading(false);
 
-      if (res.status === 429) {
-        setErrorMsg(
-          language === 'fr'
-            ? 'Trop de tentatives rapprochées. Veuillez patienter 1 minute avant de réessayer.'
-            : 'Too many requests. Please wait a minute before trying again.'
-        );
-        return;
-      }
-
       if (data.success) {
-        setConfirmedBooking(data.data);
+        setConfirmedBooking({
+          ...data.data,
+          paymentRef: stripeData?.transactionRef,
+          isPaidOnline: !!stripeData,
+        });
         setStep(4);
         confetti({
           particleCount: 150,
@@ -172,21 +161,32 @@ export default function ApartmentBooking({
           origin: { y: 0.6 },
         });
       } else {
-        setErrorMsg(
-          data.error ||
-            (language === 'fr'
-              ? 'Erreur lors de la réservation. Veuillez vérifier vos informations.'
-              : 'Booking failed. Please check your information.')
-        );
+        setErrorMsg(data.error || 'Erreur lors de l’enregistrement de votre réservation.');
       }
     } catch (err) {
       setLoading(false);
+      setErrorMsg('Erreur de connexion sécurisée.');
+    }
+  };
+
+  const handleConfirm = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!guestName || !guestEmail || !guestPhone) {
       setErrorMsg(
         language === 'fr'
-          ? 'Erreur de connexion sécurisée. Veuillez vérifier votre réseau.'
-          : 'Secure connection error. Please verify your network.'
+          ? 'Veuillez renseigner votre nom, email et numéro de téléphone.'
+          : 'Please enter your name, email, and phone number.'
       );
+      return;
     }
+    setErrorMsg('');
+
+    if (paymentMethod === 'stripe') {
+      setShowStripeCheckout(true);
+      return;
+    }
+
+    await finalizeBookingWithPayment();
   };
 
   const copyBookingCode = () => {
@@ -198,7 +198,7 @@ export default function ApartmentBooking({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto rounded-3xl bg-[#151414] border border-[#f2ca50]/30 shadow-[0_20px_70px_rgba(0,0,0,0.8)] p-5 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
+    <div className="booking-modal-card w-full max-w-4xl mx-auto rounded-3xl bg-[#151414] border border-[#f2ca50]/30 shadow-[0_20px_70px_rgba(0,0,0,0.8)] p-5 sm:p-8 md:p-10 text-[#e5e2e1] relative overflow-hidden">
       
       {/* Brand & Guarantee Header */}
       <div className="mb-6 flex flex-col sm:flex-row justify-between sm:items-center gap-4 pb-5 border-b border-white/10">
@@ -726,6 +726,59 @@ export default function ApartmentBooking({
                 />
               </div>
 
+              {/* Payment Mode Selection */}
+              <div className="flex flex-col gap-2.5">
+                <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
+                  {language === 'fr' ? 'Mode de Règlement & Garantie *' : 'Payment & Guarantee Method *'}
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div
+                    onClick={() => setPaymentMethod('stripe')}
+                    className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between gap-2 ${
+                      paymentMethod === 'stripe'
+                        ? 'bg-[#221f17] border-[#f2ca50] shadow-[0_0_20px_rgba(242,202,80,0.15)] ring-1 ring-[#f2ca50]'
+                        : 'bg-[#121110] border-white/5 hover:border-[#f2ca50]/30'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-[#f2ca50]">
+                        <CreditCard className="w-4 h-4" />
+                        <span className="font-semibold text-xs text-white">
+                          {language === 'fr' ? 'Carte Bancaire (Stripe)' : 'Credit Card (Stripe)'}
+                        </span>
+                      </div>
+                      <span className="text-[9px] font-bold text-[#22c55e] bg-[#22c55e]/15 px-2 py-0.5 rounded-full">
+                        Instant
+                      </span>
+                    </div>
+                    <p className="text-[11px] text-[#99907c]">
+                      {language === 'fr' ? 'Paiement immédiat sécurisé avec test mode ou live 3DS' : 'Secure instant payment with Stripe SSL 256-bit'}
+                    </p>
+                  </div>
+
+                  <div
+                    onClick={() => setPaymentMethod('direct')}
+                    className={`p-4 rounded-2xl border cursor-pointer transition-all flex flex-col justify-between gap-2 ${
+                      paymentMethod === 'direct'
+                        ? 'bg-[#221f17] border-[#f2ca50] shadow-[0_0_20px_rgba(242,202,80,0.15)] ring-1 ring-[#f2ca50]'
+                        : 'bg-[#121110] border-white/5 hover:border-[#f2ca50]/30'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-[#f2ca50]">
+                        <ShieldCheck className="w-4 h-4" />
+                        <span className="font-semibold text-xs text-white">
+                          {language === 'fr' ? 'Empreinte de Garantie' : 'Security Hold Pre-Auth'}
+                        </span>
+                      </div>
+                    </div>
+                    <p className="text-[11px] text-[#99907c]">
+                      {language === 'fr' ? 'Caution 250 € (non débitée) • Règlement différé' : '€250 hold (not debited) • Pay later'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               {/* Order Recap Card */}
               <div className="rounded-2xl bg-[#101010] p-5 border border-[#f2ca50]/20 flex flex-col gap-3 text-xs">
                 <div className="flex justify-between items-center text-sm font-semibold text-white">
@@ -745,29 +798,67 @@ export default function ApartmentBooking({
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-between items-stretch sm:items-center pt-4 border-t border-white/5">
-                <button
-                  type="button"
-                  onClick={() => setStep(2)}
-                  className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>{language === 'fr' ? 'Retour aux Packs' : 'Back to Packs'}</span>
-                </button>
+              {/* Embedded Stripe Checkout Form when requested */}
+              {showStripeCheckout ? (
+                <div className="pt-4 space-y-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-[#f2ca50] uppercase tracking-wider flex items-center gap-1.5">
+                      <CreditCard className="w-4 h-4" />
+                      {language === 'fr' ? 'Formulaire de Paiement Stripe' : 'Stripe Payment Terminal'}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setShowStripeCheckout(false)}
+                      className="text-xs text-[#99907c] hover:text-white underline cursor-pointer"
+                    >
+                      {language === 'fr' ? 'Modifier mes coordonnées' : 'Edit details'}
+                    </button>
+                  </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-widest luxury-shimmer-btn flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xl disabled:opacity-50"
-                >
-                  {loading ? (
-                    <span>{language === 'fr' ? 'Validation en cours...' : 'Processing...'}</span>
-                  ) : (
-                    <span>{language === 'fr' ? 'Confirmer la Réservation Immédiate' : 'Confirm Immediate Booking'}</span>
-                  )}
-                </button>
-              </div>
+                  <StripePaymentForm
+                    amountEUR={calculateTotal()}
+                    apartmentTitle={currentApartment.title}
+                    apartmentId={currentApartment.id}
+                    checkInDate={checkInDate}
+                    checkOutDate={checkOutDate}
+                    guestName={guestName}
+                    guestEmail={guestEmail}
+                    guestPhone={guestPhone}
+                    selectedPacks={selectedPacks}
+                    onPaymentSuccess={(stripeData) => finalizeBookingWithPayment(stripeData)}
+                    onPaymentError={(err) => setErrorMsg(err)}
+                  />
+                </div>
+              ) : (
+                /* Action Buttons */
+                <div className="flex flex-col-reverse sm:flex-row gap-3 sm:justify-between items-stretch sm:items-center pt-4 border-t border-white/5">
+                  <button
+                    type="button"
+                    onClick={() => setStep(2)}
+                    className="w-full sm:w-auto px-5 py-3 rounded-xl bg-[#222121] hover:bg-[#2d2c2c] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>{language === 'fr' ? 'Retour aux Packs' : 'Back to Packs'}</span>
+                  </button>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full sm:w-auto px-8 py-4 rounded-xl bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-widest luxury-shimmer-btn flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xl disabled:opacity-50"
+                  >
+                    {loading ? (
+                      <span>{language === 'fr' ? 'Validation en cours...' : 'Processing...'}</span>
+                    ) : paymentMethod === 'stripe' ? (
+                      <span className="flex items-center gap-2">
+                        <Lock className="w-4 h-4" />
+                        {language === 'fr' ? `Payer par Carte Bancaire • ${calculateTotal()} €` : `Pay with Card • €${calculateTotal()}`}
+                      </span>
+                    ) : (
+                      <span>{language === 'fr' ? 'Confirmer la Réservation Immédiate' : 'Confirm Immediate Booking'}</span>
+                    )}
+                  </button>
+                </div>
+              )}
             </form>
           </motion.div>
         )}
@@ -825,6 +916,20 @@ export default function ApartmentBooking({
                 <span className="text-[#99907c]">{language === 'fr' ? 'DATES' : 'DATES'}</span>
                 <span className="font-medium text-white">{checkInDate} → {checkOutDate}</span>
               </div>
+
+              <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                <span className="text-[#99907c]">{language === 'fr' ? 'RÈGLEMENT' : 'PAYMENT'}</span>
+                <span className="font-semibold text-xs text-[#22c55e] bg-[#22c55e]/15 px-2.5 py-0.5 rounded-full border border-[#22c55e]/30">
+                  {confirmedBooking.isPaidOnline ? (language === 'fr' ? 'Payé en ligne (Stripe)' : 'Paid Online (Stripe)') : (language === 'fr' ? 'Garantie confirmée' : 'Hold Confirmed')}
+                </span>
+              </div>
+
+              {confirmedBooking.paymentRef && (
+                <div className="flex justify-between items-center border-b border-white/5 pb-3">
+                  <span className="text-[#99907c]">{language === 'fr' ? 'RÉF TRANSACTION' : 'TRANSACTION REF'}</span>
+                  <span className="font-mono text-xs text-[#f2ca50]">{confirmedBooking.paymentRef}</span>
+                </div>
+              )}
 
               <div className="flex justify-between items-center">
                 <span className="text-[#99907c]">{language === 'fr' ? 'MONTANT TOTAL' : 'TOTAL AMOUNT'}</span>

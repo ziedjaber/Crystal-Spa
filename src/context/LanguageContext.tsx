@@ -82,7 +82,7 @@ const TRANSLATIONS: Record<Language, Record<string, string>> = {
     'hero.title.pre': "L'art du luxe intime",
     'hero.title.accent': "Quand le bien-être",
     'hero.title.post': "devient une histoire à deux.",
-    'hero.desc': "Découvrez nos suites spa privatives haut de gamme avec jacuzzi privatif, sauna finlandais en cèdre et services d’hôtellerie 5 étoiles en totale discrétion.",
+    'hero.desc': "Découvrez nos suites spa privées haut de gamme avec jacuzzi privatif, sauna finlandais en cèdre et services hôteliers 5 étoiles en totale discrétion.",
     'hero.cta.book': 'Réserver votre Suite',
     'hero.cta.virtual': 'Visite Immersive 360°',
     'hero.trust.privacy': '100% Privatif & Secret',

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Outfit, Plus_Jakarta_Sans, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/context/ThemeContext";
+import WhatsAppFloatingButton from "@/components/ui/WhatsAppFloatingButton";
+import CookieBanner from "@/components/ui/CookieBanner";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -26,18 +29,45 @@ const cormorant = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://crystal-spa.fr'),
-  title: "Crystal Spa – Suite Spa Privative de Luxe",
-  description: "L'art du luxe intime. Quand le bien-être devient une histoire à deux. Suites spa privatives haut de gamme avec jacuzzi privatif, sauna finlandais et services 5 étoiles.",
-  keywords: ["crystal spa", "suite spa privative", "jacuzzi privatif", "sauna privatif", "séjour romantique luxe", "spa paris"],
+  title: "Crystal Spa – Suite Spa Privée de Luxe",
+  description: "L'art du luxe intime. Quand le bien-être devient une histoire à deux. Suites spa privées haut de gamme avec jacuzzi privatif, sauna finlandais et services hôteliers 5 étoiles.",
+  keywords: ["crystal spa", "suite spa privée", "jacuzzi privatif", "sauna privatif", "séjour romantique luxe", "spa paris"],
   openGraph: {
-    title: "Crystal Spa – Suite Spa Privative de Luxe",
-    description: "Suites spa privatives haut de gamme avec jacuzzi privatif et sauna.",
+    title: "Crystal Spa – Suite Spa Privée de Luxe",
+    description: "Suites spa privées haut de gamme avec jacuzzi privatif et sauna.",
     images: ["/a1/Jacuzzi.png"],
   },
 };
 
-
-import WhatsAppFloatingButton from "@/components/ui/WhatsAppFloatingButton";
+const themeInitScript = `
+  (function() {
+    try {
+      var saved = localStorage.getItem('crystal_spa_theme');
+      var root = document.documentElement;
+      var isDark = true;
+      if (saved === 'light') {
+        isDark = false;
+      } else if (saved === 'dark') {
+        isDark = true;
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+        isDark = false;
+      }
+      if (!isDark) {
+        root.classList.remove('dark');
+        root.classList.add('light');
+        root.setAttribute('data-theme', 'light');
+        root.style.colorScheme = 'light';
+      } else {
+        root.classList.remove('light');
+        root.classList.add('dark');
+        root.setAttribute('data-theme', 'dark');
+        root.style.colorScheme = 'dark';
+      }
+    } catch (e) {
+      document.documentElement.classList.add('dark');
+    }
+  })();
+`;
 
 export default function RootLayout({
   children,
@@ -47,9 +77,11 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
+      suppressHydrationWarning
       className={`${outfit.variable} ${jakarta.variable} ${cormorant.variable} dark scroll-smooth h-full antialiased`}
     >
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <link
           rel="preload"
           as="image"
@@ -58,9 +90,15 @@ export default function RootLayout({
           fetchPriority="high"
         />
       </head>
-      <body className="min-h-full flex flex-col bg-[#131313] text-[#e5e2e1] font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00]">
-        {children}
-        <WhatsAppFloatingButton />
+      <body
+        suppressHydrationWarning
+        className="min-h-full flex flex-col font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00]"
+      >
+        <ThemeProvider>
+          {children}
+          <WhatsAppFloatingButton />
+          <CookieBanner />
+        </ThemeProvider>
       </body>
     </html>
   );

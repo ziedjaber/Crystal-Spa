@@ -107,6 +107,7 @@ export default function SuiteTopGallery({
       {/* 1. TOP HERO APARTMENT SHOWCASE & GALLERY SLIDER */}
       {/* ============================================================ */}
       <section
+        id="suite-hero"
         className="relative w-full min-h-[640px] sm:min-h-[720px] lg:min-h-[780px] flex flex-col justify-between overflow-hidden -mt-20 pt-28 pb-10"
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
@@ -128,7 +129,7 @@ export default function SuiteTopGallery({
         </div>
 
         {/* Cinematic Scrim Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#131313] via-[#131313]/60 to-[#131313]/40 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#131313] [data-theme=light]:from-[#FAF8F5] via-black/60 [data-theme=light]:via-black/50 to-black/40 [data-theme=light]:to-black/30 pointer-events-none transition-colors" />
         <div className="absolute inset-0 scrim-radial-gold pointer-events-none opacity-70" />
         <div className="absolute inset-0 bg-black/25 pointer-events-none" />
 
@@ -137,20 +138,21 @@ export default function SuiteTopGallery({
           
           {/* Top Row: Breadcrumb & View Fullscreen Button */}
           <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs text-[#d0c5af] backdrop-blur-md bg-black/40 px-3.5 py-1.5 rounded-full border border-white/10 w-fit">
+            <div className="flex items-center gap-2 text-xs backdrop-blur-md bg-black/50 px-3.5 py-1.5 rounded-full border border-white/20 w-fit shadow-md" style={{ color: 'rgba(255,255,255,0.9)' }}>
               <Link
                 href="/"
-                className="hover:text-[#f2ca50] transition-colors flex items-center gap-1"
+                className="transition-colors flex items-center gap-1 hover:text-[#f2ca50]"
+                style={{ color: 'rgba(255,255,255,0.9)' }}
               >
-                <ArrowLeft className="w-3.5 h-3.5" />
-                <span>
+                <ArrowLeft className="w-3.5 h-3.5" style={{ color: 'rgba(255,255,255,0.9)' }} />
+                <span style={{ color: 'rgba(255,255,255,0.9)' }}>
                   {language === 'fr'
                     ? 'Domaine Crystal Spa'
                     : 'Crystal Spa Home'}
                 </span>
               </Link>
-              <span className="text-white/40">/</span>
-              <span className="text-[#f2ca50] font-semibold truncate max-w-[200px] sm:max-w-none">
+              <span style={{ color: 'rgba(255,255,255,0.4)' }}>/</span>
+              <span className="font-semibold truncate max-w-[200px] sm:max-w-none" style={{ color: '#f2ca50' }}>
                 {apartment.title}
               </span>
             </div>
@@ -158,14 +160,15 @@ export default function SuiteTopGallery({
             {/* Quick Action: Open Full Lightbox */}
             <button
               onClick={() => setLightboxOpen(true)}
-              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-[#f2ca50] text-[#e5e2e1] hover:text-[#3c2f00] text-xs font-semibold backdrop-blur-md border border-white/15 hover:border-[#f2ca50] transition-all cursor-pointer shadow-lg"
+              className="group flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-[#C8A24D] text-white hover:text-white text-xs font-semibold backdrop-blur-md border border-white/20 hover:border-[#C8A24D] transition-all cursor-pointer shadow-lg"
               aria-label="Agrandir les photos"
+              style={{ color: '#ffffff' }}
             >
-              <Maximize2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline">
+              <Maximize2 className="w-3.5 h-3.5 group-hover:scale-110 transition-transform" style={{ color: '#ffffff' }} />
+              <span className="hidden sm:inline" style={{ color: '#ffffff' }}>
                 {language === 'fr' ? 'Plein écran' : 'Fullscreen'}
               </span>
-              <span className="px-1.5 py-0.5 rounded-full bg-white/10 group-hover:bg-[#3c2f00]/20 text-[10px] font-mono">
+              <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-mono font-bold" style={{ color: '#ffffff' }}>
                 {currentIndex + 1}/{totalImages}
               </span>
             </button>
@@ -173,20 +176,20 @@ export default function SuiteTopGallery({
 
           {/* Badges & Rating */}
           <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-xs uppercase tracking-wider shadow-lg">
+            <span className="px-3.5 py-1 rounded-full bg-[#C8A24D] font-bold text-xs uppercase tracking-wider shadow-lg" style={{ color: '#ffffff' }}>
               {apartment.badge}
             </span>
-            <div className="px-3 py-1 rounded-full bg-[#1c1b1b]/90 backdrop-blur-md text-[#f2ca50] text-xs font-semibold border border-[#f2ca50]/30 flex items-center gap-1.5 shadow-md">
-              <Star className="w-3.5 h-3.5 fill-current" />
-              <span className="text-white font-bold">{apartment.rating}</span>
-              <span className="text-[#d0c5af] font-light">
+            <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-semibold border border-white/20 flex items-center gap-1.5 shadow-md" style={{ color: '#f2ca50' }}>
+              <Star className="w-3.5 h-3.5 fill-current" style={{ color: '#f2ca50' }} />
+              <span className="font-bold" style={{ color: '#ffffff' }}>{apartment.rating}</span>
+              <span className="font-light" style={{ color: 'rgba(255,255,255,0.8)' }}>
                 ({apartment.reviewsCount}{' '}
                 {language === 'fr' ? 'avis certifiés' : 'verified reviews'})
               </span>
             </div>
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/40 backdrop-blur-md text-emerald-400 text-xs font-medium border border-emerald-500/20">
-              <Sparkles className="w-3 h-3" />
-              <span>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-medium border border-emerald-500/30" style={{ color: '#34d399' }}>
+              <Sparkles className="w-3 h-3" style={{ color: '#34d399' }} />
+              <span style={{ color: '#ffffff' }}>
                 {language === 'fr' ? 'Spa Privatif 24h/24' : 'Private Spa 24/7'}
               </span>
             </div>
@@ -194,10 +197,16 @@ export default function SuiteTopGallery({
 
           {/* Title & Location */}
           <div className="flex flex-col gap-2 max-w-4xl">
-            <h1 className="font-serif text-3xl sm:text-5xl lg:text-6xl text-[#e5e2e1] leading-tight drop-shadow-md">
+            <h1
+              className="font-serif text-3xl sm:text-5xl lg:text-6xl font-medium leading-tight transition-colors"
+              style={{ color: '#FFFFFF', textShadow: '0 2px 15px rgba(0,0,0,0.85), 0 0 30px rgba(0,0,0,0.6)' }}
+            >
               {apartment.title}
             </h1>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light flex items-center gap-2">
+            <p
+              className="text-sm sm:text-base font-medium flex items-center gap-2"
+              style={{ color: '#EDE8E0', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}
+            >
               <MapPin className="w-4 h-4 text-[#f2ca50] shrink-0" />
               <span>
                 {apartment.location} • {apartment.locationDetails}
@@ -206,31 +215,31 @@ export default function SuiteTopGallery({
           </div>
 
           {/* Stats Row */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-8 pt-2 text-xs sm:text-sm text-[#e5e2e1]">
-            <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/5">
-              <Users className="w-4 h-4 text-[#f2ca50]" />
-              <span>
+          <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2 text-xs sm:text-sm">
+            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-md font-medium" style={{ color: '#ffffff' }}>
+              <Users className="w-4 h-4" style={{ color: '#f2ca50' }} />
+              <span style={{ color: '#ffffff' }}>
                 {apartment.capacityGuests}{' '}
                 {language === 'fr' ? 'Voyageurs' : 'Guests'}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/5">
-              <Bed className="w-4 h-4 text-[#f2ca50]" />
-              <span>
+            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-md font-medium" style={{ color: '#ffffff' }}>
+              <Bed className="w-4 h-4" style={{ color: '#f2ca50' }} />
+              <span style={{ color: '#ffffff' }}>
                 {apartment.bedroomsCount}{' '}
                 {language === 'fr' ? 'Chambre King/Queen' : 'Bedroom'}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/5">
-              <Shield className="w-4 h-4 text-[#f2ca50]" />
-              <span>
+            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-md font-medium" style={{ color: '#ffffff' }}>
+              <Shield className="w-4 h-4" style={{ color: '#f2ca50' }} />
+              <span style={{ color: '#ffffff' }}>
                 {apartment.surfaceM2} m²{' '}
                 {language === 'fr' ? 'Privatifs' : 'Private Surface'}
               </span>
             </div>
-            <div className="flex items-center gap-2 bg-black/30 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-white/5">
-              <CheckCircle2 className="w-4 h-4 text-[#f2ca50]" />
-              <span>
+            <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-white/20 shadow-md font-medium" style={{ color: '#ffffff' }}>
+              <CheckCircle2 className="w-4 h-4" style={{ color: '#f2ca50' }} />
+              <span style={{ color: '#ffffff' }}>
                 {language === 'fr'
                   ? 'Arrivée Autonome 24h/24'
                   : 'Self Check-in 24/7'}
@@ -243,20 +252,22 @@ export default function SuiteTopGallery({
         <div className="absolute top-1/2 -translate-y-1/2 left-3 sm:left-6 z-20">
           <button
             onClick={handlePrev}
-            className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-[#f2ca50] text-[#e5e2e1] hover:text-[#3c2f00] backdrop-blur-xl border border-white/20 hover:border-[#f2ca50] flex items-center justify-center transition-all duration-300 shadow-2xl group cursor-pointer hover:scale-105 active:scale-95"
+            className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/70 hover:bg-[#C8A24D] backdrop-blur-xl border border-white/25 hover:border-[#C8A24D] flex items-center justify-center transition-all duration-300 shadow-2xl group cursor-pointer hover:scale-105 active:scale-95"
             aria-label="Image précédente"
+            style={{ color: '#ffffff' }}
           >
-            <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" />
+            <ChevronLeft className="w-6 h-6 group-hover:-translate-x-0.5 transition-transform" style={{ color: '#ffffff' }} />
           </button>
         </div>
 
         <div className="absolute top-1/2 -translate-y-1/2 right-3 sm:right-6 z-20">
           <button
             onClick={handleNext}
-            className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/60 hover:bg-[#f2ca50] text-[#e5e2e1] hover:text-[#3c2f00] backdrop-blur-xl border border-white/20 hover:border-[#f2ca50] flex items-center justify-center transition-all duration-300 shadow-2xl group cursor-pointer hover:scale-105 active:scale-95"
+            className="w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-black/70 hover:bg-[#C8A24D] backdrop-blur-xl border border-white/25 hover:border-[#C8A24D] flex items-center justify-center transition-all duration-300 shadow-2xl group cursor-pointer hover:scale-105 active:scale-95"
             aria-label="Image suivante"
+            style={{ color: '#ffffff' }}
           >
-            <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" />
+            <ChevronRight className="w-6 h-6 group-hover:translate-x-0.5 transition-transform" style={{ color: '#ffffff' }} />
           </button>
         </div>
 
@@ -264,37 +275,37 @@ export default function SuiteTopGallery({
         <div className="relative z-10 w-full px-6 md:px-12 lg:px-24 max-w-7xl mx-auto flex flex-col gap-5 mt-6">
           
           {/* Active Image Caption & Counter Bar */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-black/60 backdrop-blur-xl px-4 sm:px-6 py-3 rounded-2xl border border-white/10 shadow-2xl">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/95 dark:bg-[#1c1b1b]/95 backdrop-blur-xl px-4 sm:px-6 py-3 rounded-2xl border border-black/10 dark:border-white/10 shadow-2xl transition-all">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-xl bg-[#f2ca50]/20 text-[#f2ca50] border border-[#f2ca50]/30 shrink-0">
+              <div className="p-2.5 rounded-xl bg-[#C8A24D]/15 dark:bg-[#f2ca50]/20 text-[#B89032] dark:text-[#f2ca50] border border-[#C8A24D]/30 dark:border-[#f2ca50]/30 shrink-0">
                 <Camera className="w-4 h-4" />
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#f2ca50]">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#B89032] dark:text-[#f2ca50]">
                     {currentImage.categoryLabel}
                   </span>
-                  <span className="text-[10px] text-[#d0c5af]/60">•</span>
-                  <span className="text-xs text-white font-medium truncate">
+                  <span className="text-[10px] text-[#8B8B8B] dark:text-[#d0c5af]/60">•</span>
+                  <span className="text-xs text-[#171717] dark:text-white font-semibold truncate">
                     {currentImage.title}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#d0c5af] font-light truncate max-w-md sm:max-w-xl">
+                <p className="text-[11px] text-[#666666] dark:text-[#d0c5af] font-light truncate max-w-md sm:max-w-xl">
                   {currentImage.description}
                 </p>
               </div>
             </div>
 
             {/* Price & Booking Call-to-action */}
-            <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-white/10">
+            <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-black/10 dark:border-white/10">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xs text-[#d0c5af] font-light">
+                <span className="text-xs text-[#666666] dark:text-[#d0c5af] font-light">
                   {language === 'fr' ? 'Dès' : 'From'}
                 </span>
-                <span className="font-serif text-2xl sm:text-3xl font-bold text-[#f2ca50]">
+                <span className="font-serif text-2xl sm:text-3xl font-bold text-[#C8A24D] dark:text-[#f2ca50]">
                   {apartment.pricePerNightEUR} €
                 </span>
-                <span className="text-[11px] text-[#d0c5af] font-light">
+                <span className="text-[11px] text-[#8B8B8B] dark:text-[#d0c5af] font-light">
                   / {language === 'fr' ? 'nuit' : 'night'}
                 </span>
               </div>
@@ -302,16 +313,16 @@ export default function SuiteTopGallery({
               <div className="flex items-center gap-2">
                 <a
                   href="#galerie-section"
-                  className="px-4 py-2.5 rounded-lg bg-[#1c1b1b] hover:bg-[#2a2a2a] text-[#e5e2e1] text-xs font-semibold transition-all border border-white/10 text-center cursor-pointer flex items-center gap-1.5"
+                  className="px-4 py-2.5 rounded-xl bg-[#FAF8F5] dark:bg-[#252424] hover:bg-[#F5F2EC] dark:hover:bg-[#2e2d2d] text-[#171717] dark:text-[#e5e2e1] text-xs font-semibold transition-all border border-black/10 dark:border-white/10 text-center cursor-pointer flex items-center gap-1.5 shadow-sm"
                 >
-                  <Eye className="w-3.5 h-3.5 text-[#f2ca50]" />
+                  <Eye className="w-3.5 h-3.5 text-[#C8A24D] dark:text-[#f2ca50]" />
                   <span className="hidden sm:inline">
                     {language === 'fr' ? '30+ Photos' : '30+ Photos'}
                   </span>
                 </a>
                 <button
                   onClick={onOpenBookingModal}
-                  className="px-6 py-2.5 rounded-lg bg-[#f2ca50] hover:bg-[#d4af37] text-[#3c2f00] text-xs font-bold uppercase tracking-wider luxury-shimmer-btn shadow-lg shadow-[#d4af37]/20 cursor-pointer"
+                  className="px-6 py-2.5 rounded-xl bg-[#C8A24D] hover:bg-[#B89032] text-white text-xs font-bold uppercase tracking-wider luxury-shimmer-btn shadow-lg shadow-[#C8A24D]/30 cursor-pointer"
                 >
                   {language === 'fr' ? 'Réserver' : 'Book Now'}
                 </button>
@@ -330,8 +341,8 @@ export default function SuiteTopGallery({
                     onClick={() => handleSelect(idx)}
                     className={`relative group rounded-xl overflow-hidden cursor-pointer transition-all duration-300 ${
                       isActive
-                        ? 'ring-2 ring-[#f2ca50] ring-offset-2 ring-offset-[#131313] scale-105 shadow-xl shadow-[#f2ca50]/20'
-                        : 'opacity-65 hover:opacity-100 border border-white/10 hover:border-white/30'
+                        ? 'ring-2 ring-[#C8A24D] ring-offset-2 ring-offset-black scale-105 shadow-xl shadow-[#C8A24D]/30'
+                        : 'opacity-75 hover:opacity-100 border border-white/20 hover:border-white/50'
                     }`}
                     style={{ width: '104px', height: '68px' }}
                     aria-label={`Afficher ${img.title}`}
@@ -346,12 +357,15 @@ export default function SuiteTopGallery({
                     <div
                       className={`absolute inset-0 transition-opacity ${
                         isActive
-                          ? 'bg-gradient-to-t from-black/80 via-transparent to-transparent'
-                          : 'bg-black/30 group-hover:bg-transparent'
+                          ? 'bg-gradient-to-t from-black/85 via-transparent to-transparent'
+                          : 'bg-black/35 group-hover:bg-transparent'
                       }`}
                     />
-                    <div className="absolute bottom-1 left-1 right-1 flex items-center justify-between text-[9px] font-medium text-white px-1">
-                      <span className="truncate drop-shadow-md">
+                    <div className="absolute bottom-1 left-1 right-1 flex items-center justify-between text-[9px] font-semibold text-white px-1 pointer-events-none">
+                      <span
+                        className="truncate text-white font-bold tracking-wider uppercase text-[8.5px]"
+                        style={{ textShadow: '0 1px 4px rgba(0,0,0,0.95), 0 0 8px rgba(0,0,0,0.8)' }}
+                      >
                         {img.categoryLabel || `Photo ${idx + 1}`}
                       </span>
                       {isActive && (

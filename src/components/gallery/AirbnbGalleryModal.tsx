@@ -99,12 +99,20 @@ export default function AirbnbGalleryModal({
 
   // Toggle Native Fullscreen
   const toggleNativeFullscreen = () => {
-    if (!document.fullscreenElement) {
-      modalContainerRef.current?.requestFullscreen?.();
-      setIsFullscreen(true);
-    } else {
-      document.exitFullscreen?.();
-      setIsFullscreen(false);
+    try {
+      if (typeof document !== 'undefined') {
+        if (!document.fullscreenElement) {
+          if (modalContainerRef.current && modalContainerRef.current.isConnected) {
+            modalContainerRef.current.requestFullscreen?.().catch(() => {});
+            setIsFullscreen(true);
+          }
+        } else {
+          document.exitFullscreen?.().catch(() => {});
+          setIsFullscreen(false);
+        }
+      }
+    } catch {
+      // Safe fallback if DOM element is not connected
     }
   };
 
@@ -210,24 +218,35 @@ export default function AirbnbGalleryModal({
 
   // Auto-scroll active thumbnail into view
   useEffect(() => {
-    if (activeThumbnailRef.current) {
-      activeThumbnailRef.current.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest',
-      });
+    if (isOpen && activeThumbnailRef.current && activeThumbnailRef.current.isConnected) {
+      try {
+        activeThumbnailRef.current.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest',
+        });
+      } catch {
+        // Safe fallback if DOM element is not connected
+      }
     }
-  }, [currentIndex]);
+  }, [currentIndex, isOpen]);
 
-  // Lock body scroll when modal is open
+  // Lock body scroll when modal is open and cleanup fullscreen on unmount
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
+      if (typeof document !== 'undefined' && document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {});
+        setIsFullscreen(false);
+      }
     }
     return () => {
       document.body.style.overflow = '';
+      if (typeof document !== 'undefined' && document.fullscreenElement) {
+        document.exitFullscreen?.().catch(() => {});
+      }
     };
   }, [isOpen]);
 
@@ -248,22 +267,24 @@ export default function AirbnbGalleryModal({
         {/* ============================================================== */}
         {/* 1. TOP AIRBNB-STYLE NAVIGATION & ACTIONS BAR */}
         {/* ============================================================== */}
-        <header className="relative z-30 flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border-b border-white/10 bg-black/40 backdrop-blur-md">
+        {/* 1. TOP AIRBNB-STYLE NAVIGATION BAR */}
+        {/* ============================================================== */}
+        <header className="relative z-30 flex items-center justify-between px-4 sm:px-8 py-3 sm:py-4 border-b border-white/15 bg-black/70 backdrop-blur-xl text-white">
           {/* Left: Counter & Room Category */}
           <div className="flex items-center gap-3 sm:gap-4">
-            <span className="text-xs sm:text-sm font-mono tracking-widest text-[#d0c5af] bg-white/5 px-3 py-1 rounded-full border border-white/10">
+            <span className="text-xs sm:text-sm font-mono tracking-widest text-white/90 bg-white/10 px-3.5 py-1.5 rounded-full border border-white/20">
               <span className="text-[#f2ca50] font-bold">{currentIndex + 1}</span> / {total}
             </span>
 
             {currentImage.categoryLabel && (
-              <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#f2ca50] bg-[#f2ca50]/10 px-3 py-1 rounded-full border border-[#f2ca50]/20">
+              <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#f2ca50] bg-[#f2ca50]/15 px-3 py-1 rounded-full border border-[#f2ca50]/30">
                 <Sparkles className="w-3 h-3" />
                 <span>{currentImage.categoryLabel}</span>
               </span>
             )}
 
             {apartmentTitle && (
-              <span className="text-xs text-[#c9c6bf] font-serif hidden md:inline truncate max-w-xs">
+              <span className="text-xs text-[#eae8e6] font-medium hidden md:inline truncate max-w-sm border-l border-white/20 pl-3">
                 {apartmentTitle}
               </span>
             )}
@@ -277,29 +298,29 @@ export default function AirbnbGalleryModal({
               className={`p-2 sm:p-2.5 rounded-full border transition-all cursor-pointer ${
                 isZoomed
                   ? 'bg-[#f2ca50] text-[#3c2f00] border-[#f2ca50] shadow-[0_0_12px_rgba(242,202,80,0.4)]'
-                  : 'bg-white/5 hover:bg-white/10 text-white border-white/10'
+                  : 'bg-white/10 hover:bg-white/20 text-white border-white/20'
               }`}
               title={isZoomed ? 'Dézoomer (1x)' : 'Zoomer (2.2x)'}
               aria-label="Zoomer ou dézoomer l'image"
             >
               {isZoomed ? (
-                <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5" />
+                <ZoomOut className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               ) : (
-                <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5" />
+                <ZoomIn className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               )}
             </button>
 
             {/* Native Fullscreen */}
             <button
               onClick={toggleNativeFullscreen}
-              className="p-2 sm:p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-all cursor-pointer hidden sm:block"
+              className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-all cursor-pointer hidden sm:block"
               title="Plein écran"
               aria-label="Activer ou désactiver le plein écran"
             >
               {isFullscreen ? (
-                <Minimize className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Minimize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               ) : (
-                <Maximize className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Maximize className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               )}
             </button>
 
@@ -308,8 +329,8 @@ export default function AirbnbGalleryModal({
               onClick={() => setShowCaption((prev) => !prev)}
               className={`p-2 sm:p-2.5 rounded-full border transition-all cursor-pointer hidden sm:block ${
                 showCaption
-                  ? 'bg-white/15 text-[#f2ca50] border-[#f2ca50]/30'
-                  : 'bg-white/5 text-white/60 border-white/10'
+                  ? 'bg-white/20 text-[#f2ca50] border-[#f2ca50]/40'
+                  : 'bg-white/10 text-white/70 border-white/20'
               }`}
               title="Afficher/masquer les détails"
               aria-label="Basculer la légende"
@@ -320,11 +341,11 @@ export default function AirbnbGalleryModal({
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="p-2 sm:p-2.5 rounded-full bg-white/10 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] border border-white/10 transition-all cursor-pointer ml-1 sm:ml-2 shadow-lg"
+              className="p-2 sm:p-2.5 rounded-full bg-white/15 hover:bg-[#C8A24D] text-white hover:text-white border border-white/25 transition-all cursor-pointer ml-1 sm:ml-2 shadow-lg"
               title="Fermer (Échap)"
               aria-label="Fermer la galerie"
             >
-              <X className="w-4 h-4 sm:w-5 sm:h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </button>
           </div>
         </header>
@@ -345,10 +366,10 @@ export default function AirbnbGalleryModal({
           {/* Navigation Chevron Left */}
           <button
             onClick={handlePrev}
-            className="absolute left-2 sm:left-6 z-30 p-2.5 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-xl border border-white/15 transition-all cursor-pointer shadow-2xl hover:scale-105 active:scale-95"
+            className="absolute left-2 sm:left-6 z-30 p-2.5 sm:p-4 rounded-full bg-black/75 hover:bg-[#C8A24D] text-white hover:text-white backdrop-blur-xl border border-white/25 transition-all cursor-pointer shadow-2xl hover:scale-105 active:scale-95"
             aria-label="Photo précédente"
           >
-            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7" />
+            <ChevronLeft className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
           </button>
 
           {/* Active Image Box */}
@@ -386,7 +407,7 @@ export default function AirbnbGalleryModal({
                   alt={currentImage.title || 'Photo Crystal Spa'}
                   fill
                   priority
-                  containerClassName="w-full h-full rounded-xl sm:rounded-2xl overflow-hidden shadow-2xl border border-white/10"
+                  containerClassName="bg-transparent w-full h-full flex items-center justify-center overflow-hidden border-none shadow-none"
                   className="object-contain"
                   sizes="(max-width: 1280px) 100vw, 1280px"
                 />
@@ -397,10 +418,10 @@ export default function AirbnbGalleryModal({
           {/* Navigation Chevron Right */}
           <button
             onClick={handleNext}
-            className="absolute right-2 sm:right-6 z-30 p-2.5 sm:p-4 rounded-full bg-black/60 hover:bg-[#f2ca50] text-white hover:text-[#3c2f00] backdrop-blur-xl border border-white/15 transition-all cursor-pointer shadow-2xl hover:scale-105 active:scale-95"
+            className="absolute right-2 sm:right-6 z-30 p-2.5 sm:p-4 rounded-full bg-black/75 hover:bg-[#C8A24D] text-white hover:text-white backdrop-blur-xl border border-white/25 transition-all cursor-pointer shadow-2xl hover:scale-105 active:scale-95"
             aria-label="Photo suivante"
           >
-            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7" />
+            <ChevronRight className="w-5 h-5 sm:w-7 sm:h-7 text-white" />
           </button>
 
           {/* Floating Caption / Atmospheric Details */}
@@ -412,12 +433,18 @@ export default function AirbnbGalleryModal({
                 exit={{ opacity: 0, y: 15 }}
                 className="absolute bottom-2 left-1/2 -translate-x-1/2 max-w-xl w-[90%] text-center pointer-events-none z-20"
               >
-                <div className="bg-[#121212]/85 backdrop-blur-md px-4 sm:px-6 py-2.5 rounded-2xl border border-white/10 shadow-2xl inline-block">
-                  <h3 className="font-serif text-sm sm:text-base text-[#e5e2e1] font-medium leading-snug">
+                <div className="bg-black/85 backdrop-blur-xl px-5 sm:px-7 py-3 rounded-2xl border border-white/20 shadow-2xl inline-block text-white">
+                  <h3
+                    className="font-serif text-sm sm:text-base font-bold leading-snug text-white"
+                    style={{ color: '#FFFFFF', textShadow: '0 1px 4px rgba(0,0,0,0.8)' }}
+                  >
                     {currentImage.title}
                   </h3>
                   {currentImage.description && (
-                    <p className="text-[11px] sm:text-xs text-[#d0c5af] font-light mt-0.5 line-clamp-2">
+                    <p
+                      className="text-[11px] sm:text-xs font-light mt-0.5 line-clamp-2"
+                      style={{ color: '#E0DACB', textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}
+                    >
                       {currentImage.description}
                     </p>
                   )}

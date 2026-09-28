@@ -3,9 +3,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import {
-  Menu,
-  X,
   Bed,
   Sparkles,
   ShieldCheck,
@@ -15,35 +14,40 @@ import {
   Calendar,
   User,
   ChevronRight,
+  Menu,
+  X,
+  Compass,
+  ArrowLeft,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { usePathname, useRouter } from 'next/navigation';
 import { useLanguage, FranceFlag, UsaFlag, SpainFlag } from '@/context/LanguageContext';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import { useTheme } from '@/context/ThemeContext';
+import { ApartmentItem } from '@/data/apartment';
 
-interface NavbarProps {
+interface SuiteNavbarProps {
+  apartment: ApartmentItem;
   onOpenBookingModal?: () => void;
 }
 
-export default function Navbar({ onOpenBookingModal }: NavbarProps) {
+export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavbarProps) {
   const { language, setLanguage, t } = useLanguage();
   const { isDark } = useTheme();
   const pathname = usePathname();
   const router = useRouter();
+  
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>('');
+  const [activeSection, setActiveSection] = useState<string>('suite-hero');
 
-  // Bulletproof scroll listener for mobile & desktop
+  // Bulletproof scroll listener for section highlighting
   useEffect(() => {
     const handleScroll = () => {
       const scrollPos = window.scrollY || document.documentElement.scrollTop || window.pageYOffset || 0;
       setScrolled(scrollPos > 25);
 
-      // Detect active section on scroll
       const sections = [
-        'suites-collection',
+        'suite-hero',
         'experience-section',
         'equipements-section',
         'galerie-section',
@@ -63,7 +67,6 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
       }
     };
 
-    // Listen on multiple events to support iOS/Android touch scrolling
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('touchmove', handleScroll, { passive: true });
     handleScroll();
@@ -75,15 +78,44 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
   }, []);
 
   const navLinks = [
-    { id: 'suites-collection', name: t('nav.suites'), icon: Bed, href: '#suites-collection' },
-    { id: 'experience-section', name: t('nav.experience'), icon: Sparkles, href: '#experience-section' },
-    { id: 'equipements-section', name: t('nav.equipements'), icon: ShieldCheck, href: '#equipements-section' },
-    { id: 'galerie-section', name: t('nav.galerie'), icon: ImageIcon, href: '#galerie-section' },
-    { id: 'avis-section', name: t('nav.reviews'), icon: Star, href: '#avis-section' },
-    { id: 'localisation-section', name: t('nav.contact'), icon: MapPin, href: '#localisation-section' },
+    {
+      id: 'suite-hero',
+      name: language === 'fr' ? 'Aperçu' : language === 'es' ? 'Visión General' : 'Overview',
+      icon: Compass,
+      href: '#suite-hero',
+    },
+    {
+      id: 'experience-section',
+      name: language === 'fr' ? 'Prestations' : language === 'es' ? 'Servicios' : 'Signature',
+      icon: Sparkles,
+      href: '#experience-section',
+    },
+    {
+      id: 'equipements-section',
+      name: language === 'fr' ? 'Équipements' : language === 'es' ? 'Equipamiento' : 'Amenities',
+      icon: ShieldCheck,
+      href: '#equipements-section',
+    },
+    {
+      id: 'galerie-section',
+      name: language === 'fr' ? 'Galerie' : language === 'es' ? 'Galería' : 'Gallery',
+      icon: ImageIcon,
+      href: '#galerie-section',
+    },
+    {
+      id: 'avis-section',
+      name: language === 'fr' ? 'Avis' : language === 'es' ? 'Reseñas' : 'Reviews',
+      icon: Star,
+      href: '#avis-section',
+    },
+    {
+      id: 'localisation-section',
+      name: language === 'fr' ? 'Accès' : language === 'es' ? 'Ubicación' : 'Location',
+      icon: MapPin,
+      href: '#localisation-section',
+    },
   ];
 
-  // Smooth scroll handler with offset calculation
   const handleNavClick = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
       e.preventDefault();
@@ -121,7 +153,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
   return (
     <>
       <header
-        id="main-nav"
+        id="suite-main-nav"
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 backdrop-blur-xl border-b ${
           scrolled ? 'py-2.5 sm:py-3' : 'py-3.5 sm:py-4'
         }`}
@@ -149,17 +181,17 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-6" aria-label="Navigation Principale">
+          {/* Desktop Navigation Links */}
+          <nav className="hidden xl:flex items-center gap-6" aria-label="Navigation de la Suite">
             {navLinks.map((link) => {
               const Icon = link.icon;
               const isActive = activeSection === link.id;
               return (
                 <a
-                  key={link.name}
+                  key={link.id}
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
-                  className={`flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] transition-all py-1 relative ${
+                  className={`flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] transition-all py-1 relative cursor-pointer ${
                     isActive
                       ? !isDark ? 'text-[#B89032]' : 'text-[#f2ca50]'
                       : !isDark ? 'text-[#444444] hover:text-[#B89032]' : 'text-[#d0c5af] hover:text-[#f2ca50]'
@@ -169,7 +201,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
                   <span>{link.name}</span>
                   {isActive && (
                     <motion.div
-                      layoutId="activeNavIndicator"
+                      layoutId="activeSuiteNavIndicator"
                       className={`absolute -bottom-1 left-0 right-0 h-0.5 rounded-full ${!isDark ? 'bg-[#B89032] shadow-[0_0_8px_rgba(184,144,50,0.4)]' : 'bg-[#f2ca50] shadow-[0_0_8px_rgba(242,202,80,0.8)]'}`}
                     />
                   )}
@@ -221,7 +253,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
                     : 'opacity-70 hover:opacity-100'
                 }`}
                 style={language !== 'en' ? { color: !isDark ? '#666666' : '#d0c5af' } : {}}
-                title="English (US)"
+                title="English"
                 aria-label="Switch to English"
               >
                 <UsaFlag className="w-4 h-3" />
@@ -255,7 +287,13 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />
-              <span>{t('nav.book')}</span>
+              <span>
+                {language === 'fr'
+                  ? 'Réserver'
+                  : language === 'es'
+                  ? 'Reservar'
+                  : 'Book'}
+              </span>
             </button>
 
             {/* Profile / Account Icon */}
@@ -289,7 +327,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
         </div>
       </header>
 
-      {/* Mobile Drawer with Staggered Framer Motion Animations */}
+      {/* Mobile Drawer */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
@@ -357,7 +395,7 @@ export default function Navbar({ onOpenBookingModal }: NavbarProps) {
                   const isActive = activeSection === link.id;
                   return (
                     <motion.a
-                      key={link.name}
+                      key={link.id}
                       href={link.href}
                       initial={{ opacity: 0, x: -15 }}
                       animate={{ opacity: 1, x: 0 }}

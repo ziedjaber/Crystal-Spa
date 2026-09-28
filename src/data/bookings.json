@@ -1,5 +1,45 @@
 [
   {
+    "id": "BK-4059",
+    "apartmentId": "a1",
+    "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",
+    "checkInDate": "2026-09-29",
+    "checkOutDate": "2026-10-02",
+    "nightsCount": 3,
+    "guestsCount": 2,
+    "guestName": "Mohamed zied Jabeur",
+    "guestEmail": "ziedjaber18@gmail.com",
+    "guestPhone": "20358162",
+    "specialRequests": "[Paiement Stripe validé: CRYSTAL-TX-138684]",
+    "selectedPacks": [
+      {
+        "id": "pack-romance",
+        "name": "Pack Romance",
+        "priceEUR": 29
+      }
+    ],
+    "totalAmountEUR": 389,
+    "createdAt": "2026-09-28T09:03:34.903Z",
+    "status": "confirmed"
+  },
+  {
+    "id": "BK-8192",
+    "apartmentId": "a1",
+    "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",
+    "checkInDate": "2026-09-28",
+    "checkOutDate": "2026-09-29",
+    "nightsCount": 1,
+    "guestsCount": 2,
+    "guestName": "Houcine Jabeur",
+    "guestEmail": "jabeur01@gmail.com",
+    "guestPhone": "20358162",
+    "specialRequests": "",
+    "selectedPacks": [],
+    "totalAmountEUR": 120,
+    "createdAt": "2026-09-27T10:56:47.359Z",
+    "status": "confirmed"
+  },
+  {
     "id": "BK-8095",
     "apartmentId": "a1",
     "apartmentTitle": "Y0U AND ME • Jacuzzi • Sauna • Spa privé",

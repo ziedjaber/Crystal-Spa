@@ -26,8 +26,8 @@ export default function OtherApartmentsSection({
   if (otherApartments.length === 0) return null;
 
   return (
-    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 bg-[#0e0e0e] border-t border-white/5" id="autres-suites">
-      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-12">
+    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 bg-[#0e0e0e] border-t border-white/5" id="suites-collection">
+      <div id="autres-suites" className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-12">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -39,7 +39,7 @@ export default function OtherApartmentsSection({
               </span>
             </div>
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1]">
-              {language === 'fr' ? 'Découvrez nos Autres Suites d&apos;Exception' : 'Explore Our Other Signature Suites'}
+              {language === 'fr' ? "Découvrez nos Autres Suites d'Exception" : 'Explore Our Other Signature Suites'}
             </h2>
             <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed">
               {language === 'fr'
@@ -79,22 +79,22 @@ export default function OtherApartmentsSection({
 
                 {/* Badge Top Left */}
                 <div className="absolute top-4 left-4">
-                  <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[11px] uppercase tracking-wider shadow-lg">
+                  <span className="px-3 py-1 rounded-full bg-[#C8A24D] text-white font-bold text-[11px] uppercase tracking-wider shadow-lg">
                     {apt.badge}
                   </span>
                 </div>
 
                 {/* Rating Top Right */}
-                <div className="absolute top-4 right-4 bg-[#1c1b1b]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#f2ca50] border border-[#f2ca50]/30 shadow-md">
-                  <Star className="w-3.5 h-3.5 fill-current" />
-                  <span className="text-white font-bold">{apt.rating}</span>
-                  <span className="text-[#d0c5af] font-light">({apt.reviewsCount})</span>
+                <div className="absolute top-4 right-4 bg-white/95 dark:bg-[#1c1b1b]/90 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-1.5 text-xs text-[#171717] dark:text-[#f2ca50] border border-black/5 dark:border-[#f2ca50]/30 shadow-md">
+                  <Star className="w-3.5 h-3.5 fill-current text-[#C8A24D] dark:text-[#f2ca50]" />
+                  <span className="text-[#171717] dark:text-white font-bold">{apt.rating}</span>
+                  <span className="text-[#666666] dark:text-[#d0c5af] font-light">({apt.reviewsCount})</span>
                 </div>
 
                 {/* Location Pill Bottom */}
-                <div className="absolute bottom-3 left-4 text-xs text-[#e5e2e1] font-light flex items-center gap-1.5 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/15">
-                  <MapPin className="w-3.5 h-3.5 text-[#f2ca50] shrink-0" />
-                  <span className="truncate max-w-[220px]">{apt.location}</span>
+                <div className="absolute bottom-3 left-4 text-xs font-medium flex items-center gap-1.5 bg-white/95 text-[#171717] dark:bg-black/70 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg border border-black/5 dark:border-white/15 shadow-md">
+                  <MapPin className="w-3.5 h-3.5 text-[#C8A24D] dark:text-[#f2ca50] shrink-0" />
+                  <span className="truncate max-w-[220px] font-semibold">{apt.location}</span>
                 </div>
               </div>
 

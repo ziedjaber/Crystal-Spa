@@ -184,6 +184,7 @@ export default function Hero({ onReserveNow }: HeroProps) {
           poster="/hero/preview_video.jpg"
           className="hidden md:block w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
           aria-hidden="true"
+          suppressHydrationWarning
         >
           <source src="/hero/hero-bg.mp4" type="video/mp4" />
           <source src="/hero/hero-bg.webm" type="video/webm" />
@@ -200,6 +201,7 @@ export default function Hero({ onReserveNow }: HeroProps) {
           poster="/hero/preview_mobile.jpg"
           className="block md:hidden w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
           aria-hidden="true"
+          suppressHydrationWarning
         >
           <source src="/hero/hero-mobile.mp4" type="video/mp4" />
           <source src="/hero/hero-mobile.webm" type="video/webm" />
@@ -232,11 +234,11 @@ export default function Hero({ onReserveNow }: HeroProps) {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="mb-6 flex flex-col items-center"
         >
-          <h1 className="font-cormorant text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-[#faf8f5] font-medium tracking-tight leading-[1.08] drop-shadow-2xl">
+          <h1 className="hero-main-heading font-cormorant text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-medium tracking-tight leading-[1.08]">
             {t('hero.title.part1')}
           </h1>
 
-          <p className="font-cormorant italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#f2ca50] font-normal tracking-wide mt-2 sm:mt-3 leading-snug drop-shadow-lg max-w-4xl">
+          <p className="hero-main-subheading font-cormorant italic text-2xl sm:text-4xl md:text-5xl lg:text-6xl text-[#f2ca50] font-normal tracking-wide mt-2 sm:mt-3 leading-snug max-w-4xl">
             {t('hero.title.part2')}
           </p>
         </motion.div>
@@ -246,7 +248,7 @@ export default function Hero({ onReserveNow }: HeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-base sm:text-lg text-[#c9c6bf] max-w-2xl font-light mb-8 leading-relaxed"
+          className="hero-main-desc text-base sm:text-lg text-[#EDE8E0] max-w-2xl font-light mb-8 leading-relaxed"
         >
           {t('hero.desc')}
         </motion.p>
@@ -260,7 +262,7 @@ export default function Hero({ onReserveNow }: HeroProps) {
         >
           <a
             href="#suites-collection"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#d4af37] text-[#3c2f00] font-bold text-xs tracking-widest uppercase luxury-shimmer-btn cursor-pointer shadow-xl shadow-[#d4af37]/25 hover:scale-[1.02] active:scale-[0.98] transition-all"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#C8A24D] text-white font-bold text-xs tracking-widest uppercase luxury-shimmer-btn cursor-pointer shadow-xl shadow-[#C8A24D]/30 hover:scale-[1.03] active:scale-[0.98] transition-all"
           >
             <span>{t('hero.cta.book')}</span>
             <ArrowRight className="w-4 h-4" />
@@ -268,9 +270,9 @@ export default function Hero({ onReserveNow }: HeroProps) {
 
           <a
             href="#packs-romantiques"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-[#2a2a2a]/70 backdrop-blur-md text-[#e5e2e1] font-bold text-xs tracking-widest uppercase transition-all duration-300 hover:bg-[#353534] hover:text-[#f2ca50] hover:border hover:border-[#f2ca50]/50 hover:scale-[1.02] active:scale-[0.98]"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-xs tracking-widest uppercase transition-all duration-300 backdrop-blur-md cursor-pointer hover:scale-[1.03] active:scale-[0.98] border shadow-lg hero-secondary-btn"
           >
-            <Play className="w-4 h-4 text-[#f2ca50]" />
+            <Play className="w-4 h-4 text-[#C8A24D]" />
             <span>{language === 'fr' ? 'Découvrir nos Packs' : 'Explore Romantic Packs'}</span>
           </a>
         </motion.div>

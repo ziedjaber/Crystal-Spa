@@ -4,7 +4,7 @@ import React, { useState, use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import TopAnnouncementBar from '@/components/layout/TopAnnouncementBar';
-import Navbar from '@/components/layout/Navbar';
+import SuiteNavbar from '@/components/layout/SuiteNavbar';
 import Footer from '@/components/layout/Footer';
 import SuiteTopGallery from '@/components/apartment/SuiteTopGallery';
 import RoomGallery from '@/components/apartment/RoomGallery';
@@ -52,18 +52,33 @@ function SuitePageContent({ slug }: { slug: string }) {
     featured: apartment.featured,
   };
 
-  const handleOpenBooking = (aptId?: string) => {
-    setSelectedAptForBooking(aptId || apartment.id);
+  const [selectedPackForBooking, setSelectedPackForBooking] = useState<string | undefined>(undefined);
+
+  const handleOpenBooking = (details?: string | { suiteTitle?: string; totalPrice?: number; extras?: string[]; checkIn?: string; checkOut?: string }) => {
+    if (typeof details === 'string') {
+      setSelectedAptForBooking(details);
+      setSelectedPackForBooking(undefined);
+    } else if (details && details.extras && details.extras.length > 0) {
+      setSelectedAptForBooking(apartment.id);
+      if (details.extras.some(e => e.includes('Confort') || e.includes('Comfort'))) {
+        setSelectedPackForBooking('pack-confort');
+      } else if (details.extras.some(e => e.includes('Romance'))) {
+        setSelectedPackForBooking('pack-romance');
+      }
+    } else {
+      setSelectedAptForBooking(apartment.id);
+      setSelectedPackForBooking(undefined);
+    }
     setBookingModalOpen(true);
   };
 
   return (
-    <div className="min-h-screen bg-[#131313] text-[#e5e2e1] font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00] flex flex-col">
+    <div className="min-h-screen bg-[var(--cs-bg)] text-[var(--cs-text-primary)] font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00] flex flex-col transition-colors">
       {/* 0. Top Reassurance Ribbon */}
       <TopAnnouncementBar />
 
-      {/* Navigation */}
-      <Navbar onOpenBookingModal={() => handleOpenBooking()} />
+      {/* Dedicated Apartment Suite Navigation */}
+      <SuiteNavbar apartment={apartment} onOpenBookingModal={() => handleOpenBooking()} />
 
       <main className="flex-grow pt-20">
         
@@ -128,6 +143,7 @@ function SuitePageContent({ slug }: { slug: string }) {
 
               <ApartmentBooking
                 initialApartmentId={selectedAptForBooking || apartment.id}
+                initialPackId={selectedPackForBooking}
                 onComplete={() => setBookingModalOpen(false)}
               />
             </motion.div>

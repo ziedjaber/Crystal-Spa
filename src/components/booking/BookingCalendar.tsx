@@ -624,13 +624,13 @@ export default function BookingCalendar({
     if (!isOpen) return null;
     return (
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200"
+        className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/85 backdrop-blur-md animate-in fade-in duration-200 booking-calendar-overlay"
         onClick={(e) => {
           if (e.target === e.currentTarget && onClose) onClose();
         }}
       >
         <div
-          className={`w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-5 sm:p-8 md:p-10 ${className}`}
+          className={`booking-calendar-card w-full max-w-4xl max-h-[92vh] overflow-y-auto rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-5 sm:p-8 md:p-10 ${className}`}
           onClick={(e) => e.stopPropagation()}
         >
           {calendarContent}
@@ -641,7 +641,7 @@ export default function BookingCalendar({
 
   // Inlined calendar
   return (
-    <div className={`rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-5 sm:p-8 md:p-10 ${className}`}>
+    <div className={`booking-calendar-card rounded-3xl bg-[#161515] border border-[#f2ca50]/30 shadow-2xl p-5 sm:p-8 md:p-10 ${className}`}>
       {calendarContent}
     </div>
   );

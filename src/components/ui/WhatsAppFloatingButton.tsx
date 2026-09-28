@@ -22,38 +22,51 @@ export default function WhatsAppFloatingButton() {
           role="dialog"
           aria-modal="false"
           aria-labelledby="whatsapp-chat-title"
-          className="w-72 sm:w-80 rounded-2xl bg-[#181717] border border-[#25D366]/40 shadow-2xl p-4 text-[#e5e2e1] flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-3 duration-200"
+          className="w-72 sm:w-84 rounded-2xl bg-[#181717] [data-theme=light]:bg-[#FAF8F5] border border-[#25D366]/40 shadow-2xl p-4 text-[#e5e2e1] [data-theme=light]:text-[#171717] flex flex-col gap-3 animate-in fade-in slide-in-from-bottom-3 duration-200"
         >
-          <div className="flex items-center justify-between pb-2 border-b border-white/10">
+          <div className="flex items-center justify-between pb-2.5 border-b border-white/10 [data-theme=light]:border-black/8">
             <div className="flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse" />
+              <span className="w-2.5 h-2.5 rounded-full bg-[#25D366] animate-pulse shrink-0" />
               <div className="flex flex-col">
-                <span id="whatsapp-chat-title" className="text-xs font-bold text-white leading-none">
+                <span id="whatsapp-chat-title" className="text-xs font-bold text-white [data-theme=light]:text-[#171717] leading-tight">
                   Conciergerie Crystal Spa
                 </span>
-                <span className="text-[10px] text-[#25D366] mt-0.5">En ligne • Répond rapidement</span>
+                <span className="text-[10px] text-[#25D366] mt-0.5 font-medium">En ligne • Répond rapidement</span>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="p-1 rounded-lg text-white/50 hover:text-white hover:bg-white/5 transition-colors"
-              aria-label="Fermer"
-            >
-              <X className="w-4 h-4" />
-            </button>
+
+            <div className="flex items-center gap-1.5">
+              {/* Crystal Spa Luxury Logo */}
+              <div className="w-8 h-8 rounded-xl bg-white p-1 border border-[#C8A24D]/35 flex items-center justify-center shadow-sm overflow-hidden shrink-0">
+                <img
+                  src="/logo.png"
+                  alt="Crystal Spa Logo"
+                  className="w-full h-full object-contain filter drop-shadow-sm"
+                />
+              </div>
+
+              {/* Close Button */}
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                className="p-1 rounded-lg text-white/50 hover:text-white [data-theme=light]:text-black/50 [data-theme=light]:hover:text-black hover:bg-white/5 transition-colors cursor-pointer ml-1"
+                aria-label="Fermer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
-          <p className="text-xs text-[#d0c5af] leading-relaxed">
+          <p className="text-xs text-[#d0c5af] [data-theme=light]:text-[#5C554E] leading-relaxed">
             Une question sur nos suites privatives, les disponibilités ou nos packs romantiques ? Discutez directement avec nous sur WhatsApp au{' '}
-            <strong className="text-white font-semibold">{phoneNumber}</strong>.
+            <strong className="text-white [data-theme=light]:text-[#171717] font-semibold">{phoneNumber}</strong>.
           </p>
 
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all"
+            className="w-full py-2.5 px-4 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 shadow-lg transition-all cursor-pointer"
           >
             <MessageCircle className="w-4 h-4" />
             <span>Ouvrir WhatsApp</span>

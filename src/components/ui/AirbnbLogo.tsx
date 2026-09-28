@@ -5,11 +5,6 @@ interface AirbnbLogoProps {
   size?: number;
   colored?: boolean;
 }
-
-/**
- * Official Airbnb Bélo Icon
- * Standard brand icon for reviews, ratings, and guest favorite badges
- */
 export default function AirbnbLogo({
   className = 'w-4 h-4',
   size,

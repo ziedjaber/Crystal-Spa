@@ -4,47 +4,125 @@
 @import "swiper/css/pagination";
 @import "swiper/css/effect-fade";
 
+/* =====================================================================
+   MASTER CSS VARIABLE SYSTEM — DARK (default) + LIGHT
+   ===================================================================== */
+
 :root {
-  --background: #131313;
-  --surface: #131313;
-  --surface-container: #201f1f;
-  --surface-container-low: #1c1b1b;
-  --surface-container-lowest: #0e0e0e;
-  --surface-container-high: #2a2a2a;
-  --surface-container-highest: #353534;
-  --primary: #f2ca50;
-  --primary-container: #d4af37;
-  --primary-fixed: #ffe088;
-  --on-primary: #3c2f00;
-  --on-primary-container: #554300;
-  --on-surface: #e5e2e1;
-  --on-surface-variant: #d0c5af;
-  --secondary: #c9c6bf;
-  --outline: #99907c;
-  --outline-variant: #4d4635;
+  /* === DARK PALETTE — Obsidian Royale === */
+  --cs-bg:            #0f0e0e;
+  --cs-bg-alt:        #131313;
+  --cs-bg-deep:       #0a0909;
+  --cs-surface-1:     #161515;
+  --cs-surface-2:     #1c1b1b;
+  --cs-surface-3:     #201f1f;
+  --cs-surface-4:     #252424;
+  --cs-surface-5:     #2a2a2a;
+  --cs-surface-6:     #353534;
+  --cs-nav-scrolled:  rgba(12, 11, 11, 0.97);
+  --cs-nav-flat:      rgba(15, 14, 14, 0.80);
+  --cs-drawer:        rgba(10, 9, 9, 0.98);
+  --cs-modal-overlay: rgba(6, 5, 5, 0.92);
+
+  --cs-gold:          #f2ca50;
+  --cs-gold-deep:     #d4af37;
+  --cs-gold-light:    #ffe088;
+  --cs-gold-muted:    rgba(242,202,80,0.15);
+  --cs-gold-border:   rgba(242,202,80,0.25);
+  --cs-gold-text:     #f2ca50;
+  --cs-gold-on:       #3c2f00;
+
+  --cs-text-primary:  #eae8e6;
+  --cs-text-secondary:#d0c5af;
+  --cs-text-muted:    #c9c6bf;
+  --cs-text-faint:    #99907c;
+
+  --cs-border-hair:   rgba(255,255,255,0.05);
+  --cs-border-soft:   rgba(255,255,255,0.10);
+  --cs-border-mid:    rgba(255,255,255,0.15);
+  --cs-border-gold:   rgba(242,202,80,0.30);
+
+  --cs-glass-bg:      rgba(22, 21, 21, 0.80);
+  --cs-glass-border:  rgba(242,202,80,0.18);
+  --cs-card-bg:       #1c1b1b;
+  --cs-card-border:   rgba(255,255,255,0.07);
+  --cs-card-hover-bg: #201f1f;
+
+  --cs-input-bg:      #0e0e0e;
+  --cs-input-border:  rgba(255,255,255,0.08);
+  --cs-input-text:    #eae8e6;
+  --cs-input-placeholder: #99907c;
+
+  --cs-scrollbar-track: #0e0e0e;
+  --cs-scrollbar-thumb: #2a2a2a;
+
+  --cs-scrim-1: rgba(10,9,9,0.88);
+  --cs-scrim-2: rgba(15,14,14,0.55);
+  --cs-scrim-3: rgba(15,14,14,0.88);
+  --cs-scrim-end: #0f0e0e;
+
+  --cs-transition: 0.38s cubic-bezier(0.16,1,0.3,1);
 }
 
-@theme inline {
-  --color-surface: var(--surface);
-  --color-surface-container: var(--surface-container);
-  --color-surface-container-low: var(--surface-container-low);
-  --color-surface-container-lowest: var(--surface-container-lowest);
-  --color-surface-container-high: var(--surface-container-high);
-  --color-surface-container-highest: var(--surface-container-highest);
-  --color-primary: var(--primary);
-  --color-primary-container: var(--primary-container);
-  --color-primary-fixed: var(--primary-fixed);
-  --color-on-primary: var(--on-primary);
-  --color-on-primary-container: var(--on-primary-container);
-  --color-on-surface: var(--on-surface);
-  --color-on-surface-variant: var(--on-surface-variant);
-  --color-secondary: var(--secondary);
-  --color-outline: var(--outline);
-  --color-outline-variant: var(--outline-variant);
-  --font-serif: var(--font-outfit), var(--font-jakarta), sans-serif;
-  --font-sans: var(--font-jakarta), sans-serif;
-  --font-display: var(--font-outfit), sans-serif;
+/* === LIGHT PALETTE — 5-Star Luxury Palace (Aman / Four Seasons / Ritz-Carlton) === */
+[data-theme="light"] {
+  --cs-bg:            #FAF8F5;
+  --cs-bg-alt:        #F5F2EC;
+  --cs-bg-deep:       #FDFBF8;
+  --cs-surface-1:     #FFFFFF;
+  --cs-surface-2:     #FFFFFF;
+  --cs-surface-3:     #FDFBF8;
+  --cs-surface-4:     #F5F2EC;
+  --cs-surface-5:     #EFECE5;
+  --cs-surface-6:     #E5DFD5;
+  --cs-nav-scrolled:  rgba(250, 248, 245, 0.94);
+  --cs-nav-flat:      rgba(250, 248, 245, 0.82);
+  --cs-drawer:        rgba(250, 248, 245, 0.98);
+  --cs-modal-overlay: rgba(15, 23, 42, 0.55);
+
+  --cs-gold:          #C8A24D;
+  --cs-gold-deep:     #B89032;
+  --cs-gold-light:    #E7D4A2;
+  --cs-gold-muted:    rgba(200, 162, 77, 0.12);
+  --cs-gold-border:   rgba(200, 162, 77, 0.30);
+  --cs-gold-text:     #B89032;
+  --cs-gold-on:       #FFFFFF;
+
+  --cs-text-primary:  #171717;
+  --cs-text-secondary:#666666;
+  --cs-text-muted:    #8B8B8B;
+  --cs-text-faint:    #A3A3A3;
+
+  --cs-border-hair:   rgba(0, 0, 0, 0.05);
+  --cs-border-soft:   rgba(0, 0, 0, 0.08);
+  --cs-border-mid:    rgba(0, 0, 0, 0.12);
+  --cs-border-gold:   rgba(200, 162, 77, 0.35);
+
+  --cs-glass-bg:      rgba(255, 255, 255, 0.94);
+  --cs-glass-border:  rgba(200, 162, 77, 0.28);
+  --cs-card-bg:       #FFFFFF;
+  --cs-card-border:   rgba(0, 0, 0, 0.08);
+  --cs-card-hover-bg: #FDFBF8;
+
+  --cs-input-bg:      #FFFFFF;
+  --cs-input-border:  rgba(0, 0, 0, 0.10);
+  --cs-input-text:    #171717;
+  --cs-input-placeholder: #8B8B8B;
+
+  --cs-scrollbar-track: #F5F2EC;
+  --cs-scrollbar-thumb: #C8A24D;
+
+  --cs-scrim-1: rgba(15, 23, 42, 0.68);
+  --cs-scrim-2: rgba(15, 23, 42, 0.30);
+  --cs-scrim-3: rgba(250, 248, 245, 0.95);
+  --cs-scrim-end: #FAF8F5;
+
+  --cs-transition: 0.30s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* =====================================================================
+   GLOBAL RESETS & BASE
+   ===================================================================== */
 
 html {
   scroll-behavior: smooth;
@@ -59,11 +137,15 @@ body {
 }
 
 body {
-  background-color: #131313;
-  color: #e5e2e1;
+  background-color: var(--cs-bg);
+  color: var(--cs-text-primary);
   font-family: var(--font-jakarta), sans-serif;
-  selection-background-color: #d4af37;
-  selection-color: #3c2f00;
+  transition: background-color var(--cs-transition), color var(--cs-transition);
+}
+
+body ::selection {
+  background-color: #d4af37;
+  color: #3c2f00;
 }
 
 h1, h2, h3, .font-serif, .font-display {
@@ -75,7 +157,309 @@ h1, h2, h3, .font-serif, .font-display {
   font-family: var(--font-cormorant), 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
 
-/* 4K Image Rendering Sharpness & Quality */
+/* =====================================================================
+   GLOBAL THEME CLASS UTILITIES
+   Components should migrate to using these instead of hardcoded hex
+   ===================================================================== */
+
+.cs-bg           { background-color: var(--cs-bg); }
+.cs-bg-alt       { background-color: var(--cs-bg-alt); }
+.cs-surface-1    { background-color: var(--cs-surface-1); }
+.cs-surface-2    { background-color: var(--cs-surface-2); }
+.cs-surface-3    { background-color: var(--cs-surface-3); }
+.cs-card         { background-color: var(--cs-card-bg); border-color: var(--cs-card-border); }
+.cs-text-primary { color: var(--cs-text-primary); }
+.cs-text-secondary { color: var(--cs-text-secondary); }
+.cs-text-muted   { color: var(--cs-text-muted); }
+.cs-text-faint   { color: var(--cs-text-faint); }
+.cs-gold         { color: var(--cs-gold-text); }
+.cs-border-hair  { border-color: var(--cs-border-hair); }
+.cs-border-soft  { border-color: var(--cs-border-soft); }
+
+/* =====================================================================
+   MASTER LIGHT-MODE OVERRIDES
+   These target every Tailwind arbitrary-value class used in components
+   ===================================================================== */
+
+/* ── Body & Page Backgrounds ── */
+[data-theme="light"] body,
+[data-theme="light"] .bg-\[\#131313\],
+[data-theme="light"] .bg-\[\#0f0e0e\] {
+  background-color: var(--cs-bg) !important;
+  color: var(--cs-text-primary) !important;
+}
+
+[data-theme="light"] .bg-\[\#0e0e0e\],
+[data-theme="light"] .bg-\[\#0d0c0c\],
+[data-theme="light"] .bg-\[\#0a0909\],
+[data-theme="light"] .bg-\[\#090909\],
+[data-theme="light"] .bg-\[\#06090e\],
+[data-theme="light"] .bg-\[\#121110\],
+[data-theme="light"] .bg-\[\#101010\],
+[data-theme="light"] .bg-\[\#0c0b0b\] {
+  background-color: var(--cs-bg-alt) !important;
+}
+
+[data-theme="light"] .bg-\[\#121212\] {
+  background-color: var(--cs-bg-alt) !important;
+}
+
+[data-theme="light"] .bg-\[\#141313\],
+[data-theme="light"] .bg-\[\#161515\],
+[data-theme="light"] .bg-\[\#181613\],
+[data-theme="light"] .bg-\[\#181611\],
+[data-theme="light"] .bg-\[\#181717\],
+[data-theme="light"] .bg-\[\#181716\],
+[data-theme="light"] .bg-\[\#1a1919\] {
+  background-color: var(--cs-surface-1) !important;
+}
+
+[data-theme="light"] .bg-\[\#1c1b1b\],
+[data-theme="light"] .bg-\[\#1c1a16\] {
+  background-color: var(--cs-surface-2) !important;
+}
+
+[data-theme="light"] .bg-\[\#201f1f\],
+[data-theme="light"] .bg-\[\#1e1c18\],
+[data-theme="light"] .bg-\[\#1a1813\],
+[data-theme="light"] .bg-\[\#22201b\],
+[data-theme="light"] .bg-\[\#221f17\],
+[data-theme="light"] .bg-\[\#222121\],
+[data-theme="light"] .bg-\[\#242119\],
+[data-theme="light"] .bg-\[\#24221d\] {
+  background-color: var(--cs-surface-3) !important;
+}
+
+[data-theme="light"] .bg-\[\#2a2a2a\],
+[data-theme="light"] .bg-\[\#252424\],
+[data-theme="light"] .bg-\[\#2e2d2d\] {
+  background-color: var(--cs-surface-4) !important;
+}
+
+[data-theme="light"] .bg-\[\#353534\] {
+  background-color: var(--cs-surface-5) !important;
+}
+
+/* ── Translucent / Opacity Backgrounds ── */
+[data-theme="light"] .bg-\[\#0d0c0c\]\/95,
+[data-theme="light"] .bg-\[\#0d0c0c\]\/98,
+[data-theme="light"] .bg-\[\#0c0b0b\]\/98,
+[data-theme="light"] .bg-\[\#0c0b0b\]\/97,
+[data-theme="light"] .bg-\[\#131313\]\/95 {
+  background-color: var(--cs-nav-scrolled) !important;
+}
+
+[data-theme="light"] .bg-\[\#131313\]\/90,
+[data-theme="light"] .bg-\[\#131313\]\/80,
+[data-theme="light"] .bg-\[\#131313\]\/70 {
+  background-color: var(--cs-nav-flat) !important;
+}
+
+[data-theme="light"] .bg-\[\#1c1b1b\]\/98,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/95,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/90,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/85,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/80,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/75,
+[data-theme="light"] .bg-\[\#1c1b1b\]\/70 {
+  background-color: rgba(255,255,255,0.93) !important;
+}
+
+[data-theme="light"] .bg-\[\#201f1f\]\/95,
+[data-theme="light"] .bg-\[\#201f1f\]\/90,
+[data-theme="light"] .bg-\[\#201f1f\]\/80 {
+  background-color: rgba(249,245,238,0.95) !important;
+}
+
+[data-theme="light"] .bg-\[\#2a2a2a\]\/90,
+[data-theme="light"] .bg-\[\#2a2a2a\]\/80,
+[data-theme="light"] .bg-\[\#2a2a2a\]\/60 {
+  background-color: rgba(236,229,215,0.92) !important;
+}
+
+[data-theme="light"] .bg-\[\#090909\]\/90,
+[data-theme="light"] .bg-\[\#090909\]\/92 {
+  background-color: rgba(20,16,10,0.55) !important;
+}
+
+[data-theme="light"] .bg-black\/40,
+[data-theme="light"] .bg-black\/60 {
+  background-color: rgba(20,16,10,0.35) !important;
+}
+
+/* ── White/Transparent utilities ── */
+[data-theme="light"] .bg-white\/5  { background-color: rgba(184,144,12,0.06) !important; }
+[data-theme="light"] .bg-white\/10 { background-color: rgba(184,144,12,0.10) !important; }
+
+/* ── Text Colors ── */
+[data-theme="light"] .text-\[\#e5e2e1\],
+[data-theme="light"] .text-\[\#eae8e6\],
+[data-theme="light"] .text-\[\#faf8f5\] {
+  color: var(--cs-text-primary) !important;
+}
+
+[data-theme="light"] .text-\[\#d0c5af\],
+[data-theme="light"] .text-\[\#c9c6bf\] {
+  color: var(--cs-text-secondary) !important;
+}
+
+[data-theme="light"] .text-\[\#99907c\],
+[data-theme="light"] .text-\[\#8c7e6a\] {
+  color: var(--cs-text-faint) !important;
+}
+
+/* ── Gold Text in Light Mode ── */
+[data-theme="light"] .text-\[\#f2ca50\] {
+  color: var(--cs-gold-text) !important;
+}
+
+[data-theme="light"] .text-\[\#d4af37\] {
+  color: var(--cs-gold-deep) !important;
+}
+
+[data-theme="light"] .text-\[\#ffe088\] {
+  color: var(--cs-gold-light) !important;
+}
+
+/* Photo Showcases, Hero Slides, Lightbox Modals & Media Overlays MUST ALWAYS KEEP CRISP WHITE & GOLD */
+[data-theme="light"] section:has(video) .text-\[\#faf8f5\],
+[data-theme="light"] section:has(video) h1,
+[data-theme="light"] section:has(video) .font-cormorant,
+[data-theme="light"] section:has(video) .text-\[\#f2ca50\],
+[data-theme="light"] [role="dialog"] *,
+[data-theme="light"] .lightbox-stage *,
+[data-theme="light"] #airbnb-gallery-modal *,
+[data-theme="light"] .photo-overlay-text {
+  color: #FFFFFF;
+}
+
+[data-theme="light"] section:has(video) .text-\[\#f2ca50\],
+[data-theme="light"] [role="dialog"] .text-\[\#f2ca50\],
+[data-theme="light"] #airbnb-gallery-modal .text-\[\#f2ca50\] {
+  color: #FCE8B3 !important;
+}
+
+[data-theme="light"] section:has(video) .text-\[\#c9c6bf\],
+[data-theme="light"] section:has(video) .text-\[\#d0c5af\],
+[data-theme="light"] [role="dialog"] .text-\[\#d0c5af\],
+[data-theme="light"] #airbnb-gallery-modal .text-\[\#d0c5af\] {
+  color: #EDE8E0 !important;
+}
+
+/* ── Hover Text ── */
+[data-theme="light"] .hover\:text-\[\#f2ca50\]:hover   { color: var(--cs-gold-deep) !important; }
+[data-theme="light"] .hover\:text-\[\#ffe088\]:hover   { color: var(--cs-gold-text) !important; }
+[data-theme="light"] .hover\:text-white:hover          { color: var(--cs-text-primary) !important; }
+[data-theme="light"] .group:hover .group-hover\:text-\[\#f2ca50\] { color: var(--cs-gold-deep) !important; }
+
+/* ── Borders ── */
+[data-theme="light"] .border-white\/5  { border-color: var(--cs-border-hair) !important; }
+[data-theme="light"] .border-white\/10 { border-color: var(--cs-border-soft) !important; }
+[data-theme="light"] .border-white\/20 { border-color: var(--cs-border-mid) !important; }
+
+[data-theme="light"] .border-\[\#f2ca50\]\/20,
+[data-theme="light"] .border-\[\#f2ca50\]\/25,
+[data-theme="light"] .border-\[\#f2ca50\]\/30,
+[data-theme="light"] .border-\[\#f2ca50\]\/40 {
+  border-color: var(--cs-border-gold) !important;
+}
+
+/* ── Dividers (border-b, border-t using white) ── */
+[data-theme="light"] .divide-white\/5  { border-color: var(--cs-border-hair) !important; }
+[data-theme="light"] .divide-white\/10 { border-color: var(--cs-border-soft) !important; }
+
+/* ── Inputs & Selects ── */
+[data-theme="light"] input,
+[data-theme="light"] select,
+[data-theme="light"] textarea {
+  background-color: var(--cs-input-bg) !important;
+  color: var(--cs-input-text) !important;
+  border-color: var(--cs-input-border) !important;
+}
+
+[data-theme="light"] input::placeholder,
+[data-theme="light"] textarea::placeholder {
+  color: var(--cs-input-placeholder) !important;
+}
+
+[data-theme="light"] option {
+  background-color: #fffdf9 !important;
+  color: #1c1a16 !important;
+}
+
+/* ── Focus rings ── */
+[data-theme="light"] *:focus-visible {
+  outline-color: var(--cs-gold);
+}
+
+/* ── Scrollbars ── */
+[data-theme="light"] ::-webkit-scrollbar-track { background: var(--cs-scrollbar-track); }
+[data-theme="light"] ::-webkit-scrollbar-thumb { background: var(--cs-scrollbar-thumb); }
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover { background: var(--cs-gold-deep); }
+
+/* =====================================================================
+   THEMED COMPONENT CLASSES
+   ===================================================================== */
+
+/* ── Navbar ── */
+.cs-nav {
+  background-color: var(--cs-nav-flat);
+  border-bottom-color: var(--cs-border-hair);
+  transition: background-color var(--cs-transition), border-color var(--cs-transition), box-shadow var(--cs-transition);
+}
+.cs-nav-scrolled {
+  background-color: var(--cs-nav-scrolled);
+  border-bottom-color: var(--cs-gold-border);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+[data-theme="light"] .cs-nav-scrolled {
+  box-shadow: 0 8px 32px rgba(60,47,0,0.10);
+}
+
+/* ── Cards ── */
+.cs-surface-card {
+  background-color: var(--cs-card-bg);
+  border-color: var(--cs-card-border);
+  transition: background-color var(--cs-transition), border-color var(--cs-transition);
+}
+
+/* ── Glassmorphism ── */
+.glass-panel-4k {
+  background: var(--cs-glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--cs-glass-border);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.4), 0 0 30px rgba(242,202,80,0.08);
+  transition: background var(--cs-transition), border-color var(--cs-transition), box-shadow var(--cs-transition);
+}
+
+[data-theme="light"] .glass-panel-4k {
+  box-shadow: 0 20px 50px rgba(60,47,0,0.08), 0 0 30px rgba(184,144,12,0.06);
+}
+
+/* ── Scrim Overlays ── */
+.scrim-4k-overlay {
+  background: linear-gradient(
+    180deg,
+    var(--cs-scrim-1) 0%,
+    var(--cs-scrim-2) 40%,
+    var(--cs-scrim-3) 80%,
+    var(--cs-scrim-end) 100%
+  );
+  transition: background var(--cs-transition);
+}
+
+.scrim-radial-gold {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(242,202,80,0.12) 0%,
+    var(--cs-scrim-2) 60%,
+    var(--cs-scrim-end) 100%
+  );
+  transition: background var(--cs-transition);
+}
+
+/* ── 4K Image Hero ── */
 .bg-4k-hero {
   background-size: cover;
   background-position: center center;
@@ -83,193 +467,1091 @@ h1, h2, h3, .font-serif, .font-display {
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   filter: contrast(105%) brightness(95%);
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+  transition: transform 1.2s cubic-bezier(0.16,1,0.3,1), filter 0.8s ease;
 }
 
-/* Atmospheric Multi-Layered Scrim Overlays */
-.scrim-4k-overlay {
-  background: linear-gradient(
-    180deg,
-    rgba(14, 14, 14, 0.85) 0%,
-    rgba(19, 19, 19, 0.55) 40%,
-    rgba(19, 19, 19, 0.85) 80%,
-    #131313 100%
-  );
-}
+/* =====================================================================
+   LUXURY CARD SYSTEM
+   ===================================================================== */
 
-.scrim-radial-gold {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(242, 202, 80, 0.12) 0%,
-    rgba(19, 19, 19, 0.45) 60%,
-    #131313 100%
-  );
-}
-
-/* Glassmorphism Luxury Panels */
-.glass-panel-4k {
-  background: rgba(28, 27, 27, 0.75);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(242, 202, 80, 0.2);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(242, 202, 80, 0.1);
-}
-
-/* Ultra-Luxury Animations & Micro-Interactions */
-@keyframes goldShimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-@keyframes subtleFloat {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-6px); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 16px rgba(212, 175, 55, 0.25); }
-  50% { box-shadow: 0 0 28px rgba(212, 175, 55, 0.55), 0 0 45px rgba(212, 175, 55, 0.2); }
-}
-
-.animate-float-badge {
-  animation: subtleFloat 4.5s ease-in-out infinite;
-}
-
-.luxury-shimmer-btn {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.luxury-shimmer-btn::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-  transform: skewX(-20deg);
-  transition: none;
-}
-
-.luxury-shimmer-btn:hover::after {
-  animation: goldShimmer 1.4s infinite;
-}
-
-.luxury-shimmer-btn:hover {
-  box-shadow: 0 0 28px rgba(212, 175, 55, 0.5), 0 8px 24px rgba(0, 0, 0, 0.5);
-  transform: translateY(-2px);
-}
-
-/* Luxury card hover enhancements */
 .luxury-card {
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background-color: var(--cs-card-bg);
+  border: 1px solid var(--cs-card-border);
+  border-radius: 24px;
+  transition:
+    transform 0.4s cubic-bezier(0.16,1,0.3,1),
+    box-shadow 0.4s cubic-bezier(0.16,1,0.3,1),
+    border-color 0.4s cubic-bezier(0.16,1,0.3,1),
+    background-color var(--cs-transition);
 }
 
 .luxury-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(212, 175, 55, 0.4);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.15);
+  border-color: rgba(212,175,55,0.45);
+  box-shadow: 0 20px 40px -10px rgba(0,0,0,0.60), 0 0 30px rgba(212,175,55,0.12);
 }
 
-/* Card image zoom */
+[data-theme="light"] .luxury-card {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  border-radius: 24px !important;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
+}
+
+[data-theme="light"] .luxury-card:hover {
+  transform: translateY(-6px) !important;
+  border-color: rgba(200, 162, 77, 0.50) !important;
+  box-shadow: 0 24px 45px -10px rgba(15, 23, 42, 0.10), 0 0 25px rgba(200, 162, 77, 0.15) !important;
+}
+
 .zoom-container img,
 .zoom-container [style*="background-image"] {
-  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.85s cubic-bezier(0.16,1,0.3,1);
 }
 .luxury-card:hover .zoom-container img,
 .luxury-card:hover .zoom-container [style*="background-image"] {
   transform: scale(1.06);
 }
 
-/* Active Suite Highlight */
-.suite-card-selectable.is-active {
-  border-color: #f2ca50 !important;
-  box-shadow: 0 0 36px rgba(212, 175, 55, 0.4);
+/* ── Booking Bar Glass Card ── */
+[data-theme="light"] .bg-\[\#201f1f\]\/95.backdrop-blur-2xl {
+  background-color: rgba(255,255,255,0.96) !important;
+  border-color: rgba(200, 162, 77, 0.28) !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.08), 0 0 30px rgba(200, 162, 77, 0.08) !important;
 }
 
-/* Accordion smooth expansion */
+/* =====================================================================
+   LUXURY BUTTONS (Primary & Secondary)
+   ===================================================================== */
+
+.luxury-shimmer-btn {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #d4af37 0%, #b8900c 100%);
+  color: #3c2f00;
+  transition: all 0.38s cubic-bezier(0.16,1,0.3,1);
+}
+
+.luxury-shimmer-btn::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -150%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.40), transparent);
+  transform: skewX(-20deg);
+  transition: none;
+}
+
+.luxury-shimmer-btn:hover::after { animation: goldShimmer 1.4s infinite; }
+
+.luxury-shimmer-btn:hover {
+  box-shadow: 0 0 28px rgba(212,175,55,0.5), 0 8px 24px rgba(0,0,0,0.4);
+  transform: translateY(-2px) scale(1.03);
+}
+
+[data-theme="light"] .luxury-shimmer-btn {
+  background: linear-gradient(135deg, #C8A24D 0%, #B89032 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 4px 18px rgba(200, 162, 77, 0.35) !important;
+}
+
+[data-theme="light"] .luxury-shimmer-btn:hover {
+  background: linear-gradient(135deg, #B89032 0%, #A37F28 100%) !important;
+  box-shadow: 0 8px 25px rgba(200, 162, 77, 0.48), 0 4px 12px rgba(15, 23, 42, 0.08) !important;
+  transform: translateY(-2px) scale(1.03) !important;
+}
+
+/* Secondary Buttons in Light Mode */
+[data-theme="light"] .btn-luxury-secondary {
+  background-color: #FFFFFF !important;
+  border: 1px solid #C8A24D !important;
+  color: #171717 !important;
+  transition: all 0.3s ease;
+}
+[data-theme="light"] .btn-luxury-secondary:hover {
+  background: #C8A24D !important;
+  color: #FFFFFF !important;
+  border-color: #C8A24D !important;
+}
+
+/* =====================================================================
+   SUITE CARD ACTIVE STATE
+   ===================================================================== */
+
+.suite-card-selectable.is-active {
+  border-color: #f2ca50 !important;
+  box-shadow: 0 0 36px rgba(212,175,55,0.4);
+}
+
+/* =====================================================================
+   FAQ ACCORDION
+   ===================================================================== */
+
 .faq-content-wrapper {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+  transition: grid-template-rows 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.35s ease;
   opacity: 0;
 }
 .faq-item.is-open .faq-content-wrapper {
   grid-template-rows: 1fr;
   opacity: 1;
 }
-.faq-inner-content {
-  overflow: hidden;
+.faq-inner-content { overflow: hidden; }
+
+/* FAQ specific light overrides */
+[data-theme="light"] .faq-item {
+  background-color: var(--cs-surface-1) !important;
+  border-color: var(--cs-border-soft) !important;
+}
+[data-theme="light"] .faq-item.is-open {
+  background-color: #fffdf9 !important;
+  border-color: var(--cs-border-gold) !important;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: #0e0e0e;
-}
-::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #d4af37;
+/* =====================================================================
+   CUSTOM SCROLLBAR
+   ===================================================================== */
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--cs-scrollbar-track); }
+::-webkit-scrollbar-thumb { background: var(--cs-scrollbar-thumb); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #d4af37; }
+
+/* =====================================================================
+   ANIMATIONS
+   ===================================================================== */
+
+@keyframes goldShimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
-/* Luxury Skeleton Shimmer */
+@keyframes subtleFloat {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-6px); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(212,175,55,0.25); }
+  50%       { box-shadow: 0 0 28px rgba(212,175,55,0.55), 0 0 45px rgba(212,175,55,0.2); }
+}
+
+@keyframes themeRipple {
+  0%   { transform: scale(0); opacity: 0.6; }
+  100% { transform: scale(80); opacity: 0; }
+}
+
 @keyframes luxurySkeletonShimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
+
+@keyframes luxuryHaloGlow {
+  0%, 100% { transform: scale(1);    opacity: 0.45; filter: drop-shadow(0 0 25px rgba(242,202,80,0.40)); }
+  50%       { transform: scale(1.08); opacity: 0.80; filter: drop-shadow(0 0 45px rgba(242,202,80,0.75)); }
+}
+
+@keyframes sunSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes moonWiggle {
+  0%, 100% { transform: rotate(-8deg); }
+  50%       { transform: rotate(8deg); }
+}
+
+.animate-float-badge  { animation: subtleFloat 4.5s ease-in-out infinite; }
+.animate-luxury-halo  { animation: luxuryHaloGlow 3.5s ease-in-out infinite; }
+.animate-sun-spin     { animation: sunSpin 12s linear infinite; }
+.animate-moon-wiggle  { animation: moonWiggle 3s ease-in-out infinite; }
+
+/* =====================================================================
+   SKELETON SHIMMER
+   ===================================================================== */
 
 .skeleton-luxury {
   background: linear-gradient(
     90deg,
-    rgba(28, 27, 27, 0.8) 0%,
-    rgba(45, 42, 35, 0.9) 35%,
-    rgba(242, 202, 80, 0.12) 50%,
-    rgba(45, 42, 35, 0.9) 65%,
-    rgba(28, 27, 27, 0.8) 100%
+    rgba(28,27,27,0.8) 0%,
+    rgba(45,42,35,0.9) 35%,
+    rgba(242,202,80,0.12) 50%,
+    rgba(45,42,35,0.9) 65%,
+    rgba(28,27,27,0.8) 100%
   );
   background-size: 250% 100%;
-  animation: luxurySkeletonShimmer 2.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: luxurySkeletonShimmer 2.2s cubic-bezier(0.4,0,0.2,1) infinite;
 }
 
-/* Progressive Unsplash-style Blur-to-HD Transition */
+[data-theme="light"] .skeleton-luxury {
+  background: linear-gradient(
+    90deg,
+    rgba(240,233,220,0.9) 0%,
+    rgba(255,255,255,0.95) 35%,
+    rgba(197,155,39,0.18) 50%,
+    rgba(255,255,255,0.95) 65%,
+    rgba(240,233,220,0.9) 100%
+  );
+  background-size: 250% 100%;
+}
+
+/* =====================================================================
+   PROGRESSIVE IMAGE BLUR
+   ===================================================================== */
+
 .progressive-blur-loading {
   filter: blur(20px) scale(1.05);
   opacity: 0.7;
-  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  transition: filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease;
 }
 
 .progressive-blur-loaded {
   filter: blur(0px) scale(1);
   opacity: 1;
-  transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
+  transition: filter 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1), opacity 0.6s ease;
 }
 
-/* Luxury Halo Glow Animation */
-@keyframes luxuryHaloGlow {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.45;
-    filter: drop-shadow(0 0 25px rgba(242, 202, 80, 0.4));
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 0.8;
-    filter: drop-shadow(0 0 45px rgba(242, 202, 80, 0.75));
+/* =====================================================================
+   ANNOUNCEMENT BAR
+   ===================================================================== */
+
+[data-theme="light"] #announcement-bar,
+[data-theme="light"] .announcement-bar {
+  background-color: #fffaee !important;
+  border-bottom-color: rgba(184,144,12,0.28) !important;
+}
+
+/* =====================================================================
+   FOOTER
+   ===================================================================== */
+
+[data-theme="light"] footer {
+  background-color: var(--cs-bg-alt) !important;
+  border-top-color: var(--cs-border-soft) !important;
+  color: var(--cs-text-secondary) !important;
+}
+
+[data-theme="light"] footer input[type="email"] {
+  background-color: var(--cs-input-bg) !important;
+  border-color: var(--cs-border-soft) !important;
+  color: var(--cs-input-text) !important;
+}
+
+/* =====================================================================
+   SPECIAL SECTION LIGHT OVERRIDES
+   ===================================================================== */
+
+/* Direct Booking Perks bg */
+[data-theme="light"] #avantages-direct {
+  background-color: var(--cs-bg-alt) !important;
+  border-top-color: var(--cs-border-hair) !important;
+  border-bottom-color: var(--cs-border-hair) !important;
+}
+
+/* Romantic Packs bg */
+[data-theme="light"] #packs-romantiques {
+  background-color: var(--cs-bg) !important;
+}
+
+/* FAQ bg */
+[data-theme="light"] #faq-accordion {
+  background-color: var(--cs-bg-alt) !important;
+  border-top-color: var(--cs-border-hair) !important;
+}
+
+/* Contact bg */
+[data-theme="light"] #conciergerie-contact {
+  background-color: var(--cs-bg) !important;
+  border-top-color: var(--cs-border-hair) !important;
+}
+
+/* Gift card banner bg */
+[data-theme="light"] #carte-cadeau-section {
+  background-color: var(--cs-bg-alt) !important;
+}
+
+/* Suites collection bg */
+[data-theme="light"] #suites-collection {
+  background-color: var(--cs-bg) !important;
+}
+
+/* gradient card inside gift card banner */
+[data-theme="light"] .bg-gradient-to-r.from-\[\#1c1a16\] {
+  background: linear-gradient(to right, #fdf8ee, #faf4e6, #fdf8ee) !important;
+  border-color: rgba(184,144,12,0.30) !important;
+}
+
+/* Location section */
+[data-theme="light"] #localisation-section {
+  background-color: var(--cs-bg-alt) !important;
+}
+
+/* Booking modal overlay */
+[data-theme="light"] .fixed.inset-0.bg-\[\#090909\]\/90,
+[data-theme="light"] .fixed.inset-0.z-50 {
+  background-color: var(--cs-modal-overlay) !important;
+}
+
+/* =====================================================================
+   RADIAL GOLD GLOW — LIGHT MODE (soft champagne glow)
+   ===================================================================== */
+
+[data-theme="light"] .scrim-radial-gold {
+  background: radial-gradient(
+    ellipse at center,
+    rgba(184,144,12,0.10) 0%,
+    rgba(250,247,242,0.20) 60%,
+    transparent 100%
+  );
+}
+
+/* =====================================================================
+   THEME TOGGLE — wrapper, tooltip & row (thumb/icon driven by Framer Motion)
+   ===================================================================== */
+
+/* ── Pill wrapper ── */
+.theme-pill {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Focus ring for accessibility */
+.theme-pill button:focus-visible {
+  outline: 2px solid rgba(242,202,80,0.8);
+  outline-offset: 3px;
+  border-radius: 14px;
+}
+
+/* ── Tooltip ── */
+.theme-pill-tooltip {
+  display: none;
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) scale(0.92);
+  white-space: nowrap;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.22s ease, transform 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  z-index: 60;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+@media (min-width: 1024px) { .theme-pill-tooltip { display: block; } }
+.theme-pill:hover .theme-pill-tooltip {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+[data-theme="dark"] .theme-pill-tooltip {
+  background: rgba(14,12,9,0.97);
+  color: #e5e2e1;
+  border: 1px solid rgba(242,202,80,0.28);
+}
+[data-theme="light"] .theme-pill-tooltip {
+  background: rgba(255,253,248,0.98);
+  color: #1c1a16;
+  border: 1px solid rgba(184,144,12,0.32);
+}
+
+/* ── Full-row toggle (mobile drawer) ── */
+.theme-row-toggle {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  transition: background 0.38s ease, border-color 0.38s ease;
+}
+.theme-row-toggle[data-dark="true"] {
+  background: rgba(28,27,27,0.9);
+  border: 1px solid rgba(242,202,80,0.18);
+}
+.theme-row-toggle[data-dark="false"] {
+  background: rgba(255,252,245,0.9);
+  border: 1px solid rgba(184,144,12,0.25);
+}
+
+.theme-row-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-row-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.38s ease, border-color 0.38s ease;
+}
+.theme-row-toggle[data-dark="true"]  .theme-row-icon-box {
+  background: rgba(242,202,80,0.12);
+  border: 1px solid rgba(242,202,80,0.28);
+}
+.theme-row-toggle[data-dark="false"] .theme-row-icon-box {
+  background: rgba(184,144,12,0.10);
+  border: 1px solid rgba(184,144,12,0.28);
+}
+
+.theme-row-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: left;
+  overflow: hidden;
+}
+
+.theme-row-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  white-space: nowrap;
+}
+.theme-row-toggle[data-dark="true"]  .theme-row-title { color: #f2ca50; }
+.theme-row-toggle[data-dark="false"] .theme-row-title { color: #8a6a08; }
+
+.theme-row-subtitle {
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.theme-row-toggle[data-dark="true"]  .theme-row-subtitle { color: #d0c5af; }
+.theme-row-toggle[data-dark="false"] .theme-row-subtitle { color: #6b6050; }
+
+/* Mini pill indicator */
+.theme-row-mini-pill {
+  position: relative;
+  width: 44px;
+  height: 22px;
+  border-radius: 11px;
+  flex-shrink: 0;
+  transition: background 0.4s ease;
+}
+.theme-row-mini-pill[data-dark="true"]  { background: #1a1714; border: 1px solid rgba(242,202,80,0.20); }
+.theme-row-mini-pill[data-dark="false"] { background: #f8d87e; border: 1px solid rgba(184,144,12,0.30); }
+
+.theme-row-mini-thumb {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  top: 2px;
+  background: #f2ca50;
+}
+.theme-row-mini-pill[data-dark="true"]  .theme-row-mini-thumb { background: #f2ca50; }
+.theme-row-mini-pill[data-dark="false"] .theme-row-mini-thumb { background: #b8860b; }
+
+/* =====================================================================
+   WHATSAPP FLOATING BUTTON — EXCLUDE FROM LIGHT OVERRIDES
+
+   The WhatsApp popup should always keep its dark bg
+   ===================================================================== */
+
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .bg-\[\#181717\],
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .bg-\[\#181717\]\/95 {
+  background-color: #181717 !important;
+}
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .text-\[\#e5e2e1\],
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .text-white {
+  color: #e5e2e1 !important;
+}
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .text-\[\#d0c5af\] {
+  color: #d0c5af !important;
+}
+[data-theme="light"] aside[aria-label="Contact WhatsApp"] .border-white\/10 {
+  border-color: rgba(255,255,255,0.10) !important;
+}
+
+/* =====================================================================
+   PERFORMANCE OPTIMIZATIONS
+   ===================================================================== */
+
+/* Use will-change only on elements that actually animate during theme switch */
+html { will-change: auto; }
+body { will-change: background-color, color; }
+
+/* Reduce paint cost — contain layout on cards */
+.luxury-card,
+.glass-panel-4k {
+  contain: layout style;
+}
+
+/* Targeted theme transitions — only on major structural containers to ensure 60/120fps smoothness */
+body,
+header,
+nav,
+footer,
+section,
+.luxury-card,
+.glass-panel-4k,
+.suite-card,
+.theme-pill-track {
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Ensure smooth scrolling isn't janky */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
 
-.animate-luxury-halo {
-  animation: luxuryHaloGlow 3.5s ease-in-out infinite;
+/* =====================================================================
+   SUITES & APARTMENTS SPECIFIC LIGHT MODE OVERRIDES
+   ===================================================================== */
+
+/* Suite Detail Sections Background & Tone */
+[data-theme="light"] #suite-signature,
+[data-theme="light"] #galerie-section {
+  background-color: #FAF8F5 !important;
+  border-color: #EAE5DC !important;
 }
+
+[data-theme="light"] #avantages-direct,
+[data-theme="light"] #autres-suites {
+  background-color: #F5F2EB !important;
+  border-color: #EAE5DC !important;
+}
+
+/* Suite Hero Top Showcase Overlay in Light Mode */
+[data-theme="light"] .suite-hero-scrim-top {
+  background: linear-gradient(to top, rgba(250,248,245,0.95) 0%, rgba(250,248,245,0.65) 45%, rgba(250,248,245,0.35) 100%) !important;
+}
+[data-theme="light"] .suite-hero-scrim-dark {
+  background-color: rgba(250,248,245,0.20) !important;
+}
+
+/* Light Mode Badges & Pills */
+[data-theme="light"] .suite-badge-pill {
+  background-color: rgba(255,255,255,0.92) !important;
+  color: #231F1C !important;
+  border-color: #EAE5DC !important;
+  box-shadow: 0 2px 10px rgba(40,30,20,0.05) !important;
+}
+
+/* Direct Booking Calculator in Light Mode */
+[data-theme="light"] .suite-calc-container,
+[data-theme="light"] #signature-booking .lg\:col-span-5 {
+  background-color: #ffffff !important;
+  border-color: rgba(197, 160, 89, 0.40) !important;
+  box-shadow: 0 16px 40px rgba(40, 30, 20, 0.06) !important;
+  color: #231F1C !important;
+}
+
+[data-theme="light"] .suite-calc-breakdown,
+[data-theme="light"] #signature-booking .bg-\[\#201f1f\] {
+  background-color: #FAF7F2 !important;
+  border-color: #EAE5DC !important;
+  color: #5C554E !important;
+}
+
+[data-theme="light"] #signature-booking .bg-\[\#201f1f\]:hover {
+  background-color: #F4EFE8 !important;
+  border-color: rgba(197, 160, 89, 0.35) !important;
+}
+
+/* Good to Know Practical Block in Light Mode */
+[data-theme="light"] .suite-good-to-know,
+[data-theme="light"] .bg-\[\#161515\] {
+  background-color: #ffffff !important;
+  border-color: #EAE5DC !important;
+  box-shadow: 0 4px 20px rgba(40, 30, 20, 0.03) !important;
+}
+
+[data-theme="light"] .bg-\[\#1d1c1c\],
+[data-theme="light"] .bg-\[\#1c1a17\],
+[data-theme="light"] .bg-\[\#1a1918\] {
+  background-color: #FAF7F2 !important;
+  border-color: #EAE5DC !important;
+}
+
+/* Non-smoking / No party badges in Light Mode */
+[data-theme="light"] .bg-\[\#2a1b1b\] {
+  background-color: #fef2f2 !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+[data-theme="light"] .text-\[\#f87171\] {
+  color: #dc2626 !important;
+}
+
+/* Direct Booking Perks 4 Cards in Light Mode */
+[data-theme="light"] #avantages-direct .bg-\[\#181717\] {
+  background-color: #ffffff !important;
+  border-color: #ECE7DF !important;
+  box-shadow: 0 4px 20px rgba(40, 30, 20, 0.04) !important;
+}
+[data-theme="light"] #avantages-direct .bg-\[\#181717\]:hover {
+  border-color: rgba(197, 160, 89, 0.50) !important;
+  box-shadow: 0 16px 35px -10px rgba(45, 35, 25, 0.08) !important;
+}
+
+[data-theme="light"] #avantages-direct .bg-\[\#24221d\] {
+  background-color: #FAF7F2 !important;
+  border-color: #EAE5DC !important;
+  color: #775a19 !important;
+}
+
+/* Apartment Equipments Section in Light Mode */
+[data-theme="light"] #equipements-section {
+  background-color: #FAF8F5 !important;
+}
+[data-theme="light"] #equipements-section .bg-\[\#1c1b1b\]\/85,
+[data-theme="light"] #equipements-section .bg-\[\#1c1b1b\]\/90 {
+  background-color: rgba(255, 255, 255, 0.96) !important;
+  border-color: #EAE5DC !important;
+  box-shadow: 0 10px 30px rgba(40, 30, 20, 0.05) !important;
+}
+[data-theme="light"] #equipements-section .bg-\[\#2a2a2a\]\/80 {
+  background-color: #FAF7F2 !important;
+  border-color: #EAE5DC !important;
+  color: #775a19 !important;
+}
+
+/* =====================================================================
+   EQUIPEMENTS SECTION IN LIGHT MODE (Seamless Luxury Background)
+   ===================================================================== */
+
+[data-theme="light"] #equipements-section {
+  background-color: #FAF8F5 !important;
+}
+
+[data-theme="light"] #equipements-section .bg-4k-hero,
+[data-theme="light"] #equipements-section .scrim-4k-overlay {
+  display: none !important;
+}
+
+[data-theme="light"] #equipements-section h2 {
+  color: #171717 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] #equipements-section p {
+  color: #666666 !important;
+}
+
+[data-theme="light"] #equipements-section .bg-\[\#1c1b1b\]\/85,
+[data-theme="light"] #equipements-section .bg-\[\#1c1b1b\]\/80,
+[data-theme="light"] #equipements-section .bg-\[\#1c1b1b\]\/90 {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme="light"] #equipements-section .bg-\[\#2a2a2a\]\/80 {
+  background-color: #FDFBF8 !important;
+  border: 1px solid rgba(200, 162, 77, 0.25) !important;
+  color: #B89032 !important;
+}
+
+[data-theme="light"] #equipements-section .text-\[\#e5e2e1\] {
+  color: #171717 !important;
+}
+
+[data-theme="light"] #equipements-section .text-\[\#99907c\],
+[data-theme="light"] #equipements-section .text-\[\#d0c5af\] {
+  color: #666666 !important;
+}
+
+[data-theme="light"] #equipements-section .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* =====================================================================
+   PHOTO OVERLAYS & GALLERY CAPTIONS (High Contrast on Images)
+   ===================================================================== */
+
+[data-theme="light"] #galerie-section {
+  background-color: #FAF8F5 !important;
+}
+
+[data-theme="light"] #galerie-section .bg-\[\#1c1b1b\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] #galerie-section .aspect-\[4\/3\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme="light"] #galerie-section .aspect-\[4\/3\]:hover {
+  border-color: rgba(200, 162, 77, 0.45) !important;
+  box-shadow: 0 16px 36px -8px rgba(15, 23, 42, 0.12), 0 0 20px rgba(200, 162, 77, 0.15) !important;
+}
+
+/* Text inside photo hover gradient overlays MUST ALWAYS BE WHITE & GOLD */
+[data-theme="light"] [class*="bg-gradient-to-t"] p,
+[data-theme="light"] [class*="bg-gradient-to-t"] .text-\[\#e5e2e1\],
+[data-theme="light"] .group:hover [class*="bg-gradient-to-t"] p {
+  color: #FFFFFF !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="light"] [class*="bg-gradient-to-t"] span.text-\[\#f2ca50\],
+[data-theme="light"] [class*="bg-gradient-to-t"] .text-\[\#f2ca50\] {
+  color: #FCE8B3 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="light"] [class*="bg-gradient-to-t"] .text-\[\#c9c6bf\],
+[data-theme="light"] [class*="bg-gradient-to-t"] .text-\[\#d0c5af\] {
+  color: #EDE8E0 !important;
+}
+
+/* Hero Secondary Button */
+.hero-secondary-btn {
+  background-color: rgba(42, 42, 42, 0.70);
+  color: #e5e2e1;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.hero-secondary-btn:hover {
+  background-color: #353534;
+  color: #f2ca50;
+  border-color: rgba(242, 202, 80, 0.50);
+}
+
+[data-theme="light"] .hero-secondary-btn {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  color: #171717 !important;
+  border-color: rgba(200, 162, 77, 0.45) !important;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08) !important;
+}
+
+[data-theme="light"] .hero-secondary-btn:hover {
+  background: linear-gradient(135deg, #C8A24D 0%, #B89032 100%) !important;
+  color: #FFFFFF !important;
+  border-color: #B89032 !important;
+  box-shadow: 0 12px 28px rgba(200, 162, 77, 0.35) !important;
+}
+
+[data-theme="light"] .hero-secondary-btn:hover svg {
+  color: #FFFFFF !important;
+}
+
+/* Green accents */
+[data-theme="light"] .bg-\[\#22c55e\] {
+  background-color: #22c55e !important;
+}
+[data-theme="light"] .text-\[\#22c55e\] {
+  color: #16a34a !important;
+}
+[data-theme="light"] .bg-\[\#22c55e\]\/15 {
+  background-color: rgba(34, 197, 94, 0.12) !important;
+  color: #15803d !important;
+  border-color: rgba(34, 197, 94, 0.25) !important;
+}
+
+/* =====================================================================
+   PRACTICAL INFO / GOOD TO KNOW ICON BOXES & CARDS
+   ===================================================================== */
+[data-theme="light"] .practical-icon-box,
+[data-theme="light"] .bg-\[\#2a2720\],
+[data-theme="light"] .bg-\[\#201f1f\] {
+  background-color: rgba(200, 162, 77, 0.12) !important;
+  color: #B89032 !important;
+  border-color: rgba(200, 162, 77, 0.25) !important;
+}
+
+[data-theme="light"] .bg-\[\#2a2720\] svg,
+[data-theme="light"] .bg-\[\#201f1f\] svg {
+  color: #B89032 !important;
+}
+
+/* =====================================================================
+   ULTRA-LUXURY RESERVATION DIALOG (ApartmentBooking & BookingCalendar)
+   ===================================================================== */
+
+/* ── Modal Backdrop & Overlays ── */
+[data-theme="light"] .fixed.inset-0.z-50.bg-\[\#090909\]\/90,
+[data-theme="light"] .fixed.inset-0.z-50.bg-black\/85,
+[data-theme="light"] .booking-calendar-overlay {
+  background-color: rgba(15, 23, 42, 0.58) !important;
+  backdrop-filter: blur(20px) !important;
+}
+
+/* ── Close Modal Buttons ── */
+[data-theme="light"] .booking-modal-card ~ button,
+[data-theme="light"] button[aria-label="Fermer"],
+[data-theme="light"] button[aria-label="Cerrar calendario"],
+[data-theme="light"] button[aria-label="Fermer le calendrier"] {
+  background-color: #FFFFFF !important;
+  color: #171717 !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .booking-modal-card ~ button:hover,
+[data-theme="light"] button[aria-label="Fermer"]:hover,
+[data-theme="light"] button[aria-label="Cerrar calendario"]:hover,
+[data-theme="light"] button[aria-label="Fermer le calendrier"]:hover {
+  background-color: #FAF8F5 !important;
+  color: #B89032 !important;
+  border-color: rgba(200, 162, 77, 0.40) !important;
+}
+
+/* ── Main Booking Dialog Modal Card ── */
+[data-theme="light"] .booking-modal-card,
+[data-theme="light"] .booking-calendar-card {
+  background-color: #FAF8F5 !important;
+  border-color: rgba(200, 162, 77, 0.35) !important;
+  color: #171717 !important;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.18), 0 0 40px rgba(200, 162, 77, 0.12) !important;
+}
+
+/* Modal Headings & Texts */
+[data-theme="light"] .booking-modal-card h2,
+[data-theme="light"] .booking-modal-card h3,
+[data-theme="light"] .booking-modal-card .font-serif,
+[data-theme="light"] .booking-calendar-card h2,
+[data-theme="light"] .booking-calendar-card h3 {
+  color: #171717 !important;
+}
+
+[data-theme="light"] .booking-modal-card .text-white {
+  color: #171717 !important;
+}
+
+[data-theme="light"] .booking-modal-card .text-\[\#e5e2e1\] {
+  color: #171717 !important;
+}
+
+[data-theme="light"] .booking-modal-card .text-\[\#d0c5af\] {
+  color: #5C554E !important;
+}
+
+[data-theme="light"] .booking-modal-card .text-\[\#99907c\],
+[data-theme="light"] .booking-modal-card .text-\[\#c9c6bf\] {
+  color: #737373 !important;
+}
+
+[data-theme="light"] .booking-modal-card .text-\[\#f2ca50\] {
+  color: #B89032 !important;
+}
+
+[data-theme="light"] .booking-modal-card .border-white\/5,
+[data-theme="light"] .booking-modal-card .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Top Brand Row */
+[data-theme="light"] .booking-modal-card .bg-\[\#1c1a17\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(200, 162, 77, 0.40) !important;
+  box-shadow: 0 2px 8px rgba(200, 162, 77, 0.15) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#1a1918\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Step Progress Track */
+[data-theme="light"] .booking-modal-card .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Step 1: Suite Selection Cards */
+[data-theme="light"] .booking-modal-card .grid-cols-1.sm\:grid-cols-3 button {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-modal-card .grid-cols-1.sm\:grid-cols-3 button:hover {
+  border-color: rgba(200, 162, 77, 0.50) !important;
+  box-shadow: 0 6px 20px rgba(200, 162, 77, 0.15) !important;
+}
+
+[data-theme="light"] .booking-modal-card .grid-cols-1.sm\:grid-cols-3 button.bg-\[\#221f17\] {
+  background-color: #FDFBF8 !important;
+  border-color: #C8A24D !important;
+  box-shadow: 0 8px 25px rgba(200, 162, 77, 0.22) !important;
+}
+
+/* Step 1: Date Trigger Boxes */
+[data-theme="light"] .booking-modal-card .bg-\[\#111010\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.10) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#111010\]:hover {
+  border-color: #C8A24D !important;
+  box-shadow: 0 4px 16px rgba(200, 162, 77, 0.15) !important;
+}
+
+/* Night Stepper Bar */
+[data-theme="light"] .booking-modal-card .border-\[\#f2ca50\]\/30.bg-\[\#1a1918\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(200, 162, 77, 0.35) !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#252424\] {
+  background-color: #F5F2EC !important;
+  color: #171717 !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#252424\]:hover {
+  background-color: #EAE5DC !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#121110\] {
+  background-color: #FAF8F5 !important;
+  border-color: rgba(0, 0, 0, 0.10) !important;
+  color: #B89032 !important;
+}
+
+/* Pricing Grid Recap Card ("GRILLE TARIFAIRE OFFICIELLE") */
+[data-theme="light"] .booking-modal-card .bg-\[\#100f0f\],
+[data-theme="light"] .booking-modal-card .bg-\[\#101010\] {
+  background-color: #FDFBF8 !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#1e1c19\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #171717 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* Step 2: Romantic Add-on Cards */
+[data-theme="light"] .booking-modal-card .bg-\[\#1b1a1a\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#262219\] {
+  background-color: #FDFBF8 !important;
+  border-color: #C8A24D !important;
+  box-shadow: 0 6px 20px rgba(200, 162, 77, 0.20) !important;
+}
+
+/* Step 3: Form Inputs & Textareas */
+[data-theme="light"] .booking-modal-card input[type="text"],
+[data-theme="light"] .booking-modal-card input[type="tel"],
+[data-theme="light"] .booking-modal-card input[type="email"],
+[data-theme="light"] .booking-modal-card textarea {
+  background-color: #FFFFFF !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  color: #171717 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+[data-theme="light"] .booking-modal-card input:focus,
+[data-theme="light"] .booking-modal-card textarea:focus {
+  border-color: #C8A24D !important;
+  box-shadow: 0 0 0 3px rgba(200, 162, 77, 0.20) !important;
+}
+
+/* Navigation Buttons in Booking Modal */
+[data-theme="light"] .booking-modal-card .bg-\[\#222121\] {
+  background-color: #F5F2EC !important;
+  color: #171717 !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#222121\]:hover {
+  background-color: #EAE5DC !important;
+}
+
+/* Primary CTA Buttons */
+[data-theme="light"] .booking-modal-card .bg-\[\#f2ca50\] {
+  background: linear-gradient(135deg, #C8A24D 0%, #B89032 100%) !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 10px 25px rgba(200, 162, 77, 0.35) !important;
+}
+
+[data-theme="light"] .booking-modal-card .bg-\[\#f2ca50\]:hover {
+  background: linear-gradient(135deg, #B89032 0%, #A37E28 100%) !important;
+  box-shadow: 0 12px 28px rgba(200, 162, 77, 0.45) !important;
+}
+
+/* ── Booking Calendar Modal Elements ── */
+[data-theme="light"] .booking-calendar-card .bg-\[\#1b1a1a\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(200, 162, 77, 0.25) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .booking-calendar-card .bg-\[\#141313\] {
+  background-color: #F5F2EC !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .booking-calendar-card .bg-\[\#252424\] {
+  background-color: #F5F2EC !important;
+  color: #171717 !important;
+}
+
+[data-theme="light"] .booking-calendar-card .bg-\[\#252424\]:hover {
+  background-color: #EAE5DC !important;
+}
+
+[data-theme="light"] .booking-calendar-card button.aspect-square {
+  background-color: #FFFFFF !important;
+  color: #171717 !important;
+  border: 1px solid rgba(0, 0, 0, 0.06) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02) !important;
+}
+
+[data-theme="light"] .booking-calendar-card button.aspect-square:hover:not(:disabled) {
+  border-color: #C8A24D !important;
+  box-shadow: 0 2px 8px rgba(200, 162, 77, 0.20) !important;
+}
+
+[data-theme="light"] .booking-calendar-card .bg-\[\#1f1e1e\] {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: #171717 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* =====================================================================
+   HERO 5-STAR LUMINOUS TYPOGRAPHY (Video Scrim Contrast in ALL Themes)
+   ===================================================================== */
+.hero-main-heading,
+[data-theme="light"] .hero-main-heading,
+[data-theme="dark"] .hero-main-heading {
+  color: #FFFFFF !important;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.85), 0 0 40px rgba(0, 0, 0, 0.60), 0 4px 10px rgba(0, 0, 0, 0.90) !important;
+}
+
+.hero-main-subheading,
+[data-theme="light"] .hero-main-subheading,
+[data-theme="dark"] .hero-main-subheading {
+  color: #F6D878 !important;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.85), 0 0 30px rgba(242, 202, 80, 0.40), 0 4px 10px rgba(0, 0, 0, 0.90) !important;
+}
+
+.hero-main-desc,
+[data-theme="light"] .hero-main-desc,
+[data-theme="dark"] .hero-main-desc {
+  color: #EDE8E0 !important;
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.90) !important;
+}
+
+
