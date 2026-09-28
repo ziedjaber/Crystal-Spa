@@ -1175,6 +1175,52 @@ section,
 }
 
 /* =====================================================================
+   EXPERIENCE SECTION IN LIGHT MODE (Seamless Luxury Background)
+   ===================================================================== */
+
+[data-theme="light"] #experience-section {
+  background-color: #FAF8F5 !important;
+}
+
+[data-theme="light"] #experience-section .bg-4k-hero,
+[data-theme="light"] #experience-section .scrim-4k-overlay {
+  display: none !important;
+}
+
+[data-theme="light"] #experience-section h2 {
+  color: #171717 !important;
+  text-shadow: none !important;
+}
+
+[data-theme="light"] #experience-section p {
+  color: #4A453E !important;
+}
+
+[data-theme="light"] #experience-section .bg-\[\#1c1b1b\]\/85 {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05) !important;
+}
+
+[data-theme="light"] #experience-section .bg-\[\#2a2a2a\]\/80 {
+  background-color: #FDFBF8 !important;
+  border: 1px solid rgba(200, 162, 77, 0.25) !important;
+  color: #B89032 !important;
+}
+
+[data-theme="light"] #experience-section .text-\[\#e5e2e1\] {
+  color: #171717 !important;
+}
+
+[data-theme="light"] #experience-section .text-\[\#d0c5af\] {
+  color: #666666 !important;
+}
+
+[data-theme="light"] #experience-section .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* =====================================================================
    PHOTO OVERLAYS & GALLERY CAPTIONS (High Contrast on Images)
    ===================================================================== */
 

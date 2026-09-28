@@ -130,15 +130,15 @@ function MainContent() {
                       <span className="text-[#666666] dark:text-[#d0c5af] font-light">({apt.reviewsCount})</span>
                     </div>
 
-                    {/* Overlapping Floating Location Badge */}
-                    <div className="absolute -bottom-3.5 left-4 text-xs font-medium flex items-center gap-1.5 bg-white/95 text-[#171717] dark:bg-black/85 dark:text-white backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-black/5 dark:border-white/15 shadow-xl z-20">
-                      <MapPin className="w-3.5 h-3.5 text-[#C8A24D] dark:text-[#f2ca50]" />
+                    {/* Floating Location Badge */}
+                    <div className="absolute bottom-3 left-4 text-xs font-medium flex items-center gap-1.5 bg-white/95 text-[#171717] dark:bg-black/80 dark:text-white backdrop-blur-md px-3 py-1.5 rounded-lg border border-black/5 dark:border-white/15 shadow-lg z-20">
+                      <MapPin className="w-3.5 h-3.5 text-[#C8A24D] dark:text-[#f2ca50] shrink-0" />
                       <span className="font-semibold text-[#171717] dark:text-white">{apt.location}</span>
                     </div>
                   </div>
 
                   {/* Body Content */}
-                  <div className="p-6 sm:p-8 pt-9 sm:pt-10 flex flex-col justify-between flex-1 gap-6">
+                  <div className="p-6 sm:p-8 flex flex-col justify-between flex-1 gap-6">
                     <div className="flex flex-col gap-3">
                       <div className="flex items-baseline justify-between gap-2">
                         <h3 className="font-serif text-xl sm:text-2xl text-[#e5e2e1] group-hover:text-[#f2ca50] transition-colors font-medium">

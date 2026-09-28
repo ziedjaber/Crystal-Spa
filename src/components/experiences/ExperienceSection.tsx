@@ -60,8 +60,8 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 overflow-hidden" id="experience-section">
-      {/* 4K Background Image with Dark Scrim Overlay */}
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 overflow-hidden bg-[#0e0e0e] [data-theme=light]:bg-[#FAF8F5]" id="experience-section">
+      {/* 4K Background Image with Dark Scrim Overlay (Dark theme only) */}
       <div className="absolute inset-0 bg-4k-hero pointer-events-none">
         <Image
           src="/a2/chambre.png"
@@ -80,13 +80,13 @@ export default function ExperienceSection() {
       <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
         <div className="text-center max-w-[640px] mx-auto flex flex-col items-center gap-4">
-          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#f2ca50] bg-[#2a2a2a]/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-[#f2ca50]/20">
+          <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#C8A24D] dark:text-[#f2ca50] bg-[#C8A24D]/10 dark:bg-[#2a2a2a]/60 backdrop-blur-md px-4 py-1.5 rounded-full border border-[#C8A24D]/30 dark:border-[#f2ca50]/20">
             {language === 'fr' ? 'Les Fondements Crystal Spa' : 'The Crystal Spa Pillars'}
           </span>
-          <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1] drop-shadow-md leading-tight">
-            {t('nav.experience')}
+          <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl text-[#171717] dark:text-[#FAF8F5] leading-tight font-medium">
+            {language === 'fr' ? "L'Art de l'Expérience Privative" : 'The Art of Private Sanctuary'}
           </h2>
-          <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
+          <p className="text-sm sm:text-base text-[#4A453E] dark:text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
             {language === 'fr'
               ? 'Chaque détail architectural, tactile et sensoriel a été calibré pour effacer la notion du temps et vous offrir une déconnexion intime sans pareil.'
               : 'Every architectural, tactile, and sensory detail has been calibrated to erase time and offer an unmatched intimate sanctuary.'}
