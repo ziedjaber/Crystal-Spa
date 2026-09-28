@@ -96,17 +96,20 @@ export default function FaqSection() {
   };
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-20 bg-[#131313] border-t border-white/5" id="faq-accordion">
-      <div className="max-w-4xl mx-auto flex flex-col gap-12 sm:gap-14">
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 bg-[#131313] border-t border-white/5 luxury-radial-top overflow-hidden" id="faq-accordion">
+      {/* Subtle Ambient Glow */}
+      <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-[#d4af37]/[0.02] blur-[160px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 max-w-4xl mx-auto flex flex-col gap-16 sm:gap-20">
         {/* Header */}
-        <div className="text-center flex flex-col items-center gap-2">
+        <div className="text-center flex flex-col items-center gap-4 max-w-[640px] mx-auto">
           <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#f2ca50]">
             {language === 'fr' ? 'Questions Fréquentes' : 'Frequently Asked Questions'}
           </span>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#e5e2e1] font-normal">
+          <h2 className="font-serif text-3xl sm:text-5xl text-[#e5e2e1] font-normal leading-tight">
             {language === 'fr' ? 'Tout ce Qu’il Faut Savoir' : 'Everything You Need to Know'}
           </h2>
-          <p className="text-sm sm:text-base text-[#d0c5af] font-light max-w-xl">
+          <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
             {language === 'fr'
               ? 'Arrivée autonome, caution, hygiène du spa privatif : toutes les réponses à vos interrogations pour un séjour en toute sérénité.'
               : 'Keyless arrival, deposit pre-authorization, private spa hygiene: all answers for a tranquil romantic getaway.'}

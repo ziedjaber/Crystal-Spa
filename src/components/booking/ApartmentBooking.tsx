@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar,
@@ -28,6 +28,10 @@ import StripePaymentForm from '@/components/payment/StripePaymentForm';
 interface ApartmentBookingProps {
   initialApartmentId?: string;
   initialPackId?: string;
+  initialPackIds?: string[];
+  initialCheckIn?: string;
+  initialCheckOut?: string;
+  initialStep?: number;
   onComplete?: () => void;
 }
 
@@ -59,6 +63,10 @@ const ROMANTIC_ADDONS = [
 export default function ApartmentBooking({
   initialApartmentId,
   initialPackId,
+  initialPackIds,
+  initialCheckIn,
+  initialCheckOut,
+  initialStep,
   onComplete,
 }: ApartmentBookingProps) {
   const { language } = useLanguage();
@@ -66,17 +74,36 @@ export default function ApartmentBooking({
   const [selectedAptId, setSelectedAptId] = useState<string>(
     initialApartmentId || FEATURED_APARTMENTS[1]?.id || FEATURED_APARTMENTS[0].id
   );
-  const [step, setStep] = useState<number>(1);
+  const [step, setStep] = useState<number>(initialStep || 1);
   const [checkInDate, setCheckInDate] = useState<string>(
-    new Date(Date.now() + 86400000).toISOString().split('T')[0]
+    initialCheckIn || new Date(Date.now() + 86400000).toISOString().split('T')[0]
   );
   const [checkOutDate, setCheckOutDate] = useState<string>(
-    new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
+    initialCheckOut || new Date(Date.now() + 86400000 * 2).toISOString().split('T')[0]
   );
   const [guestsCount, setGuestsCount] = useState<number>(2);
-  const [selectedPacks, setSelectedPacks] = useState<string[]>(
-    initialPackId ? [initialPackId] : []
-  );
+  const [selectedPacks, setSelectedPacks] = useState<string[]>(() => {
+    if (initialPackIds && initialPackIds.length > 0) return initialPackIds;
+    if (initialPackId) return [initialPackId];
+    return [];
+  });
+
+  useEffect(() => {
+    if (initialApartmentId) setSelectedAptId(initialApartmentId);
+  }, [initialApartmentId]);
+
+  useEffect(() => {
+    if (initialCheckIn) setCheckInDate(initialCheckIn);
+    if (initialCheckOut) setCheckOutDate(initialCheckOut);
+  }, [initialCheckIn, initialCheckOut]);
+
+  useEffect(() => {
+    if (initialPackIds && initialPackIds.length > 0) {
+      setSelectedPacks(initialPackIds);
+    } else if (initialPackId) {
+      setSelectedPacks([initialPackId]);
+    }
+  }, [initialPackId, initialPackIds]);
 
   const [guestName, setGuestName] = useState<string>('');
   const [guestEmail, setGuestEmail] = useState<string>('');
@@ -477,11 +504,21 @@ export default function ApartmentBooking({
 
               <div className="text-left sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 border-white/5 w-full sm:w-auto">
                 <span className="text-[#99907c] text-[10px] uppercase font-bold tracking-widest block">
-                  {language === 'fr' ? 'SOUS-TOTAL HÉBERGEMENT' : 'SUBTOTAL'}
+                  {language === 'fr' ? (selectedPacks.length > 0 ? 'TOTAL ESTIMÉ DU SÉJOUR' : 'SOUS-TOTAL HÉBERGEMENT') : (selectedPacks.length > 0 ? 'TOTAL STAY ESTIMATE' : 'SUBTOTAL')}
                 </span>
                 <span className="font-serif text-3xl font-bold text-[#f2ca50]">
-                  {stayPricing.baseAmountEUR} €
+                  {calculateTotal()} €
                 </span>
+                {selectedPacks.length > 0 && (
+                  <div className="text-[11px] text-[#22c55e] font-medium mt-1 flex flex-col items-start sm:items-end">
+                    <span>
+                      {stayPricing.baseAmountEUR} € ({stayPricing.nightsCount} {language === 'fr' ? 'nuit' : 'night'}) + {calculatePacksTotal()} € ({selectedPacks.length} {language === 'fr' ? 'option(s)' : 'option(s)'})
+                    </span>
+                    <span className="text-[10px] text-[#99907c] font-light">
+                      {selectedPacks.map(id => ROMANTIC_ADDONS.find(p => p.id === id)?.name).filter(Boolean).join(' • ')}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
 

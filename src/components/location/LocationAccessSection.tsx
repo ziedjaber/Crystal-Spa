@@ -56,27 +56,27 @@ export default function LocationAccessSection({
 
   return (
     <section
-      className="relative w-full py-16 sm:py-24 px-3.5 sm:px-6 md:px-12 lg:px-24 bg-[#131313] border-t border-white/5 overflow-hidden"
+      className="relative w-full py-28 sm:py-36 lg:py-44 px-3.5 sm:px-6 md:px-12 lg:px-24 bg-[#131313] border-t border-white/5 luxury-radial-top overflow-hidden"
       id="localisation-section"
     >
       {/* Subtle Background Glow */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-96 h-96 bg-[#f2ca50]/5 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#d4af37]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-[#f2ca50]/[0.025] rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-[#d4af37]/[0.02] rounded-full blur-[160px] pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex flex-col gap-3 max-w-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col gap-4 max-w-[640px]">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30 w-fit">
               <MapPin className="w-4 h-4 text-[#f2ca50]" />
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#f2ca50]">
                 {locationTitle}
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] leading-tight">
               {aptTitle}
             </h2>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
               {language === 'fr'
                 ? 'Ce logement est situé à Le Petit-Quevilly, Normandie, France. Emplacement privilégié dans un quartier résidentiel paisible, à seulement 5 minutes du centre historique de Rouen et des transports en commun. Stationnement gratuit très facile.'
                 : 'This apartment is located in Le Petit-Quevilly, Normandy, France. Prime location in a quiet residential district, just 5 minutes from historic downtown Rouen and public transit. Free and easy parking.'}
@@ -98,7 +98,7 @@ export default function LocationAccessSection({
         {/* 2-Column Showcase: Interactive Map Frame + Access Details */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Airbnb-Style Interactive Map Frame */}
-          <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#1c1b1b] border border-white/10 shadow-2xl relative min-h-[420px] lg:min-h-[500px] flex flex-col group">
+          <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#1c1b1b] border border-white/10 luxury-overlap-shadow relative min-h-[420px] lg:min-h-[500px] flex flex-col group">
             
             {/* Top Airbnb Map Bar (Title) */}
             <div className="absolute top-4 left-4 z-20 bg-[#131313]/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-lg pointer-events-none">

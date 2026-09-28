@@ -31,6 +31,7 @@ interface SuiteSignatureDetailProps {
     suiteTitle: string;
     totalPrice: number;
     extras: string[];
+    packIds: string[];
     checkIn?: string;
     checkOut?: string;
   }) => void;
@@ -60,13 +61,21 @@ export default function SuiteSignatureDetail({
   const handleBookingClick = (e: React.MouseEvent) => {
     e.preventDefault();
     const extras: string[] = [];
-    if (packConfort) extras.push(language === 'fr' ? 'Pack Confort (+29€)' : 'Comfort Pack (+29€)');
-    if (packRomance) extras.push(language === 'fr' ? 'Pack Romance (+29€)' : 'Romance Pack (+29€)');
+    const packIds: string[] = [];
+    if (packConfort) {
+      extras.push(language === 'fr' ? 'Pack Confort (+29€)' : 'Comfort Pack (+29€)');
+      packIds.push('pack-confort');
+    }
+    if (packRomance) {
+      extras.push(language === 'fr' ? 'Pack Romance (+29€)' : 'Romance Pack (+29€)');
+      packIds.push('pack-romance');
+    }
 
     onConfirmBooking({
       suiteTitle: language === 'fr' ? currentSuite.title : currentSuite.titleEn,
       totalPrice: calculateTotal(),
       extras,
+      packIds,
       checkIn: checkInDate,
       checkOut: checkOutDate,
     });

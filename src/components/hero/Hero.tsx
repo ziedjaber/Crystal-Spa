@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { ArrowRight, Play, ShieldCheck, Droplets, Star, Sparkles } from 'lucide-react';
 import AirbnbLogo from '@/components/ui/AirbnbLogo';
@@ -13,83 +14,70 @@ interface HeroProps {
 export default function Hero({ onReserveNow }: HeroProps) {
   const { language, t } = useLanguage();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const desktopVideoRef = useRef<HTMLVideoElement | null>(null);
-  const mobileVideoRef = useRef<HTMLVideoElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  // Bulletproof video loop and playback manager for both desktop & mobile video elements
+  // Bulletproof video loop and playback manager
   useEffect(() => {
-    const videos = [desktopVideoRef.current, mobileVideoRef.current].filter(Boolean) as HTMLVideoElement[];
-    if (videos.length === 0) return;
+    const video = videoRef.current;
+    if (!video) return;
 
-    const cleanupFns: Array<() => void> = [];
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+    video.loop = true;
 
-    videos.forEach((video) => {
-      video.muted = true;
-      video.defaultMuted = true;
-      video.playsInline = true;
-      video.loop = true;
-
-      const playVideo = () => {
-        if (video.paused) {
-          const promise = video.play();
-          if (promise !== undefined) {
-            promise.catch(() => {});
-          }
+    const playVideo = () => {
+      if (video.paused) {
+        const promise = video.play();
+        if (promise !== undefined) {
+          promise.catch(() => {});
         }
-      };
+      }
+    };
 
-      const handleEnded = () => {
+    const handleEnded = () => {
+      video.currentTime = 0;
+      playVideo();
+    };
+
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.08) {
         video.currentTime = 0;
         playVideo();
-      };
+      }
+    };
 
-      const handleTimeUpdate = () => {
-        if (video.duration && video.currentTime >= video.duration - 0.08) {
-          video.currentTime = 0;
-          playVideo();
-        }
-      };
+    const handlePause = () => {
+      if (document.visibilityState === 'visible') {
+        playVideo();
+      }
+    };
 
-      const handlePause = () => {
-        if (document.visibilityState === 'visible') {
-          playVideo();
-        }
-      };
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') {
+        playVideo();
+      }
+    };
 
-      const handleVisibility = () => {
-        if (document.visibilityState === 'visible') {
-          playVideo();
-        }
-      };
+    video.addEventListener('ended', handleEnded);
+    video.addEventListener('timeupdate', handleTimeUpdate);
+    video.addEventListener('pause', handlePause);
+    document.addEventListener('visibilitychange', handleVisibility);
 
-      video.addEventListener('ended', handleEnded);
-      video.addEventListener('timeupdate', handleTimeUpdate);
-      video.addEventListener('pause', handlePause);
-      document.addEventListener('visibilitychange', handleVisibility);
-
-      playVideo();
-
-      cleanupFns.push(() => {
-        video.removeEventListener('ended', handleEnded);
-        video.removeEventListener('timeupdate', handleTimeUpdate);
-        video.removeEventListener('pause', handlePause);
-        document.removeEventListener('visibilitychange', handleVisibility);
-      });
-    });
+    playVideo();
 
     const watchdog = setInterval(() => {
-      if (document.visibilityState === 'visible') {
-        videos.forEach((video) => {
-          if (video.paused && video.offsetParent !== null) {
-            video.currentTime = video.currentTime >= (video.duration || 9) - 0.1 ? 0 : video.currentTime;
-            video.play().catch(() => {});
-          }
-        });
+      if (document.visibilityState === 'visible' && video.paused && video.offsetParent !== null) {
+        video.currentTime = video.currentTime >= (video.duration || 9) - 0.1 ? 0 : video.currentTime;
+        video.play().catch(() => {});
       }
     }, 600);
 
     return () => {
-      cleanupFns.forEach((fn) => fn());
+      video.removeEventListener('ended', handleEnded);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
+      video.removeEventListener('pause', handlePause);
+      document.removeEventListener('visibilitychange', handleVisibility);
       clearInterval(watchdog);
     };
   }, []);
@@ -173,46 +161,35 @@ export default function Hero({ onReserveNow }: HeroProps) {
       
       {/* Hero Background Video & Atmospheric Scrim */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        {/* Desktop Video (Screen >= 768px) */}
+        {/* Responsive Video (Desktop >= 768px, Mobile < 768px) */}
         <video
-          ref={desktopVideoRef}
+          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           poster="/hero/preview_video.jpg"
-          className="hidden md:block w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
+          className="w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
           aria-hidden="true"
           suppressHydrationWarning
         >
-          <source src="/hero/hero-bg.mp4" type="video/mp4" />
-          <source src="/hero/hero-bg.webm" type="video/webm" />
+          <source src="/hero/hero-bg.mp4" type="video/mp4" media="(min-width: 768px)" />
+          <source src="/hero/hero-mobile.mp4" type="video/mp4" media="(max-width: 767px)" />
         </video>
 
-        {/* Mobile Video (Screen < 768px vertical portrait optimized) */}
-        <video
-          ref={mobileVideoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          poster="/hero/preview_mobile.jpg"
-          className="block md:hidden w-full h-full object-cover object-center scale-105 transition-transform duration-1000 brightness-90"
-          aria-hidden="true"
-          suppressHydrationWarning
-        >
-          <source src="/hero/hero-mobile.mp4" type="video/mp4" />
-          <source src="/hero/hero-mobile.webm" type="video/webm" />
-          <source src="/hero/video mobile.mp4" type="video/mp4" />
-        </video>
-
-        {/* Fallback image if video fails to load */}
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center -z-10 pointer-events-none"
-          style={{ backgroundImage: "url('/hero/preview_video.jpg')" }}
-        />
+        {/* High priority fallback LCP image */}
+        <div className="absolute inset-0 w-full h-full -z-10 pointer-events-none">
+          <Image
+            src="/hero/preview_video.jpg"
+            alt="Hero Spa Background"
+            fill
+            priority
+            quality={85}
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
       </div>
       
       {/* Layered luxury scrims */}
@@ -277,28 +254,41 @@ export default function Hero({ onReserveNow }: HeroProps) {
           </a>
         </motion.div>
 
-        {/* Micro Trust Badges */}
+        {/* Unified Luxury Trust Hallmark Ribbon — Elegant Palace Hotel Design (No Black BG) */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-10 flex flex-wrap items-center justify-center gap-6 text-[#d0c5af] text-xs font-medium"
+          className="mt-8 max-w-fit mx-auto"
         >
-          <div className="flex items-center gap-1.5 transition-transform duration-300 hover:scale-105">
-            <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
-            <span>{t('hero.trust.privacy')}</span>
-          </div>
-          <div className="hidden sm:inline opacity-30">•</div>
-          <div className="flex items-center gap-1.5 transition-transform duration-300 hover:scale-105">
-            <Droplets className="w-4 h-4 text-[#f2ca50]" />
-            <span>{t('hero.trust.water')}</span>
-          </div>
-          <div className="hidden sm:inline opacity-30">•</div>
-          <div className="flex items-center gap-2 transition-transform duration-300 hover:scale-105 bg-[#1c1b1b]/70 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10 shadow-lg">
-            <AirbnbLogo className="w-4 h-4 text-[#FF385C]" />
-            <div className="flex items-center gap-1.5">
-              <Star className="w-3.5 h-3.5 text-[#f2ca50] fill-current" />
-              <span>{t('hero.trust.rating')}</span>
+          <div className="hero-trust-ribbon inline-flex flex-wrap items-center justify-center gap-4 sm:gap-6 px-7 py-3 rounded-2xl transition-all duration-300">
+            {/* Item 1: 100% Privatif */}
+            <div className="flex items-center gap-2.5">
+              <ShieldCheck className="w-4 h-4 text-[#C8A24D] shrink-0" />
+              <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] font-semibold text-[#171717] dark:text-[#FAF8F5]">
+                {t('hero.trust.privacy')}
+              </span>
+            </div>
+
+            <div className="hidden sm:block w-[1px] h-3.5 bg-gradient-to-b from-transparent via-[#C8A24D]/50 to-transparent" aria-hidden="true" />
+
+            {/* Item 2: Eau Filtrée & Renouvelée */}
+            <div className="flex items-center gap-2.5">
+              <Droplets className="w-4 h-4 text-[#C8A24D] shrink-0" />
+              <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] font-semibold text-[#171717] dark:text-[#FAF8F5]">
+                {t('hero.trust.water')}
+              </span>
+            </div>
+
+            <div className="hidden sm:block w-[1px] h-3.5 bg-gradient-to-b from-transparent via-[#C8A24D]/50 to-transparent" aria-hidden="true" />
+
+            {/* Item 3: Airbnb Rating */}
+            <div className="flex items-center gap-2.5">
+              <AirbnbLogo className="w-3.5 h-3.5 text-[#FF385C] shrink-0" />
+              <Star className="w-3.5 h-3.5 text-[#C8A24D] fill-current shrink-0" />
+              <span className="text-[11px] sm:text-[11.5px] uppercase tracking-[0.12em] font-semibold text-[#171717] dark:text-[#FAF8F5]">
+                {t('hero.trust.rating')}
+              </span>
             </div>
           </div>
         </motion.div>

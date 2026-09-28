@@ -52,22 +52,39 @@ function SuitePageContent({ slug }: { slug: string }) {
     featured: apartment.featured,
   };
 
-  const [selectedPackForBooking, setSelectedPackForBooking] = useState<string | undefined>(undefined);
+  const [selectedPackIdsForBooking, setSelectedPackIdsForBooking] = useState<string[]>([]);
+  const [selectedDatesForBooking, setSelectedDatesForBooking] = useState<{ checkIn?: string; checkOut?: string }>({});
 
-  const handleOpenBooking = (details?: string | { suiteTitle?: string; totalPrice?: number; extras?: string[]; checkIn?: string; checkOut?: string }) => {
+  const handleOpenBooking = (details?: string | {
+    suiteTitle?: string;
+    totalPrice?: number;
+    extras?: string[];
+    packIds?: string[];
+    checkIn?: string;
+    checkOut?: string;
+  }) => {
     if (typeof details === 'string') {
       setSelectedAptForBooking(details);
-      setSelectedPackForBooking(undefined);
-    } else if (details && details.extras && details.extras.length > 0) {
+      setSelectedPackIdsForBooking([]);
+      setSelectedDatesForBooking({});
+    } else if (details) {
       setSelectedAptForBooking(apartment.id);
-      if (details.extras.some(e => e.includes('Confort') || e.includes('Comfort'))) {
-        setSelectedPackForBooking('pack-confort');
-      } else if (details.extras.some(e => e.includes('Romance'))) {
-        setSelectedPackForBooking('pack-romance');
+      const packs: string[] = [];
+      if (details.packIds && details.packIds.length > 0) {
+        packs.push(...details.packIds);
+      } else if (details.extras && details.extras.length > 0) {
+        if (details.extras.some(e => e.includes('Confort') || e.includes('Comfort'))) packs.push('pack-confort');
+        if (details.extras.some(e => e.includes('Romance'))) packs.push('pack-romance');
       }
+      setSelectedPackIdsForBooking(packs);
+      setSelectedDatesForBooking({
+        checkIn: details.checkIn,
+        checkOut: details.checkOut,
+      });
     } else {
       setSelectedAptForBooking(apartment.id);
-      setSelectedPackForBooking(undefined);
+      setSelectedPackIdsForBooking([]);
+      setSelectedDatesForBooking({});
     }
     setBookingModalOpen(true);
   };
@@ -91,7 +108,7 @@ function SuitePageContent({ slug }: { slug: string }) {
         {/* 2. Dedicated Suite Signature Detail & Interactive Calculator */}
         <SuiteSignatureDetail
           currentSuite={suiteItem}
-          onConfirmBooking={() => handleOpenBooking()}
+          onConfirmBooking={(bookingDetails) => handleOpenBooking(bookingDetails)}
         />
 
         {/* 3. Direct Booking Advantages */}
@@ -143,7 +160,9 @@ function SuitePageContent({ slug }: { slug: string }) {
 
               <ApartmentBooking
                 initialApartmentId={selectedAptForBooking || apartment.id}
-                initialPackId={selectedPackForBooking}
+                initialPackIds={selectedPackIdsForBooking}
+                initialCheckIn={selectedDatesForBooking.checkIn}
+                initialCheckOut={selectedDatesForBooking.checkOut}
                 onComplete={() => setBookingModalOpen(false)}
               />
             </motion.div>

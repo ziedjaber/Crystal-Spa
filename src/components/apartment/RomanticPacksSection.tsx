@@ -75,21 +75,24 @@ export default function RomanticPacksSection({
   const { language } = useLanguage();
 
   return (
-    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-20 bg-[#0e0e0e]" id="packs-romantiques">
-      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
+    <section className="relative w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 bg-[#0e0e0e] luxury-radial-top overflow-hidden" id="packs-romantiques">
+      {/* Subtle Ambient Glow */}
+      <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-[#d4af37]/[0.025] blur-[160px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
         {/* Header */}
-        <div className="text-center flex flex-col items-center gap-3 max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30">
+        <div className="text-center flex flex-col items-center gap-4 max-w-[640px] mx-auto">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30">
             <Sparkles className="w-3.5 h-3.5 text-[#f2ca50]" />
             <span className="text-[11px] font-bold uppercase tracking-wider text-[#f2ca50]">
               {language === 'fr' ? 'Envie de Prolonger la Parenthèse ?' : 'Enhance Your Romantic Escape'}
             </span>
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#e5e2e1]">
+          <h2 className="font-serif text-3xl sm:text-5xl text-[#e5e2e1] leading-tight">
             {language === 'fr' ? 'Nos Packs Romantiques d’Exception' : 'Our Signature Romantic Add-on Packs'}
           </h2>
-          <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
             {language === 'fr'
               ? 'Personnalisez votre séjour avec des attentions préparées avec soin par notre conciergerie avant votre arrivée.'
               : 'Tailor your private stay with bespoke romantic setups arranged by our private concierge team prior to your arrival.'}
@@ -97,7 +100,7 @@ export default function RomanticPacksSection({
         </div>
 
         {/* 2 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto w-full items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 max-w-4xl mx-auto w-full items-stretch">
           {ROMANTIC_PACKS.map((pack) => {
             const Icon = pack.icon;
             const isSelected = selectedPackId === pack.id;
@@ -105,9 +108,9 @@ export default function RomanticPacksSection({
             return (
               <div
                 key={pack.id}
-                className={`rounded-2xl p-6 sm:p-7 flex flex-col justify-between gap-6 transition-all duration-300 relative ${
+                className={`rounded-2xl p-7 sm:p-9 lg:p-10 flex flex-col justify-between gap-8 transition-all duration-300 relative luxury-overlap-shadow ${
                   pack.popular
-                    ? 'bg-[#1a1813] border-2 border-[#f2ca50] shadow-[0_10px_35px_rgba(242,202,80,0.15)] -translate-y-1'
+                    ? 'bg-[#1a1813] border-2 border-[#f2ca50] shadow-[0_15px_40px_rgba(242,202,80,0.18)] -translate-y-1'
                     : isSelected
                     ? 'bg-[#1e1c18] border-2 border-[#f2ca50] shadow-xl'
                     : 'bg-[#181717] border border-white/5 hover:border-[#f2ca50]/30 hover:shadow-xl'

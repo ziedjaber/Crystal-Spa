@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import ProgressiveImage from '@/components/ui/ProgressiveImage';
 import { useLanguage } from '@/context/LanguageContext';
 import { Star, CheckCircle } from 'lucide-react';
 
@@ -169,9 +170,12 @@ export default function SuitesCollection({
             }`}
           >
             <div className="relative aspect-[16/10] sm:aspect-[21/10] overflow-hidden zoom-container">
-              <div
-                className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{ backgroundImage: `url('${SUITES_DATA[0].image}')` }}
+              <ProgressiveImage
+                src={SUITES_DATA[0].image}
+                alt={SUITES_DATA[0].title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 66vw"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1c1b1b] via-transparent to-black/40 pointer-events-none" />
 
@@ -270,9 +274,12 @@ export default function SuitesCollection({
                 }`}
               >
                 <div className="relative aspect-[16/10] overflow-hidden zoom-container">
-                  <div
-                    className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                    style={{ backgroundImage: `url('${suite.image}')` }}
+                  <ProgressiveImage
+                    src={suite.image}
+                    alt={suite.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1c1b1b] via-transparent to-black/30 pointer-events-none" />
                   

@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { getApartmentScoresAndReviews, AirbnbReview } from '@/data/apartment';
 import { Star, ShieldCheck } from 'lucide-react';
@@ -32,19 +33,28 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
     : rawReviews;
 
   return (
-    <section className="relative w-full px-6 md:px-12 lg:px-24 py-24 overflow-hidden" id="avis-section">
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 overflow-hidden" id="avis-section">
       {/* 4K Background Image with Scrim Overlay */}
-      <div
-        className="absolute inset-0 bg-4k-hero"
-        style={{ backgroundImage: `url('${bgImage}')` }}
-      />
+      <div className="absolute inset-0 bg-4k-hero pointer-events-none">
+        <Image
+          src={bgImage}
+          alt="Spa Jacuzzi Background"
+          fill
+          sizes="100vw"
+          quality={75}
+          loading="lazy"
+          decoding="async"
+          className="object-cover object-center"
+        />
+      </div>
       <div className="absolute inset-0 scrim-4k-overlay pointer-events-none" />
+      <div className="absolute inset-0 scrim-radial-gold pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
         {/* Main Airbnb Header Card */}
-        <div className="rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl p-6 sm:p-10 border border-white/10 shadow-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-          <div className="flex flex-col gap-3">
+        <div className="rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl p-8 sm:p-12 border border-white/10 luxury-overlap-shadow flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+          <div className="flex flex-col gap-3 max-w-[640px]">
             <div className="flex flex-wrap items-center gap-2.5">
               <span className="px-3 py-1 rounded-full bg-[#f2ca50] text-[#3c2f00] font-bold text-[10px] uppercase tracking-wider inline-flex items-center gap-1.5 shadow-sm">
                 <AirbnbLogo className="w-3.5 h-3.5 text-[#3c2f00]" />
@@ -56,10 +66,10 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
               </span>
             </div>
             
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#e5e2e1] drop-shadow-md">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] drop-shadow-md leading-tight">
               {t('reviews.title')}
             </h2>
-            <p className="text-sm text-[#d0c5af] font-light max-w-xl">
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
               {language === 'fr'
                 ? `Une note d’excellence de ${scores.overall}★ fondée sur ${scores.reviewsTotal} commentaires certifiés de voyageurs ayant séjourné à ${apartmentName}.`
                 : `An excellence score of ${scores.overall}★ backed by ${scores.reviewsTotal} verified traveler reviews who stayed at ${apartmentName}.`}

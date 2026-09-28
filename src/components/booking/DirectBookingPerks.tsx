@@ -51,22 +51,25 @@ export default function DirectBookingPerks() {
   ];
 
   return (
-    <section className="w-full px-6 md:px-12 lg:px-24 py-16 sm:py-20 bg-[#101010] border-y border-white/5" id="avantages-direct">
-      <div className="max-w-7xl mx-auto flex flex-col gap-12">
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-40 bg-[#101010] border-y border-white/5 luxury-radial-top overflow-hidden" id="avantages-direct">
+      {/* Subtle Ambient Glow */}
+      <div className="absolute -top-32 right-1/4 w-[450px] h-[450px] bg-[#d4af37]/[0.02] blur-[150px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex flex-col gap-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30 w-fit">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col gap-4 max-w-[640px]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30 w-fit">
               <Lock className="w-3.5 h-3.5 text-[#f2ca50]" />
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#f2ca50]">
                 {language === 'fr' ? 'Garanties Réservation Directe' : 'Direct Booking Privileges'}
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#e5e2e1]">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] leading-tight">
               {language === 'fr' ? 'Pourquoi Réserver en Direct sur ce Site ?' : 'Why Book Directly on Our Official Site?'}
             </h2>
-            <p className="text-sm text-[#d0c5af] font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
               {language === 'fr'
                 ? 'Une expérience sans intermédiaire au meilleur tarif du web, avec confirmation instantanée et paiement 100% sécurisé.'
                 : 'An intermediary-free experience at the web’s best guaranteed rate, with instant confirmation and 100% secure payment.'}

@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { EyeOff, Waves, Heart, Tv, Sparkles, ShieldCheck } from 'lucide-react';
 
@@ -59,25 +60,33 @@ export default function ExperienceSection() {
   ];
 
   return (
-    <section className="relative w-full px-6 md:px-12 lg:px-24 py-24 overflow-hidden" id="experience-section">
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 overflow-hidden" id="experience-section">
       {/* 4K Background Image with Dark Scrim Overlay */}
-      <div
-        className="absolute inset-0 bg-4k-hero"
-        style={{ backgroundImage: "url('/a2/chambre.png')" }}
-      />
+      <div className="absolute inset-0 bg-4k-hero pointer-events-none">
+        <Image
+          src="/a2/chambre.png"
+          alt="Chambre Spa"
+          fill
+          sizes="100vw"
+          quality={75}
+          loading="lazy"
+          decoding="async"
+          className="object-cover object-center"
+        />
+      </div>
       <div className="absolute inset-0 scrim-4k-overlay pointer-events-none" />
       <div className="absolute inset-0 scrim-radial-gold pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-14">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
-        <div className="text-center max-w-3xl mx-auto flex flex-col items-center gap-3">
+        <div className="text-center max-w-[640px] mx-auto flex flex-col items-center gap-4">
           <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#f2ca50] bg-[#2a2a2a]/60 backdrop-blur-md px-3.5 py-1 rounded-full border border-[#f2ca50]/20">
             {language === 'fr' ? 'Les Fondements Crystal Spa' : 'The Crystal Spa Pillars'}
           </span>
-          <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1] drop-shadow-md">
+          <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1] drop-shadow-md leading-tight">
             {t('nav.experience')}
           </h2>
-          <p className="text-sm text-[#d0c5af] font-light leading-relaxed">
+          <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
             {language === 'fr'
               ? 'Chaque détail architectural, tactile et sensoriel a été calibré pour effacer la notion du temps et vous offrir une déconnexion intime sans pareil.'
               : 'Every architectural, tactile, and sensory detail has been calibrated to erase time and offer an unmatched intimate sanctuary.'}
@@ -91,7 +100,7 @@ export default function ExperienceSection() {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl luxury-card flex flex-col gap-6 border border-white/10 shadow-2xl group hover:border-[#f2ca50]/40 transition-all duration-500"
+                className="p-8 sm:p-9 rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl luxury-card flex flex-col gap-6 border border-white/10 luxury-overlap-shadow group hover:border-[#f2ca50]/40 transition-all duration-500"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#2a2a2a]/80 flex items-center justify-center text-[#f2ca50] transition-transform duration-300 group-hover:scale-110 shadow-[0_0_20px_rgba(242,202,80,0.2)] border border-[#f2ca50]/20">
                   <Icon className="w-6 h-6" />

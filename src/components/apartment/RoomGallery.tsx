@@ -85,23 +85,31 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
   });
 
   return (
-    <section className="w-full bg-[#0e0e0e] py-20 px-6 md:px-12 lg:px-24" id="galerie-section">
-      <div className="max-w-7xl mx-auto flex flex-col gap-10 sm:gap-14">
+    <section className="relative w-full bg-[#0e0e0e] py-28 sm:py-36 lg:py-44 px-6 md:px-12 lg:px-24 luxury-radial-top overflow-hidden" id="galerie-section">
+      {/* Subtle Ambient Glow */}
+      <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-[#d4af37]/[0.025] blur-[160px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex flex-col gap-2">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col gap-3 max-w-[640px]">
             <span className="text-[11px] font-bold uppercase tracking-[0.25em] text-[#f2ca50]">
               {t('gallery.badge')}
             </span>
-            <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1]">
+            <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1] leading-tight">
               {t('gallery.title')}
             </h2>
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
+              {language === 'fr'
+                ? 'Explorez l’atmosphère intime et le design soigné de nos 3 appartements spa à travers notre galerie haute résolution.'
+                : 'Explore the intimate mood and bespoke design of our 3 private spa suites through our high-resolution photo collection.'}
+            </p>
           </div>
 
           <a
             href="#reservation-bar"
-            className="text-[11px] font-bold tracking-wider text-[#f2ca50] hover:text-white uppercase flex items-center gap-1.5 transition-colors group cursor-pointer"
+            className="text-[11px] font-bold tracking-wider text-[#f2ca50] hover:text-white uppercase flex items-center gap-1.5 transition-colors group cursor-pointer shrink-0"
           >
             <span>{language === 'fr' ? 'Vérifier les disponibilités' : 'Check availability'}</span>
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

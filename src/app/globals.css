@@ -1554,4 +1554,113 @@ section,
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.90) !important;
 }
 
+/* =====================================================================
+   HERO UNIFIED TRUST RIBBON (Sleek Minimalist Palace Hotel Design)
+   Harmonizes seamlessly with the luxury buttons (Gold & Ivory Glass)
+   NO HEAVY BLACK BACKGROUND
+   ===================================================================== */
+.hero-trust-ribbon {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(200, 162, 77, 0.40);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08), 0 0 20px rgba(200, 162, 77, 0.10);
+  transition: all 0.3s ease;
+}
+
+.hero-trust-ribbon:hover {
+  background: #FFFFFF;
+  border-color: rgba(200, 162, 77, 0.70);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12), 0 0 25px rgba(200, 162, 77, 0.20);
+}
+
+.hero-trust-ribbon span {
+  color: #171717;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+/* Light Theme — Pure Ivory Frosted Glass matching [DÉCOUVRIR NOS PACKS] */
+[data-theme="light"] .hero-trust-ribbon {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(200, 162, 77, 0.42) !important;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08), 0 0 20px rgba(200, 162, 77, 0.10) !important;
+}
+
+[data-theme="light"] .hero-trust-ribbon:hover {
+  background: #FFFFFF !important;
+  border-color: rgba(200, 162, 77, 0.70) !important;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12), 0 0 25px rgba(200, 162, 77, 0.20) !important;
+}
+
+[data-theme="light"] .hero-trust-ribbon span {
+  color: #171717 !important;
+  font-weight: 600 !important;
+  text-shadow: none !important;
+}
+
+/* Dark Theme — Smoked Crystal Glass */
+[data-theme="dark"] .hero-trust-ribbon {
+  background: rgba(28, 25, 23, 0.75) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(200, 162, 77, 0.35) !important;
+  box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(200, 162, 77, 0.08) !important;
+}
+
+[data-theme="dark"] .hero-trust-ribbon:hover {
+  background: rgba(36, 32, 29, 0.85) !important;
+  border-color: rgba(200, 162, 77, 0.55) !important;
+  box-shadow: 0 16px 45px -8px rgba(0, 0, 0, 0.75), 0 0 25px rgba(200, 162, 77, 0.15) !important;
+}
+
+[data-theme="dark"] .hero-trust-ribbon span {
+  color: #FAF8F5 !important;
+  font-weight: 500 !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9) !important;
+}
+
+
+/* =====================================================================
+   LUXURY BOUTIQUE HOTEL DESIGN SYSTEM (Aman / Bulgari / Cheval Blanc)
+   Subtle Noise, Film Grain, Radial Candlelight Gradients, Editorial Overlaps
+   ===================================================================== */
+
+/* Ultra-subtle film grain texture — adds tactile depth to dark and light surfaces */
+.luxury-grain-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
+}
+
+/* Ambient champagne top illumination for section transitions */
+.luxury-radial-top {
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(242, 202, 80, 0.045), transparent 75%);
+}
+
+[data-theme="light"] .luxury-radial-top {
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200, 162, 77, 0.06), transparent 75%);
+}
+
+/* Ambient warm candlelight center glow */
+.luxury-radial-center {
+  background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04), transparent 65%);
+}
+
+/* Deep diffuse shadow for elevated overlapping elements */
+.luxury-overlap-shadow {
+  box-shadow: 0 25px 60px -12px rgba(0, 0, 0, 0.85), 0 0 40px -10px rgba(242, 202, 80, 0.10);
+}
+
+[data-theme="light"] .luxury-overlap-shadow {
+  box-shadow: 0 25px 60px -12px rgba(15, 23, 42, 0.15), 0 0 40px -10px rgba(200, 162, 77, 0.15);
+}
+
+/* Luxury line clamp & prose width constraint */
+.luxury-text-constrained {
+  max-width: 680px;
+  line-height: 1.75;
+}
+
+
 

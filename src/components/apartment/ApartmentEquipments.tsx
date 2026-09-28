@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { APARTMENT_AMENITIES_42 } from '@/data/apartment';
 import {
@@ -63,28 +64,37 @@ export default function ApartmentEquipments() {
       : APARTMENT_AMENITIES_42.filter((c) => c.category === selectedCategory);
 
   return (
-    <section className="relative w-full px-6 md:px-12 lg:px-24 py-24 overflow-hidden" id="equipements-section">
+    <section className="relative w-full px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 overflow-hidden" id="equipements-section">
       {/* 4K Background Image with Scrim Overlay */}
-      <div
-        className="absolute inset-0 bg-4k-hero"
-        style={{ backgroundImage: "url('/a1/Chambre.png')" }}
-      />
+      <div className="absolute inset-0 bg-4k-hero pointer-events-none">
+        <Image
+          src="/a1/Chambre.png"
+          alt="Chambre"
+          fill
+          sizes="100vw"
+          quality={75}
+          loading="lazy"
+          decoding="async"
+          className="object-cover object-center"
+        />
+      </div>
       <div className="absolute inset-0 scrim-4k-overlay pointer-events-none" />
+      <div className="absolute inset-0 scrim-radial-gold pointer-events-none" />
 
-      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-12">
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col gap-16 sm:gap-20">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-          <div className="flex flex-col gap-2 max-w-2xl">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
+          <div className="flex flex-col gap-3 max-w-[640px]">
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f2ca50]/15 border border-[#f2ca50]/30 w-fit backdrop-blur-md">
               <ShieldCheck className="w-4 h-4 text-[#f2ca50]" />
               <span className="text-[11px] font-bold tracking-wider text-[#f2ca50] uppercase">
                 {language === 'fr' ? 'Prestations & Confort Absolu' : 'Uncompromising Comfort & Amenities'}
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] drop-shadow-md">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] drop-shadow-md leading-tight">
               {t('equip.title')}
             </h2>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light">
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
               {t('equip.desc')}
             </p>
           </div>

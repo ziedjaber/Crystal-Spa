@@ -49,6 +49,10 @@ export default function ProgressiveImage({
           width={!fill ? width : undefined}
           height={!fill ? height : undefined}
           priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          quality={props.quality || 80}
+          sizes={props.sizes || (fill ? '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw' : undefined)}
           onLoad={() => setIsLoaded(true)}
           onError={() => setHasError(true)}
           className={`

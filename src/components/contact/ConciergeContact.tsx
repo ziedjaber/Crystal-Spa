@@ -65,19 +65,22 @@ export default function ConciergeContact() {
   };
 
   return (
-    <section className="w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-16 sm:py-24 bg-[#131313] border-t border-white/5" id="conciergerie-contact">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 sm:gap-16 items-center">
+    <section className="relative w-full px-3.5 sm:px-6 md:px-12 lg:px-24 py-28 sm:py-36 lg:py-44 bg-[#131313] border-t border-white/5 luxury-radial-top overflow-hidden" id="conciergerie-contact">
+      {/* Subtle Ambient Glow */}
+      <div className="absolute top-1/2 left-1/3 w-[500px] h-[500px] bg-[#d4af37]/[0.025] blur-[160px] rounded-full pointer-events-none" />
+
+      <div className="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 sm:gap-20 items-center">
         
         {/* Contact Info Left */}
-        <div className="lg:w-5/12 flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
+        <div className="lg:w-5/12 flex flex-col gap-6 max-w-[580px]">
+          <div className="flex flex-col gap-3">
             <span className="text-[11px] font-semibold uppercase tracking-[0.25em] text-[#f2ca50]">
               {t('contact.badge')}
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#e5e2e1] font-normal">
+            <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] font-normal leading-tight">
               {t('contact.title')}
             </h2>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[520px]">
               {t('contact.desc')}
             </p>
 

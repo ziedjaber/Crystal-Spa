@@ -85,15 +85,20 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/a2/Jacuzzi.png"
-          type="image/png"
+          href="/hero/preview_video.jpg"
+          type="image/jpeg"
           fetchPriority="high"
         />
       </head>
       <body
         suppressHydrationWarning
-        className="min-h-full flex flex-col font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00]"
+        className="min-h-full flex flex-col font-sans antialiased selection:bg-[#d4af37] selection:text-[#3c2f00] relative"
       >
+        {/* Subtle Luxury Boutique Hotel Tactile Grain Texture */}
+        <div
+          aria-hidden="true"
+          className="fixed inset-0 pointer-events-none z-50 opacity-20 luxury-grain-overlay"
+        />
         <ThemeProvider>
           {children}
           <WhatsAppFloatingButton />
