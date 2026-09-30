@@ -21,6 +21,17 @@ import {
   Key,
 } from 'lucide-react';
 import AirbnbLogo from '@/components/ui/AirbnbLogo';
+import MovingBorderCard from '@/components/ui/MovingBorder';
+
+const CARD_GRADIENTS = [
+  'bg-[radial-gradient(circle_at_center,#f2ca50_0%,#d97706_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#ffe088_0%,#f43f5e_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#38bdf8_0%,#f2ca50_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#c084fc_0%,#f2ca50_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#fbbf24_0%,#b45309_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#34d399_0%,#f2ca50_45%,transparent_75%)]',
+  'bg-[radial-gradient(circle_at_center,#f2ca50_0%,#92400e_45%,transparent_75%)]',
+];
 
 function getAmenityIcon(iconName: string, className = "w-4 h-4") {
   switch (iconName) {
@@ -140,35 +151,41 @@ export default function ApartmentEquipments() {
 
         {/* Categories Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {displayedCategories.map((cat) => (
-            <div
+          {displayedCategories.map((cat, idx) => (
+            <MovingBorderCard
               key={cat.category}
-              className="p-6 rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl border border-white/10 hover:border-[#f2ca50]/40 transition-all duration-300 flex flex-col gap-4 shadow-2xl group"
+              borderRadius="1rem"
+              duration={7500 + (idx % CARD_GRADIENTS.length) * 1500}
+              rx="16"
+              ry="16"
+              blobClassName={CARD_GRADIENTS[idx % CARD_GRADIENTS.length]}
+              containerClassName="h-full"
+              className="p-6 rounded-2xl bg-[#1c1b1b]/90 [data-theme=light]:bg-white backdrop-blur-xl border border-white/10 [data-theme=light]:border-black/5 hover:border-[#f2ca50]/40 transition-all duration-300 flex flex-col gap-4 shadow-2xl h-full"
             >
-              <div className="flex items-center gap-3 pb-3 border-b border-white/10">
-                <div className="w-10 h-10 rounded-xl bg-[#2a2a2a]/80 flex items-center justify-center text-[#f2ca50] group-hover:scale-110 transition-transform shadow-md">
+              <div className="flex items-center gap-3 pb-3 border-b border-white/10 [data-theme=light]:border-black/10">
+                <div className="w-10 h-10 rounded-xl bg-[#2a2a2a]/80 [data-theme=light]:bg-[#fdfbf8] flex items-center justify-center text-[#f2ca50] group-hover:scale-110 transition-transform shadow-md">
                   {getAmenityIcon(cat.icon, 'w-5 h-5')}
                 </div>
                 <div>
-                  <h3 className="text-base font-serif text-[#e5e2e1] group-hover:text-[#f2ca50] transition-colors">
+                  <h3 className="text-base font-serif text-[#e5e2e1] [data-theme=light]:text-[#171717] group-hover:text-[#f2ca50] transition-colors">
                     {language === 'fr' ? cat.category : cat.categoryEn}
                   </h3>
-                  <span className="text-[10px] text-[#f0ebd9] uppercase tracking-wider font-semibold">
+                  <span className="text-[10px] text-[#f0ebd9] [data-theme=light]:text-[#775a19] uppercase tracking-wider font-semibold">
                     {cat.items.length} {language === 'fr' ? 'équipements' : 'amenities'}
                   </span>
                 </div>
               </div>
 
               <ul className="flex flex-col gap-3">
-                {cat.items.map((item, idx) => (
-                  <li key={idx} className="flex items-start gap-2.5">
+                {cat.items.map((item, i) => (
+                  <li key={i} className="flex items-start gap-2.5">
                     <Check className="w-4 h-4 text-[#f2ca50] shrink-0 mt-0.5" />
                     <div className="flex flex-col">
-                      <span className="text-xs sm:text-sm font-medium text-[#e5e2e1]">
+                      <span className="text-xs sm:text-sm font-medium text-[#e5e2e1] [data-theme=light]:text-[#231F1C]">
                         {language === 'fr' ? item.title : item.titleEn}
                       </span>
                       {(item.description || item.descriptionEn) && (
-                        <span className="text-[11px] text-[#f0ebd9] font-light leading-snug">
+                        <span className="text-[11px] text-[#f0ebd9] [data-theme=light]:text-[#5C554E] font-light leading-snug">
                           {language === 'fr' ? item.description : item.descriptionEn}
                         </span>
                       )}
@@ -176,12 +193,19 @@ export default function ApartmentEquipments() {
                   </li>
                 ))}
               </ul>
-            </div>
+            </MovingBorderCard>
           ))}
         </div>
 
         {/* Special Airbnb Highlight Callout */}
-        <div className="rounded-2xl bg-[#1c1b1b]/90 backdrop-blur-xl p-6 sm:p-8 border border-[#f2ca50]/30 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl">
+        <MovingBorderCard
+          borderRadius="1rem"
+          duration={11000}
+          rx="16"
+          ry="16"
+          blobClassName="bg-[radial-gradient(circle_at_center,#f2ca50_0%,#e11d48_45%,transparent_75%)] h-36 w-36"
+          className="rounded-2xl bg-[#1c1b1b]/90 [data-theme=light]:bg-white backdrop-blur-xl p-6 sm:p-8 border border-[#f2ca50]/30 [data-theme=light]:border-[#f2ca50]/40 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xl"
+        >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-xl bg-[#f2ca50]/15 border border-[#f2ca50]/30 flex items-center justify-center shrink-0 shadow-lg">
               <Heart className="w-8 h-8 text-[#f2ca50]" />
@@ -192,17 +216,17 @@ export default function ApartmentEquipments() {
                   <AirbnbLogo className="w-3.5 h-3.5 text-[#3c2f00]" />
                   <span>Airbnb Top 10%</span>
                 </span>
-                <span className="text-xs text-[#f0ebd9] flex items-center gap-1">
+                <span className="text-xs text-[#f0ebd9] [data-theme=light]:text-[#5C554E] flex items-center gap-1">
                   <AirbnbLogo className="w-3 h-3 text-[#FF385C]" />
                   <span>• Coup de cœur voyageurs 4.97★</span>
                 </span>
               </div>
-              <h4 className="font-serif text-lg sm:text-xl text-[#e5e2e1]">
+              <h4 className="font-serif text-lg sm:text-xl text-[#e5e2e1] [data-theme=light]:text-[#171717]">
                 {language === 'fr'
                   ? 'Fait partie des 10 % des logements les plus appréciés'
                   : 'Ranked in the top 10% of highest rated stays'}
               </h4>
-              <p className="text-xs sm:text-sm text-[#f0ebd9] font-light max-w-xl">
+              <p className="text-xs sm:text-sm text-[#f0ebd9] [data-theme=light]:text-[#5C554E] font-light max-w-xl">
                 {language === 'fr'
                   ? 'D’après les évaluations, les avis et la fiabilité des 37 couples et voyageurs accueillis.'
                   : 'Based on high ratings, verified reviews and reliable 5-star service for all 37 guest couples.'}
@@ -217,7 +241,7 @@ export default function ApartmentEquipments() {
           >
             {language === 'fr' ? 'Réserver ce Séjour' : 'Book this Stay'}
           </a>
-        </div>
+        </MovingBorderCard>
       </div>
     </section>
   );

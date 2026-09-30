@@ -4,6 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import { EyeOff, Waves, Heart, Tv, Sparkles, ShieldCheck } from 'lucide-react';
+import MovingBorderCard from '@/components/ui/MovingBorder';
 
 export default function ExperienceSection() {
   const { language, t } = useLanguage();
@@ -150,11 +151,17 @@ export default function ExperienceSection() {
           {highlights.map((item, idx) => {
             const Icon = item.icon;
             return (
-              <div
+              <MovingBorderCard
                 key={idx}
-                className="p-8 sm:p-9 rounded-2xl bg-[#1c1b1b]/85 backdrop-blur-xl luxury-card flex flex-col gap-6 border border-white/10 luxury-overlap-shadow group hover:border-[#f2ca50]/40 transition-all duration-500"
+                borderRadius="1rem"
+                duration={7000 + (idx % 6) * 1500}
+                rx="16"
+                ry="16"
+                blobClassName="bg-[radial-gradient(circle_at_center,#f2ca50_0%,#c5a059_40%,transparent_75%)]"
+                containerClassName="h-full"
+                className="p-8 sm:p-9 rounded-2xl bg-[#1c1b1b]/85 [data-theme=light]:bg-white backdrop-blur-xl luxury-card flex flex-col gap-6 border border-white/10 [data-theme=light]:border-black/5 luxury-overlap-shadow group hover:border-[#f2ca50]/40 transition-all duration-500 h-full"
               >
-                <div className="w-12 h-12 rounded-xl bg-[#2a2a2a]/80 flex items-center justify-center text-[#f2ca50] transition-transform duration-300 group-hover:scale-110 shadow-[0_0_20px_rgba(242,202,80,0.2)] border border-[#f2ca50]/20">
+                <div className="w-12 h-12 rounded-xl bg-[#2a2a2a]/80 [data-theme=light]:bg-[#fdfbf8] flex items-center justify-center text-[#f2ca50] transition-transform duration-300 group-hover:scale-110 shadow-[0_0_20px_rgba(242,202,80,0.2)] border border-[#f2ca50]/20">
                   <Icon className="w-6 h-6" />
                 </div>
                 <div className="flex flex-col gap-2">
@@ -165,7 +172,7 @@ export default function ExperienceSection() {
                     {item.description}
                   </p>
                 </div>
-              </div>
+              </MovingBorderCard>
             );
           })}
         </div>
