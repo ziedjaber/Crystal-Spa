@@ -7,15 +7,39 @@ import TopAnnouncementBar from '@/components/layout/TopAnnouncementBar';
 import SuiteNavbar from '@/components/layout/SuiteNavbar';
 import Footer from '@/components/layout/Footer';
 import SuiteTopGallery from '@/components/apartment/SuiteTopGallery';
-import RoomGallery from '@/components/apartment/RoomGallery';
-import OtherApartmentsSection from '@/components/apartment/OtherApartmentsSection';
-import ApartmentEquipments from '@/components/apartment/ApartmentEquipments';
 import SuiteSignatureDetail from '@/components/apartment/SuiteSignatureDetail';
-import DirectBookingPerks from '@/components/booking/DirectBookingPerks';
-import ReviewsSection from '@/components/reviews/ReviewsSection';
-import LocationAccessSection from '@/components/location/LocationAccessSection';
-import ConciergeContact from '@/components/contact/ConciergeContact';
-import ApartmentBooking from '@/components/booking/ApartmentBooking';
+import dynamic from 'next/dynamic';
+
+const DirectBookingPerks = dynamic(() => import('@/components/booking/DirectBookingPerks'), {
+  loading: () => <div className="min-h-[150px]" />,
+});
+const ApartmentEquipments = dynamic(() => import('@/components/apartment/ApartmentEquipments'), {
+  loading: () => <div className="min-h-[300px]" />,
+});
+const OtherApartmentsSection = dynamic(() => import('@/components/apartment/OtherApartmentsSection'), {
+  loading: () => <div className="min-h-[300px]" />,
+});
+const RoomGallery = dynamic(() => import('@/components/apartment/RoomGallery'), {
+  loading: () => <div className="min-h-[250px]" />,
+});
+const ReviewsSection = dynamic(() => import('@/components/reviews/ReviewsSection'), {
+  loading: () => <div className="min-h-[250px]" />,
+});
+const LocationAccessSection = dynamic(() => import('@/components/location/LocationAccessSection'), {
+  loading: () => <div className="min-h-[250px]" />,
+});
+const ConciergeContact = dynamic(() => import('@/components/contact/ConciergeContact'), {
+  loading: () => <div className="min-h-[250px]" />,
+});
+
+const ApartmentBooking = dynamic(() => import('@/components/booking/ApartmentBooking'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center min-h-[300px] text-[#f2ca50]">
+      <div className="w-8 h-8 border-2 border-[#f2ca50] border-t-transparent rounded-full animate-spin" />
+    </div>
+  ),
+});
 import { LanguageProvider, useLanguage } from '@/context/LanguageContext';
 import { getApartmentBySlug, FEATURED_APARTMENTS } from '@/data/apartment';
 import { SuiteItem } from '@/components/apartment/SuitesCollection';

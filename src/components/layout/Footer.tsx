@@ -84,16 +84,32 @@ export default function Footer() {
               {t('nav.suites')}
             </h3>
             <nav className="flex flex-col gap-2.5">
-              <Link href="/suites/la-vie-est-belle" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                La Vie est Belle (Rouen)
+              <Link
+                href="/suites/you-and-me"
+                aria-label="Suite You and Me – Love Room"
+                className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors"
+              >
+                Y0U AND ME • Love Room (Rouen)
               </Link>
-              <Link href="/suites/diamant-noir" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                Suite Diamant Noir (Paris)
+              <Link
+                href="/suites/la-vie-est-belle"
+                aria-label="Suite La Vie est Belle – Spa Privatif"
+                className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors"
+              >
+                La Vie est Belle | Spa Privatif
               </Link>
-              <Link href="/suites/master-crystal-royale" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                Master Crystal Royale
+              <Link
+                href="/suites/le-reve-luxe"
+                aria-label="Suite Le Rêve Luxe – Suite Céleste"
+                className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors"
+              >
+                Le Rêve Luxe | Suite Céleste
               </Link>
-              <Link href="#packs-romantiques" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
+              <Link
+                href="#packs-romantiques"
+                aria-label="Découvrir les packs romantiques"
+                className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors"
+              >
                 {language === 'fr' ? 'Packs Romantiques' : 'Romantic Add-on Packs'}
               </Link>
             </nav>
@@ -105,16 +121,16 @@ export default function Footer() {
               {language === 'fr' ? 'Prestations' : 'Amenities'}
             </h3>
             <nav className="flex flex-col gap-2.5">
-              <a href="#equipements-section" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                {language === 'fr' ? 'Jacuzzi Privatif 24h/24' : '24/7 Private Hydro Spa'}
+              <a href="#equipements-section" className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors">
+                {language === 'fr' ? 'Équipements & Jacuzzi 24h/24' : '24/7 Hydro Spa & Amenities'}
               </a>
-              <a href="#equipements-section" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                {language === 'fr' ? 'Double Smart TV 4K' : 'Dual 4K Smart TVs'}
+              <a href="#galerie-section" className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors">
+                {language === 'fr' ? 'Galerie Photos Complète' : 'Full HD Gallery'}
               </a>
-              <a href="#avantages-direct" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
-                {language === 'fr' ? 'Réservation Directe' : 'Direct Booking'}
+              <a href="#avantages-direct" className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors">
+                {language === 'fr' ? 'Avantages Réservation Directe' : 'Direct Booking Perks'}
               </a>
-              <Link href="/gift-cards" className="text-xs text-[#d0c5af] hover:text-[#f2ca50] transition-colors">
+              <Link href="/gift-cards" className="text-xs text-[#f0ebd9] hover:text-[#f2ca50] transition-colors">
                 {language === 'fr' ? 'Carte Cadeau Romantique' : 'Romantic Gift Card'}
               </Link>
             </nav>
@@ -138,6 +154,9 @@ export default function Footer() {
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex flex-col gap-2">
+                <label htmlFor="newsletter-email-input" className="sr-only">
+                  {language === 'fr' ? 'Adresse email pour la newsletter' : 'Email address for newsletter'}
+                </label>
                 <input
                   required
                   type="email"
@@ -168,12 +187,15 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 sm:mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#c9c6bf] font-light">
           <span>© {new Date().getFullYear()} Crystal Spa – Suite Spa Privative. {t('footer.rights')}</span>
-          <div className="flex items-center gap-6">
-            <Link href="/" className="hover:text-[#e5e2e1] transition-colors">
+          <div className="flex flex-wrap items-center gap-6">
+            <Link href="/cgv" className="hover:text-[#f2ca50] transition-colors">
+              {language === 'fr' ? 'CGV' : 'Terms & Conditions'}
+            </Link>
+            <Link href="/mentions-legales" className="hover:text-[#f2ca50] transition-colors">
               {language === 'fr' ? 'Mentions Légales' : 'Legal Notice'}
             </Link>
-            <Link href="/" className="hover:text-[#e5e2e1] transition-colors">
-              {language === 'fr' ? 'Politique de Confidentialité' : 'Privacy Policy'}
+            <Link href="/confidentialite" className="hover:text-[#f2ca50] transition-colors">
+              {language === 'fr' ? 'Confidentialité (RGPD)' : 'Privacy (GDPR)'}
             </Link>
           </div>
         </div>

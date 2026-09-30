@@ -145,7 +145,7 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
 
         {/* Popular Tags */}
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-[#99907c] uppercase tracking-wider font-semibold mr-2">
+          <span className="text-xs text-[#d0c5af] uppercase tracking-wider font-semibold mr-2">
             {language === 'fr' ? 'Mots fréquents :' : 'Frequent mentions:'}
           </span>
           <button
@@ -167,7 +167,7 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
               className={`px-3.5 py-1.5 rounded-full text-xs font-medium cursor-pointer transition-all ${
                 selectedReviewTag === tag.label
                   ? 'bg-[#f2ca50] text-[#3c2f00] font-bold shadow-md'
-                  : 'bg-[#1c1b1b]/80 backdrop-blur-md text-[#c9c6bf] hover:text-[#e5e2e1] border border-white/10'
+                : 'bg-[#1c1b1b]/80 backdrop-blur-md text-[#c9c6bf] hover:text-[#e5e2e1] border border-white/10'
               }`}
             >
               {tag.label} <span className="opacity-60">({tag.count})</span>
@@ -195,7 +195,7 @@ export default function ReviewsSection({ apartmentId }: ReviewsSectionProps) {
                       Airbnb
                     </span>
                   </div>
-                  <span className="text-[11px] text-[#99907c] font-light">
+                  <span className="text-[11px] text-[#d0c5af] font-light">
                     {rev.date}
                   </span>
                 </div>

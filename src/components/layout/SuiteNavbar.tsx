@@ -40,40 +40,61 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('suite-hero');
 
-  // Bulletproof scroll listener for section highlighting
+  // Ultra-fast zero-reflow scroll listener with IntersectionObserver
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY || document.documentElement.scrollTop || window.pageYOffset || 0;
-      setScrolled(scrollPos > 25);
-
-      const sections = [
-        'suite-hero',
-        'experience-section',
-        'equipements-section',
-        'galerie-section',
-        'avis-section',
-        'localisation-section',
-      ];
-
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sections[i]);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 160) {
-            setActiveSection(sections[i]);
-            break;
-          }
-        }
+    let ticking = false;
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
+          setScrolled(scrollPos > 25);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('touchmove', handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    
+    // Check initial scroll state in RAF without blocking hydration
+    const rafId = window.requestAnimationFrame(() => {
+      const scrollPos = window.scrollY || document.documentElement.scrollTop || 0;
+      setScrolled(scrollPos > 25);
+    });
+
+    // Zero-reflow IntersectionObserver for section tracking
+    const sections = [
+      'suite-hero',
+      'experience-section',
+      'equipements-section',
+      'galerie-section',
+      'avis-section',
+      'localisation-section',
+    ];
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      {
+        rootMargin: '-80px 0px -60% 0px',
+        threshold: 0.05,
+      }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('touchmove', handleScroll);
+      window.removeEventListener('scroll', onScroll);
+      window.cancelAnimationFrame(rafId);
+      observer.disconnect();
     };
   }, []);
 
@@ -175,7 +196,7 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
               <span className={`font-serif text-lg sm:text-2xl tracking-wide transition-colors font-medium leading-none ${!isDark ? 'text-[#B89032] group-hover:text-[#9A7410]' : 'text-[#f2ca50] group-hover:text-[#ffe088]'}`}>
                 Crystal Spa
               </span>
-              <span className={`text-[8px] sm:text-[9px] tracking-[0.25em] uppercase font-light mt-0.5 ${!isDark ? 'text-[#666666]' : 'text-[#d0c5af]'}`}>
+              <span className={`text-[8px] sm:text-[9px] tracking-[0.25em] uppercase font-light mt-0.5 ${!isDark ? 'text-[#333333]' : 'text-[#f0ebd9]'}`}>
                 Suites Spa Privées
               </span>
             </div>
@@ -194,7 +215,7 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
                   className={`flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.18em] transition-all py-1 relative cursor-pointer ${
                     isActive
                       ? !isDark ? 'text-[#B89032]' : 'text-[#f2ca50]'
-                      : !isDark ? 'text-[#444444] hover:text-[#B89032]' : 'text-[#d0c5af] hover:text-[#f2ca50]'
+                      : !isDark ? 'text-[#333333] hover:text-[#B89032]' : 'text-[#f0ebd9] hover:text-[#f2ca50]'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 transition-transform ${!isDark ? 'text-[#B89032]' : 'text-[#f2ca50]'}`} />
@@ -230,11 +251,11 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all cursor-pointer ${
                   language === 'fr'
                     ? !isDark
-                      ? 'bg-[#C8A24D] text-white font-bold shadow-sm'
+                      ? 'bg-[#C8A24D] text-[#1c1b1b] font-bold shadow-sm'
                       : 'bg-[#f2ca50] text-[#3c2f00] font-bold shadow-sm'
                     : 'opacity-70 hover:opacity-100'
                 }`}
-                style={language !== 'fr' ? { color: !isDark ? '#666666' : '#d0c5af' } : {}}
+                style={language !== 'fr' ? { color: !isDark ? '#333333' : '#f0ebd9' } : {}}
                 title="Français"
                 aria-label="Passer en Français"
               >
@@ -248,11 +269,11 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all cursor-pointer ${
                   language === 'en'
                     ? !isDark
-                      ? 'bg-[#C8A24D] text-white font-bold shadow-sm'
+                      ? 'bg-[#C8A24D] text-[#1c1b1b] font-bold shadow-sm'
                       : 'bg-[#f2ca50] text-[#3c2f00] font-bold shadow-sm'
                     : 'opacity-70 hover:opacity-100'
                 }`}
-                style={language !== 'en' ? { color: !isDark ? '#666666' : '#d0c5af' } : {}}
+                style={language !== 'en' ? { color: !isDark ? '#333333' : '#f0ebd9' } : {}}
                 title="English"
                 aria-label="Switch to English"
               >
@@ -266,11 +287,11 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
                 className={`flex items-center gap-1.5 px-2 py-1 rounded-lg transition-all cursor-pointer ${
                   language === 'es'
                     ? !isDark
-                      ? 'bg-[#C8A24D] text-white font-bold shadow-sm'
+                      ? 'bg-[#C8A24D] text-[#1c1b1b] font-bold shadow-sm'
                       : 'bg-[#f2ca50] text-[#3c2f00] font-bold shadow-sm'
                     : 'opacity-70 hover:opacity-100'
                 }`}
-                style={language !== 'es' ? { color: !isDark ? '#666666' : '#d0c5af' } : {}}
+                style={language !== 'es' ? { color: !isDark ? '#333333' : '#f0ebd9' } : {}}
                 title="Español"
                 aria-label="Cambiar a Español"
               >
@@ -283,7 +304,7 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
             <button
               onClick={onOpenBookingModal}
               className={`hidden sm:inline-flex items-center justify-center gap-1.5 px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl font-bold text-[11px] uppercase tracking-widest luxury-shimmer-btn cursor-pointer shadow-md hover:scale-105 active:scale-95 transition-all ${
-                !isDark ? 'bg-[#C8A24D] text-white shadow-[#C8A24D]/25' : 'bg-[#d4af37] text-[#3c2f00] shadow-[#d4af37]/20'
+                !isDark ? 'bg-[#C8A24D] text-[#1c1b1b] shadow-[#C8A24D]/25' : 'bg-[#d4af37] text-[#3c2f00] shadow-[#d4af37]/20'
               }`}
             >
               <Calendar className="w-3.5 h-3.5" />
@@ -301,7 +322,7 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
               type="button"
               onClick={onOpenBookingModal}
               className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer shadow-md ${
-                !isDark ? 'bg-[#C8A24D] text-white shadow-[#C8A24D]/30' : 'bg-[#f2ca50] text-[#3c2f00] shadow-[0_0_12px_rgba(242,202,80,0.3)]'
+                !isDark ? 'bg-[#C8A24D] text-[#1c1b1b] shadow-[#C8A24D]/30' : 'bg-[#f2ca50] text-[#3c2f00] shadow-[0_0_12px_rgba(242,202,80,0.3)]'
               }`}
               title="Espace Réservation"
               aria-label="Ouvrir le formulaire de réservation"
@@ -412,7 +433,7 @@ export default function SuiteNavbar({ apartment, onOpenBookingModal }: SuiteNavb
                         <Icon className="w-4 h-4 text-[#f2ca50]" />
                         <span>{link.name}</span>
                       </div>
-                      <ChevronRight className="w-4 h-4" style={{ color: isDark ? '#99907c' : '#8c7e6a' }} />
+                      <ChevronRight className="w-4 h-4" style={{ color: isDark ? '#f0ebd9' : '#665c4d' }} />
                     </motion.a>
                   );
                 })}

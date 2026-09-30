@@ -22,7 +22,10 @@ import {
 } from 'lucide-react';
 import { ApartmentItem, RoomImage, getTopApartmentImages } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
-import AirbnbGalleryModal from '@/components/gallery/AirbnbGalleryModal';
+import dynamic from 'next/dynamic';
+const AirbnbGalleryModal = dynamic(() => import('@/components/gallery/AirbnbGalleryModal'), {
+  ssr: false,
+});
 
 interface SuiteTopGalleryProps {
   apartment: ApartmentItem;
@@ -112,21 +115,45 @@ export default function SuiteTopGallery({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        {/* Dynamic Animated Background Carousel */}
+        {/* Instantaneous Static LCP Base Image (Zero render delay, immediate first paint) */}
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={currentIndex}
-              custom={direction}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.98 }}
-              transition={{ duration: 0.75, ease: [0.25, 1, 0.5, 1] }}
-              className="absolute inset-0 w-full h-full bg-cover bg-center"
-              style={{ backgroundImage: `url('${currentImage.src}')` }}
-            />
-          </AnimatePresence>
+          <Image
+            src={images[0]?.src || apartment.image}
+            alt={apartment.title}
+            fill
+            priority
+            fetchPriority="high"
+            sizes="100vw"
+            quality={85}
+            className="object-cover object-center"
+          />
         </div>
+
+        {/* Dynamic Animated Carousel Overlay (Active only when navigating to slides > 0) */}
+        {currentIndex > 0 && (
+          <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+            <AnimatePresence custom={direction}>
+              <motion.div
+                key={currentIndex}
+                custom={direction}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <Image
+                  src={currentImage.src}
+                  alt={currentImage.title || apartment.title}
+                  fill
+                  sizes="100vw"
+                  quality={85}
+                  className="object-cover object-center"
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* Cinematic Scrim Overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-[#131313] [data-theme=light]:from-[#FAF8F5] via-black/60 [data-theme=light]:via-black/50 to-black/40 [data-theme=light]:to-black/30 pointer-events-none transition-colors" />
@@ -176,7 +203,7 @@ export default function SuiteTopGallery({
 
           {/* Badges & Rating */}
           <div className="flex flex-wrap items-center gap-3">
-            <span className="px-3.5 py-1 rounded-full bg-[#C8A24D] font-bold text-xs uppercase tracking-wider shadow-lg" style={{ color: '#ffffff' }}>
+            <span className="px-3.5 py-1 rounded-full bg-[#C8A24D] font-bold text-xs uppercase tracking-wider shadow-lg text-[#1c1b1b]">
               {apartment.badge}
             </span>
             <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-xs font-semibold border border-white/20 flex items-center gap-1.5 shadow-md" style={{ color: '#f2ca50' }}>
@@ -282,15 +309,15 @@ export default function SuiteTopGallery({
               </div>
               <div className="flex flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#B89032] dark:text-[#f2ca50]">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#916b15] dark:text-[#f2ca50]">
                     {currentImage.categoryLabel}
                   </span>
-                  <span className="text-[10px] text-[#8B8B8B] dark:text-[#d0c5af]/60">•</span>
+                  <span className="text-[10px] text-[#525252] dark:text-[#d0c5af]/60">•</span>
                   <span className="text-xs text-[#171717] dark:text-white font-semibold truncate">
                     {currentImage.title}
                   </span>
                 </div>
-                <p className="text-[11px] text-[#666666] dark:text-[#d0c5af] font-light truncate max-w-md sm:max-w-xl">
+                <p className="text-[11px] text-[#454545] dark:text-[#d0c5af] font-normal truncate max-w-md sm:max-w-xl">
                   {currentImage.description}
                 </p>
               </div>
@@ -299,13 +326,13 @@ export default function SuiteTopGallery({
             {/* Price & Booking Call-to-action */}
             <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-black/10 dark:border-white/10">
               <div className="flex items-baseline gap-1.5">
-                <span className="text-xs text-[#666666] dark:text-[#d0c5af] font-light">
+                <span className="text-xs text-[#454545] dark:text-[#d0c5af] font-medium">
                   {language === 'fr' ? 'Dès' : 'From'}
                 </span>
-                <span className="font-serif text-2xl sm:text-3xl font-bold text-[#C8A24D] dark:text-[#f2ca50]">
+                <span className="font-serif text-2xl sm:text-3xl font-bold text-[#916b15] dark:text-[#f2ca50]">
                   {apartment.pricePerNightEUR} €
                 </span>
-                <span className="text-[11px] text-[#8B8B8B] dark:text-[#d0c5af] font-light">
+                <span className="text-[11px] text-[#525252] dark:text-[#d0c5af] font-medium">
                   / {language === 'fr' ? 'nuit' : 'night'}
                 </span>
               </div>
@@ -322,7 +349,8 @@ export default function SuiteTopGallery({
                 </a>
                 <button
                   onClick={onOpenBookingModal}
-                  className="px-6 py-2.5 rounded-xl bg-[#C8A24D] hover:bg-[#B89032] text-white text-xs font-bold uppercase tracking-wider luxury-shimmer-btn shadow-lg shadow-[#C8A24D]/30 cursor-pointer"
+                  aria-label={`Réserver la suite ${apartment.title}`}
+                  className="px-6 py-2.5 rounded-xl bg-[#C8A24D] hover:bg-[#B89032] text-[#1c1b1b] text-xs font-bold uppercase tracking-wider luxury-shimmer-btn shadow-lg shadow-[#C8A24D]/30 cursor-pointer"
                 >
                   {language === 'fr' ? 'Réserver' : 'Book Now'}
                 </button>
@@ -382,14 +410,15 @@ export default function SuiteTopGallery({
 
       {/* ============================================================ */}
       {/* 2. AIRBNB-GRADE FULLSCREEN INTERACTIVE GALLERY MODAL */}
-      {/* ============================================================ */}
-      <AirbnbGalleryModal
-        images={images}
-        initialIndex={currentIndex}
-        isOpen={lightboxOpen}
-        onClose={() => setLightboxOpen(false)}
-        apartmentTitle={apartment.title}
-      />
+      {lightboxOpen && (
+        <AirbnbGalleryModal
+          images={images}
+          initialIndex={currentIndex}
+          isOpen={lightboxOpen}
+          onClose={() => setLightboxOpen(false)}
+          apartmentTitle={apartment.title}
+        />
+      )}
     </>
   );
 }

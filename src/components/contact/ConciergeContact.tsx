@@ -143,6 +143,8 @@ export default function ConciergeContact() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Invisible Honeypot Field for Spam Bot Protection */}
               <input
+                id="concierge-hp-field"
+                aria-label="Do not fill"
                 type="text"
                 name="hp_website_url"
                 value={formData.hp_website_url}

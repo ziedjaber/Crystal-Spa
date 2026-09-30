@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import {
   MapPin,
@@ -34,6 +34,23 @@ export default function LocationAccessSection({
   const { language } = useLanguage();
   const [bboxDelta, setBboxDelta] = useState<number>(0.005);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [mapVisible, setMapVisible] = useState(false);
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!mapContainerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setMapVisible(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '300px' }
+    );
+    observer.observe(mapContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   // Exact coordinates for all apartments in Google Maps: 49.42427, 1.061738
   const lat = currentApartment?.lat ?? 49.42427;
@@ -98,7 +115,10 @@ export default function LocationAccessSection({
         {/* 2-Column Showcase: Interactive Map Frame + Access Details */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Airbnb-Style Interactive Map Frame */}
-          <div className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#1c1b1b] border border-white/10 luxury-overlap-shadow relative min-h-[420px] lg:min-h-[500px] flex flex-col group">
+          <div
+            ref={mapContainerRef}
+            className="lg:col-span-7 rounded-3xl overflow-hidden bg-[#1c1b1b] border border-white/10 luxury-overlap-shadow relative min-h-[420px] lg:min-h-[500px] flex flex-col group"
+          >
             
             {/* Top Airbnb Map Bar (Title) */}
             <div className="absolute top-4 left-4 z-20 bg-[#131313]/90 backdrop-blur-md px-4 py-2 rounded-xl border border-white/10 shadow-lg pointer-events-none">
@@ -144,18 +164,27 @@ export default function LocationAccessSection({
               <div className="w-3 h-3 bg-[#f2ca50] rotate-45 -mt-1.5 border-r-[2px] border-b-[2px] border-[#3c2f00]" />
             </div>
 
-            <iframe
-              key={googleMapsEmbedUrl}
-              src={googleMapsEmbedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0, minHeight: '420px', flexGrow: 1 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`Localisation Google Maps - ${aptTitle}`}
-              className="w-full h-full transition-opacity duration-300"
-            />
+            {mapVisible ? (
+              <iframe
+                key={googleMapsEmbedUrl}
+                src={googleMapsEmbedUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0, minHeight: '420px', flexGrow: 1 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`Localisation Google Maps - ${aptTitle}`}
+                className="w-full h-full transition-opacity duration-500"
+              />
+            ) : (
+              <div className="w-full h-full min-h-[420px] flex flex-col items-center justify-center bg-[#151414] text-center p-8 text-[#d0c5af]">
+                <div className="w-8 h-8 rounded-full border-2 border-[#f2ca50] border-t-transparent animate-spin mb-3" />
+                <span className="text-xs font-medium tracking-wider uppercase text-[#f2ca50]">
+                  {language === 'fr' ? 'Chargement de la carte...' : 'Loading map...'}
+                </span>
+              </div>
+            )}
             {/* Transparent overlay — prevents map panning so the pin stays fixed on the apartment */}
             <div className="absolute inset-0 z-10 cursor-default" aria-hidden="true" />
 

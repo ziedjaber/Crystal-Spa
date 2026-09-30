@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
+const isProd = process.env.NODE_ENV === 'production';
+
 /**
- * Production-Grade Restrictive Content Security Policy (CSP)
- * Allows only self, Stripe, Smoobu, Google Fonts, and Cloudflare Turnstile.
+ * Production-Grade Content Security Policy (CSP)
+ * Allows self, Stripe (all subdomains, networks, frames, and workers), Smoobu, Google Fonts, and Cloudflare Turnstile.
  */
 const contentSecurityPolicy = `
   default-src 'self';
@@ -10,14 +12,67 @@ const contentSecurityPolicy = `
   style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
   img-src 'self' data: blob: https://images.unsplash.com https://*.stripe.com https://maps.googleapis.com https://challenges.cloudflare.com;
   font-src 'self' data: https://fonts.gstatic.com;
-  connect-src 'self' https://api.stripe.com https://login.smoobu.com https://api.smoobu.com https://challenges.cloudflare.com https://maps.googleapis.com;
+  connect-src 'self' https://api.stripe.com https://*.stripe.com https://*.stripe.network https://js.stripe.com https://login.smoobu.com https://api.smoobu.com https://challenges.cloudflare.com https://maps.googleapis.com ws: wss:;
   frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://challenges.cloudflare.com https://www.google.com https://maps.google.com https://www.openstreetmap.org;
+  worker-src 'self' blob: https://js.stripe.com;
+  child-src 'self' blob: https://js.stripe.com;
   object-src 'none';
   base-uri 'self';
   form-action 'self';
   frame-ancestors 'none';
-  upgrade-insecure-requests;
+  ${isProd ? 'upgrade-insecure-requests;' : ''}
 `.replace(/\s{2,}/g, ' ').trim();
+
+const securityHeaders = [
+  {
+    key: 'Content-Security-Policy',
+    value: contentSecurityPolicy,
+  },
+  ...(isProd
+    ? [
+        {
+          key: 'Strict-Transport-Security',
+          value: 'max-age=63072000; includeSubDomains; preload',
+        },
+      ]
+    : []),
+  {
+    key: 'X-Content-Type-Options',
+    value: 'nosniff',
+  },
+  {
+    key: 'X-Frame-Options',
+    value: 'DENY',
+  },
+  {
+    key: 'Referrer-Policy',
+    value: 'strict-origin-when-cross-origin',
+  },
+  {
+    key: 'Permissions-Policy',
+    value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(self "https://js.stripe.com")',
+  },
+  {
+    key: 'Cross-Origin-Opener-Policy',
+    value: 'same-origin-allow-popups',
+  },
+  {
+    key: 'Cross-Origin-Resource-Policy',
+    value: 'cross-origin',
+  },
+  {
+    key: 'X-Permitted-Cross-Domain-Policies',
+    value: 'none',
+  },
+  {
+    key: 'X-XSS-Protection',
+    value: '1; mode=block',
+  },
+  {
+    key: 'X-DNS-Prefetch-Control',
+    value: 'on',
+  },
+];
 
 const nextConfig: NextConfig = {
   compress: true,
@@ -33,52 +88,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/:path*',
-        headers: [
-          {
-            key: 'Content-Security-Policy',
-            value: contentSecurityPolicy,
-          },
-          {
-            key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
-          },
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'Referrer-Policy',
-            value: 'strict-origin-when-cross-origin',
-          },
-          {
-            key: 'Permissions-Policy',
-            value: 'camera=(), microphone=(), geolocation=(), browsing-topics=(), payment=(self "https://js.stripe.com")',
-          },
-          {
-            key: 'Cross-Origin-Opener-Policy',
-            value: 'same-origin',
-          },
-          {
-            key: 'Cross-Origin-Resource-Policy',
-            value: 'same-origin',
-          },
-          {
-            key: 'X-Permitted-Cross-Domain-Policies',
-            value: 'none',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-          {
-            key: 'X-DNS-Prefetch-Control',
-            value: 'on',
-          },
-        ],
+        headers: securityHeaders,
       },
       {
         source: '/(.*)\\.(png|jpg|jpeg|webp|avif|ico|svg|woff2)',

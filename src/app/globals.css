@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, [data-theme="dark"], .dark *, [data-theme="dark"] *));
 @import "swiper/css";
 @import "swiper/css/navigation";
 @import "swiper/css/pagination";
@@ -32,10 +33,10 @@
   --cs-gold-text:     #f2ca50;
   --cs-gold-on:       #3c2f00;
 
-  --cs-text-primary:  #eae8e6;
-  --cs-text-secondary:#d0c5af;
-  --cs-text-muted:    #c9c6bf;
-  --cs-text-faint:    #99907c;
+  --cs-text-primary:  #FAF9F6;
+  --cs-text-secondary:#F0EBD9;
+  --cs-text-muted:    #E2DDD0;
+  --cs-text-faint:    #C8C2B3;
 
   --cs-border-hair:   rgba(255,255,255,0.05);
   --cs-border-soft:   rgba(255,255,255,0.10);
@@ -86,12 +87,12 @@
   --cs-gold-muted:    rgba(200, 162, 77, 0.12);
   --cs-gold-border:   rgba(200, 162, 77, 0.30);
   --cs-gold-text:     #B89032;
-  --cs-gold-on:       #FFFFFF;
+  --cs-gold-on:       #1C1B1B;
 
   --cs-text-primary:  #171717;
-  --cs-text-secondary:#666666;
-  --cs-text-muted:    #8B8B8B;
-  --cs-text-faint:    #A3A3A3;
+  --cs-text-secondary:#333333;
+  --cs-text-muted:    #4B463F;
+  --cs-text-faint:    #5C554E;
 
   --cs-border-hair:   rgba(0, 0, 0, 0.05);
   --cs-border-soft:   rgba(0, 0, 0, 0.08);
@@ -205,13 +206,24 @@ h1, h2, h3, .font-serif, .font-display {
 }
 
 [data-theme="light"] .bg-\[\#141313\],
+[data-theme="light"] .bg-\[\#141312\],
 [data-theme="light"] .bg-\[\#161515\],
 [data-theme="light"] .bg-\[\#181613\],
 [data-theme="light"] .bg-\[\#181611\],
 [data-theme="light"] .bg-\[\#181717\],
 [data-theme="light"] .bg-\[\#181716\],
-[data-theme="light"] .bg-\[\#1a1919\] {
+[data-theme="light"] .bg-\[\#1a1919\],
+[data-theme="light"] .bg-\[\#131211\],
+[data-theme="light"] .bg-\[\#131211\]\/95 {
   background-color: var(--cs-surface-1) !important;
+}
+
+[data-theme="light"] .bg-\[\#1b1918\],
+[data-theme="light"] .bg-\[\#1b1917\],
+[data-theme="light"] .bg-\[\#1d1b16\],
+[data-theme="light"] .bg-\[\#1c1b1a\],
+[data-theme="light"] .bg-\[\#0a0a0a\] {
+  background-color: var(--cs-bg-alt) !important;
 }
 
 [data-theme="light"] .bg-\[\#1c1b1b\],
@@ -1218,6 +1230,19 @@ section,
 
 [data-theme="light"] #experience-section .border-white\/10 {
   border-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Explicit pure white text in dark mode for #experience-section */
+:root:not([data-theme="light"]) #experience-section h2,
+[data-theme="dark"] #experience-section h2,
+.dark #experience-section h2 {
+  color: #FFFFFF !important;
+}
+
+:root:not([data-theme="light"]) #experience-section .experience-description,
+[data-theme="dark"] #experience-section .experience-description,
+.dark #experience-section .experience-description {
+  color: #FFFFFF !important;
 }
 
 /* =====================================================================

@@ -19,11 +19,20 @@ import {
   Check,
   CreditCard,
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 import { FEATURED_APARTMENTS, calculateStayPricing } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
+import confetti from 'canvas-confetti';
+import dynamic from 'next/dynamic';
 import BookingCalendar from './BookingCalendar';
-import StripePaymentForm from '@/components/payment/StripePaymentForm';
+
+const StripePaymentForm = dynamic(() => import('@/components/payment/StripePaymentForm'), {
+  ssr: false,
+  loading: () => (
+    <div className="flex items-center justify-center p-8 text-[#f2ca50]">
+      <div className="w-8 h-8 border-2 border-[#f2ca50] border-t-transparent rounded-full animate-spin" />
+    </div>
+  ),
+});
 
 interface ApartmentBookingProps {
   initialApartmentId?: string;
@@ -514,7 +523,7 @@ export default function ApartmentBooking({
                     <span>
                       {stayPricing.baseAmountEUR} € ({stayPricing.nightsCount} {language === 'fr' ? 'nuit' : 'night'}) + {calculatePacksTotal()} € ({selectedPacks.length} {language === 'fr' ? 'option(s)' : 'option(s)'})
                     </span>
-                    <span className="text-[10px] text-[#99907c] font-light">
+                    <span className="text-[10px] text-[#d0c5af] font-light">
                       {selectedPacks.map(id => ROMANTIC_ADDONS.find(p => p.id === id)?.name).filter(Boolean).join(' • ')}
                     </span>
                   </div>
@@ -523,7 +532,7 @@ export default function ApartmentBooking({
             </div>
 
             {/* Reassurance notes */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#99907c]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] text-[#d0c5af]">
               <div className="flex items-center gap-2">
                 <ShieldCheck className="w-4 h-4 text-[#22c55e]" />
                 <span>{language === 'fr' ? 'Caution par simple empreinte bancaire : 250 € (aucun débit)' : 'Deposit hold: €250 (not debited)'}</span>
@@ -626,11 +635,11 @@ export default function ApartmentBooking({
             {/* Pricing Recap Box */}
             <div className="rounded-xl bg-[#101010] p-4 sm:p-5 border border-white/5 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-xs">
               <div>
-                <span className="text-[#99907c] block">{language === 'fr' ? 'OPTIONS SÉLECTIONNÉES' : 'SELECTED ADD-ONS'}</span>
+                <span className="text-[#d0c5af] block">{language === 'fr' ? 'OPTIONS SÉLECTIONNÉES' : 'SELECTED ADD-ONS'}</span>
                 <span className="font-bold text-sm text-white">+{calculatePacksTotal()} €</span>
               </div>
               <div className="text-left sm:text-right">
-                <span className="text-[#99907c] block">{language === 'fr' ? 'TOTAL DU SÉJOUR' : 'TOTAL STAY PRICE'}</span>
+                <span className="text-[#d0c5af] block">{language === 'fr' ? 'TOTAL DU SÉJOUR' : 'TOTAL STAY PRICE'}</span>
                 <span className="font-serif text-3xl font-bold text-[#f2ca50]">
                   {calculateTotal()} €
                 </span>
@@ -692,6 +701,8 @@ export default function ApartmentBooking({
             <form onSubmit={handleConfirm} className="space-y-5">
               {/* Invisible Honeypot Field for Spam Bot Protection */}
               <input
+                id="booking-hp-field"
+                aria-label="Do not fill"
                 type="text"
                 name="hp_company_field"
                 value={hpCompanyField}
@@ -704,10 +715,11 @@ export default function ApartmentBooking({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
+                  <label htmlFor="booking-guest-name" className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
                     {language === 'fr' ? 'Nom Complet *' : 'Full Name *'}
                   </label>
                   <input
+                    id="booking-guest-name"
                     type="text"
                     required
                     placeholder="ex: Alexandre de Valois"
@@ -718,10 +730,11 @@ export default function ApartmentBooking({
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
+                  <label htmlFor="booking-guest-phone" className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
                     {language === 'fr' ? 'Téléphone Mobile *' : 'Mobile Phone *'}
                   </label>
                   <input
+                    id="booking-guest-phone"
                     type="tel"
                     required
                     placeholder="06 00 00 00 00"
@@ -733,10 +746,11 @@ export default function ApartmentBooking({
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
+                <label htmlFor="booking-guest-email" className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
                   {language === 'fr' ? 'Adresse Email *' : 'Email Address *'}
                 </label>
                 <input
+                  id="booking-guest-email"
                   type="email"
                   required
                   placeholder="alexandre@example.com"
@@ -747,10 +761,11 @@ export default function ApartmentBooking({
               </div>
 
               <div className="flex flex-col gap-1.5">
-                <label className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
+                <label htmlFor="booking-special-requests" className="text-xs font-bold text-[#d0c5af] uppercase tracking-wider">
                   {language === 'fr' ? 'Message ou demande particulière (optionnel)' : 'Special Requests (optional)'}
                 </label>
                 <textarea
+                  id="booking-special-requests"
                   rows={2}
                   placeholder={
                     language === 'fr'
@@ -839,14 +854,14 @@ export default function ApartmentBooking({
               {showStripeCheckout ? (
                 <div className="pt-4 space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#f2ca50] uppercase tracking-wider flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-[#f2ca50] [data-theme=light]:text-[#b89032] uppercase tracking-wider flex items-center gap-1.5">
                       <CreditCard className="w-4 h-4" />
                       {language === 'fr' ? 'Formulaire de Paiement Stripe' : 'Stripe Payment Terminal'}
                     </span>
                     <button
                       type="button"
                       onClick={() => setShowStripeCheckout(false)}
-                      className="text-xs text-[#99907c] hover:text-white underline cursor-pointer"
+                      className="text-xs text-[#99907c] [data-theme=light]:text-[#666666] hover:text-white [data-theme=light]:hover:text-black underline cursor-pointer"
                     >
                       {language === 'fr' ? 'Modifier mes coordonnées' : 'Edit details'}
                     </button>

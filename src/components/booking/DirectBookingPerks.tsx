@@ -117,7 +117,7 @@ export default function DirectBookingPerks() {
                 </div>
 
                 <div className="pt-4 border-t border-white/5 flex items-center justify-between text-xs">
-                  <span className="text-[#99907c] font-light text-[11px]">
+                  <span className="text-[#d0c5af] font-light text-[11px]">
                     {language === 'fr' ? 'Avantage exclusif' : 'Exclusive perk'}
                   </span>
                   <span className="font-semibold text-[#f2ca50]">

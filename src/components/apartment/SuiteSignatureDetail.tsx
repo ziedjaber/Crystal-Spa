@@ -305,7 +305,7 @@ export default function SuiteSignatureDetail({
                   <p className="text-xs sm:text-sm text-[#d0c5af] [data-theme=light]:text-[#5C554E] font-light leading-relaxed">
                     {aptDetails.spaDesc}
                   </p>
-                  <div className="pt-2 flex flex-wrap gap-3 text-xs text-[#99907c] [data-theme=light]:text-[#7f7667]">
+                  <div className="pt-2 flex flex-wrap gap-3 text-xs text-[#d0c5af] [data-theme=light]:text-[#4d4438]">
                     <span className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4 text-[#C5A059] [data-theme=light]:text-[#775a19]" />
                       <span>{language === 'fr' ? 'Vidange intégrale après chaque hôte' : 'Full water change each stay'}</span>
@@ -335,7 +335,7 @@ export default function SuiteSignatureDetail({
                   <p className="text-xs sm:text-sm text-[#d0c5af] [data-theme=light]:text-[#5C554E] font-light leading-relaxed">
                     {aptDetails.saunaDesc}
                   </p>
-                  <div className="pt-2 flex flex-wrap gap-3 text-xs text-[#99907c] [data-theme=light]:text-[#7f7667]">
+                  <div className="pt-2 flex flex-wrap gap-3 text-xs text-[#d0c5af] [data-theme=light]:text-[#4d4438]">
                     <span className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4 text-[#C5A059] [data-theme=light]:text-[#775a19]" />
                       <span>{language === 'fr' ? 'Huiles essentielles offertes' : 'Essential oils provided'}</span>
@@ -535,10 +535,11 @@ export default function SuiteSignatureDetail({
                 {/* Date Picker Form */}
                 <div className="grid grid-cols-2 gap-2.5 p-3 rounded-2xl bg-[#201f1f] [data-theme=light]:bg-[#FAF7F2] border border-white/5 [data-theme=light]:border-[#EAE5DC]">
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-[#99907c] [data-theme=light]:text-[#7f7667] mb-1">
+                    <label htmlFor="suite-calc-checkin" className="block text-[10px] font-bold uppercase tracking-wider text-[#d0c5af] [data-theme=light]:text-[#4d4438] mb-1">
                       {language === 'fr' ? 'ARRIVÉE' : 'CHECK-IN'}
                     </label>
                     <input
+                      id="suite-calc-checkin"
                       type="date"
                       value={checkInDate}
                       onChange={(e) => setCheckInDate(e.target.value)}
@@ -546,10 +547,11 @@ export default function SuiteSignatureDetail({
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] font-bold uppercase tracking-wider text-[#99907c] [data-theme=light]:text-[#7f7667] mb-1">
+                    <label htmlFor="suite-calc-checkout" className="block text-[10px] font-bold uppercase tracking-wider text-[#d0c5af] [data-theme=light]:text-[#4d4438] mb-1">
                       {language === 'fr' ? 'DÉPART' : 'CHECK-OUT'}
                     </label>
                     <input
+                      id="suite-calc-checkout"
                       type="date"
                       value={checkOutDate}
                       onChange={(e) => setCheckOutDate(e.target.value)}
@@ -565,9 +567,11 @@ export default function SuiteSignatureDetail({
                   </span>
 
                   {/* Pack Confort */}
-                  <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#201f1f] [data-theme=light]:bg-[#FAF7F2] hover:bg-[#282727] [data-theme=light]:hover:bg-[#F4EFE8] cursor-pointer transition-all border border-white/5 [data-theme=light]:border-[#EAE5DC]">
+                  <label htmlFor="suite-pack-confort" className="flex items-center justify-between p-3.5 rounded-2xl bg-[#201f1f] [data-theme=light]:bg-[#FAF7F2] hover:bg-[#282727] [data-theme=light]:hover:bg-[#F4EFE8] cursor-pointer transition-all border border-white/5 [data-theme=light]:border-[#EAE5DC]">
                     <div className="flex items-center gap-3">
                       <input
+                        id="suite-pack-confort"
+                        aria-label={language === 'fr' ? 'Pack Confort (+4h de Spa)' : 'Comfort Pack (+4h Spa)'}
                         type="checkbox"
                         checked={packConfort}
                         onChange={(e) => setPackConfort(e.target.checked)}
@@ -577,7 +581,7 @@ export default function SuiteSignatureDetail({
                         <span className="text-xs font-semibold text-[#e5e2e1] [data-theme=light]:text-[#231F1C]">
                           {language === 'fr' ? 'Pack Confort (+4h de Spa)' : 'Comfort Pack (+4h Spa)'}
                         </span>
-                        <span className="text-[11px] text-[#99907c] [data-theme=light]:text-[#7f7667]">
+                        <span className="text-[11px] text-[#d0c5af] [data-theme=light]:text-[#4d4438]">
                           {language === 'fr' ? 'Arrivée dès 15h & départ tardif à 13h' : 'Early check-in 3PM & late check-out 1PM'}
                         </span>
                       </div>
@@ -588,9 +592,11 @@ export default function SuiteSignatureDetail({
                   </label>
 
                   {/* Pack Romance */}
-                  <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#201f1f] [data-theme=light]:bg-[#FAF7F2] hover:bg-[#282727] [data-theme=light]:hover:bg-[#F4EFE8] cursor-pointer transition-all border border-white/5 [data-theme=light]:border-[#EAE5DC]">
+                  <label htmlFor="suite-pack-romance" className="flex items-center justify-between p-3.5 rounded-2xl bg-[#201f1f] [data-theme=light]:bg-[#FAF7F2] hover:bg-[#282727] [data-theme=light]:hover:bg-[#F4EFE8] cursor-pointer transition-all border border-white/5 [data-theme=light]:border-[#EAE5DC]">
                     <div className="flex items-center gap-3">
                       <input
+                        id="suite-pack-romance"
+                        aria-label={language === 'fr' ? 'Pack Romance & Pétales' : 'Romance & Petals Pack'}
                         type="checkbox"
                         checked={packRomance}
                         onChange={(e) => setPackRomance(e.target.checked)}
@@ -600,7 +606,7 @@ export default function SuiteSignatureDetail({
                         <span className="text-xs font-semibold text-[#e5e2e1] [data-theme=light]:text-[#231F1C]">
                           {language === 'fr' ? 'Pack Romance & Pétales' : 'Romance & Petals Pack'}
                         </span>
-                        <span className="text-[11px] text-[#99907c] [data-theme=light]:text-[#7f7667]">
+                        <span className="text-[11px] text-[#d0c5af] [data-theme=light]:text-[#4d4438]">
                           {language === 'fr' ? 'Pétales de roses, bougies LED, mot personnalisé' : 'Rose petals, LED candles, love letter'}
                         </span>
                       </div>

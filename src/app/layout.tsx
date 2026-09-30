@@ -82,13 +82,6 @@ export default function RootLayout({
     >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
-        <link
-          rel="preload"
-          as="image"
-          href="/hero/preview_video.jpg"
-          type="image/jpeg"
-          fetchPriority="high"
-        />
       </head>
       <body
         suppressHydrationWarning

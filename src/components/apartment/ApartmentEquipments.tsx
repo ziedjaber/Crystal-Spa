@@ -94,12 +94,12 @@ export default function ApartmentEquipments() {
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-[#e5e2e1] drop-shadow-md leading-tight">
               {t('equip.title')}
             </h2>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
+            <p className="text-sm sm:text-base text-[#f0ebd9] font-light leading-relaxed max-w-[600px]">
               {t('equip.desc')}
             </p>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-[#d0c5af] bg-[#1c1b1b]/80 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 shadow-lg">
+          <div className="flex items-center gap-2 text-xs text-[#f0ebd9] bg-[#1c1b1b]/80 backdrop-blur-md px-4 py-2.5 rounded-xl border border-white/10 shadow-lg">
             <CheckCircle className="w-4 h-4 text-[#f2ca50]" />
             <span>
               {language === 'fr'
@@ -153,7 +153,7 @@ export default function ApartmentEquipments() {
                   <h3 className="text-base font-serif text-[#e5e2e1] group-hover:text-[#f2ca50] transition-colors">
                     {language === 'fr' ? cat.category : cat.categoryEn}
                   </h3>
-                  <span className="text-[10px] text-[#99907c] uppercase tracking-wider font-semibold">
+                  <span className="text-[10px] text-[#f0ebd9] uppercase tracking-wider font-semibold">
                     {cat.items.length} {language === 'fr' ? 'équipements' : 'amenities'}
                   </span>
                 </div>
@@ -168,7 +168,7 @@ export default function ApartmentEquipments() {
                         {language === 'fr' ? item.title : item.titleEn}
                       </span>
                       {(item.description || item.descriptionEn) && (
-                        <span className="text-[11px] text-[#99907c] font-light leading-snug">
+                        <span className="text-[11px] text-[#f0ebd9] font-light leading-snug">
                           {language === 'fr' ? item.description : item.descriptionEn}
                         </span>
                       )}
@@ -192,7 +192,7 @@ export default function ApartmentEquipments() {
                   <AirbnbLogo className="w-3.5 h-3.5 text-[#3c2f00]" />
                   <span>Airbnb Top 10%</span>
                 </span>
-                <span className="text-xs text-[#d0c5af] flex items-center gap-1">
+                <span className="text-xs text-[#f0ebd9] flex items-center gap-1">
                   <AirbnbLogo className="w-3 h-3 text-[#FF385C]" />
                   <span>• Coup de cœur voyageurs 4.97★</span>
                 </span>
@@ -202,7 +202,7 @@ export default function ApartmentEquipments() {
                   ? 'Fait partie des 10 % des logements les plus appréciés'
                   : 'Ranked in the top 10% of highest rated stays'}
               </h4>
-              <p className="text-xs sm:text-sm text-[#d0c5af] font-light max-w-xl">
+              <p className="text-xs sm:text-sm text-[#f0ebd9] font-light max-w-xl">
                 {language === 'fr'
                   ? 'D’après les évaluations, les avis et la fiabilité des 37 couples et voyageurs accueillis.'
                   : 'Based on high ratings, verified reviews and reliable 5-star service for all 37 guest couples.'}
@@ -211,7 +211,8 @@ export default function ApartmentEquipments() {
           </div>
 
           <a
-            href="#reservation-bar"
+            href="#experience-section"
+            aria-label="Accéder au formulaire de réservation de la suite"
             className="w-full md:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#f2ca50] to-[#cba328] hover:from-[#fada68] hover:to-[#dfb537] text-[#3c2f00] font-bold text-xs uppercase tracking-wider text-center transition-all shadow-[0_0_25px_rgba(242,202,80,0.3)] hover:scale-105 shrink-0 cursor-pointer"
           >
             {language === 'fr' ? 'Réserver ce Séjour' : 'Book this Stay'}

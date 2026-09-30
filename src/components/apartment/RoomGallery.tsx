@@ -4,7 +4,10 @@ import React, { useState } from 'react';
 import { ArrowRight, Heart, Gem, Sparkles } from 'lucide-react';
 import { ROOM_IMAGES_A1, ROOM_IMAGES_A2, ROOM_IMAGES_A3, RoomImage } from '@/data/apartment';
 import { useLanguage } from '@/context/LanguageContext';
-import AirbnbGalleryModal from '@/components/gallery/AirbnbGalleryModal';
+import dynamic from 'next/dynamic';
+const AirbnbGalleryModal = dynamic(() => import('@/components/gallery/AirbnbGalleryModal'), {
+  ssr: false,
+});
 import ProgressiveImage from '@/components/ui/ProgressiveImage';
 
 interface RoomGalleryProps {
@@ -100,7 +103,7 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
             <h2 className="font-serif text-3xl md:text-5xl text-[#e5e2e1] leading-tight">
               {t('gallery.title')}
             </h2>
-            <p className="text-sm sm:text-base text-[#d0c5af] font-light leading-relaxed max-w-[600px]">
+            <p className="text-sm sm:text-base text-[#f0ebd9] font-light leading-relaxed max-w-[600px]">
               {language === 'fr'
                 ? 'Explorez l’atmosphère intime et le design soigné de nos 3 appartements spa à travers notre galerie haute résolution.'
                 : 'Explore the intimate mood and bespoke design of our 3 private spa suites through our high-resolution photo collection.'}
@@ -108,7 +111,8 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
           </div>
 
           <a
-            href="#reservation-bar"
+            href="#experience-section"
+            aria-label="Accéder au formulaire de réservation de la suite"
             className="text-[11px] font-bold tracking-wider text-[#f2ca50] hover:text-white uppercase flex items-center gap-1.5 transition-colors group cursor-pointer shrink-0"
           >
             <span>{language === 'fr' ? 'Vérifier les disponibilités' : 'Check availability'}</span>
@@ -224,13 +228,14 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
 
         {/* Bottom Booking Trigger */}
         <div className="text-center pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[#d0c5af] font-light">
+          <p className="text-xs text-[#f0ebd9] font-light">
             {language === 'fr'
               ? 'Toutes les photos sont certifiées 100% fidèles à l’appartement réel.'
               : 'All photos are 100% genuine and verified.'}
           </p>
           <a
-            href="#reservation-bar"
+            href="#experience-section"
+            aria-label="Accéder au formulaire de réservation de la suite"
             className="px-6 py-2.5 rounded-lg bg-[#2a2a2a] hover:bg-[#353534] text-[#f2ca50] text-xs font-bold uppercase tracking-wider transition-colors border border-[#f2ca50]/20"
           >
             {language === 'fr' ? 'Réserver cette ambiance' : 'Book this atmosphere'}
@@ -240,19 +245,21 @@ export default function RoomGallery({ apartmentId }: RoomGalleryProps) {
       </div>
 
       {/* Airbnb-Grade Fullscreen Interactive Gallery Modal */}
-      <AirbnbGalleryModal
-        images={filteredImages}
-        initialIndex={activeImageIndex ?? 0}
-        isOpen={activeImageIndex !== null}
-        onClose={() => setActiveImageIndex(null)}
-        apartmentTitle={
-          selectedApartment === 'a2'
-            ? 'Apt 2: La Vie est Belle'
-            : selectedApartment === 'a3'
-            ? 'Apt 3: Le Rêve Luxe'
-            : 'Apt 1: YOU AND ME'
-        }
-      />
+      {activeImageIndex !== null && (
+        <AirbnbGalleryModal
+          images={filteredImages}
+          initialIndex={activeImageIndex ?? 0}
+          isOpen={true}
+          onClose={() => setActiveImageIndex(null)}
+          apartmentTitle={
+            selectedApartment === 'a2'
+              ? 'Apt 2: La Vie est Belle'
+              : selectedApartment === 'a3'
+              ? 'Apt 3: Le Rêve Luxe'
+              : 'Apt 1: YOU AND ME'
+          }
+        />
+      )}
     </section>
   );
 }
